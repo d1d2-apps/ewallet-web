@@ -1,3 +1,5 @@
+import { Button } from '../../components/atoms/Button';
+
 import * as S from './styles';
 
 export function LoginPage() {
@@ -22,7 +24,7 @@ export function LoginPage() {
             <input id="password" type="password" placeholder="********" />
           </label>
 
-          <button type="submit">Entrar</button>
+          <Button type="submit">Entrar</Button>
         </main>
 
         <footer>
