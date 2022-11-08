@@ -46,4 +46,21 @@ export const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  :root {
+    ${props => {
+      const themeColors = props.theme.colors;
+      let cssVariables = '';
+
+      const colors = Object.keys(themeColors);
+
+      colors.forEach(color => {
+        Object.entries(themeColors[color]).forEach(([prop, value]) => {
+          cssVariables += `--${color}-${prop}: ${value};`;
+        });
+      });
+
+      return cssVariables;
+    }}
+  }
 `;

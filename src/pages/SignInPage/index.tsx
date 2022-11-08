@@ -1,4 +1,7 @@
+import { FiMail, FiLock } from 'react-icons/fi';
+
 import { Button } from '../../components/atoms/Button';
+import { TextInput } from '../../components/atoms/TextInput';
 
 import * as S from './styles';
 
@@ -16,12 +19,26 @@ export function LoginPage() {
         <main>
           <label htmlFor="email">
             <span>Seu e-mail</span>
-            <input id="email" type="text" placeholder="fulano@email.com.br" />
+
+            <TextInput.Root>
+              <TextInput.Icon>
+                <FiMail />
+              </TextInput.Icon>
+
+              <TextInput.Input id="email" type="email" placeholder="fulano@email.com.br" />
+            </TextInput.Root>
           </label>
 
           <label htmlFor="password">
             <span>Sua senha</span>
-            <input id="password" type="password" placeholder="********" />
+
+            <TextInput.Root>
+              <TextInput.Icon>
+                <FiLock />
+              </TextInput.Icon>
+
+              <TextInput.Input id="password" type="password" placeholder="********" />
+            </TextInput.Root>
           </label>
 
           <Button type="submit">Entrar</Button>
@@ -29,6 +46,7 @@ export function LoginPage() {
 
         <footer>
           <span>Não tem uma conta?</span>
+          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           <a href="#">Cadastrar</a>
         </footer>
       </S.SignInForm>
