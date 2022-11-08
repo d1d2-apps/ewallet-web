@@ -42,6 +42,7 @@ export const InputContainer = styled.input`
 
   height: 100%;
   background-color: transparent;
+  padding-right: 1rem;
   border: none;
   color: ${({ theme }) => theme.colors.secondary[500]};
 
