@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const BaseContainer = styled.div`
+interface BaseContainerProps {
+  hasError?: boolean;
+}
+
+export const BaseContainer = styled.div<BaseContainerProps>`
   width: 100%;
   height: 3rem;
   padding-left: 1rem;
@@ -26,6 +30,12 @@ export const BaseContainer = styled.div`
 
     --icon-color: ${({ theme }) => theme.colors.primary[500]};
   }
+
+  ${({ hasError, theme }) =>
+    hasError &&
+    css`
+      border-color: ${theme.colors.red[500]};
+    `}
 `;
 
 export const IconContainer = styled.span`

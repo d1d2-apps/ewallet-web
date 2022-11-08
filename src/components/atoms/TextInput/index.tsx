@@ -4,10 +4,11 @@ import * as S from './styles';
 
 export interface TextInputBaseProps {
   children: ReactNode;
+  hasError?: boolean;
 }
 
-function TextInputBase({ children }: TextInputBaseProps) {
-  return <S.BaseContainer>{children}</S.BaseContainer>;
+function TextInputBase({ children, hasError = false }: TextInputBaseProps) {
+  return <S.BaseContainer hasError={hasError}>{children}</S.BaseContainer>;
 }
 
 TextInputBase.displayName = 'TextInput.Base';
@@ -31,7 +32,7 @@ function TextInputInput(props: TextInputInputProps) {
 TextInputInput.displayName = 'TextInput.Input';
 
 export const TextInput = {
-  Root: TextInputBase,
+  Base: TextInputBase,
   Input: TextInputInput,
   Icon: TextInputIcon
 };
