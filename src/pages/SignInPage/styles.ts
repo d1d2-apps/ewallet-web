@@ -9,9 +9,10 @@ export const SignInPageContainer = styled.div`
 `;
 
 export const SignInForm = styled.form`
-  width: 35rem;
+  max-width: 35rem;
   background-color: white;
   padding: 2.5rem;
+  margin: 0 1rem;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.md};
 
