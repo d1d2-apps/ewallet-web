@@ -4,6 +4,8 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { ControlledTextInput } from '@/components/forms';
 import { Button } from '@/components/elements';
 
+import logoImg from '@/assets/images/logo.png';
+
 import * as S from './SignInPage.styles';
 
 interface SignInFormData {
@@ -27,7 +29,11 @@ export function SignInPage() {
     <S.SignInPageContainer>
       <S.SignInForm onSubmit={signInForm.handleSubmit(handleSignIn)}>
         <header>
-          <h1>eWallet</h1>
+          <div>
+            <img src={logoImg} alt="eWallet Logo" />
+            <h1>eWallet</h1>
+          </div>
+
           <h2>Organize suas finanças de forma eficiente</h2>
         </header>
 

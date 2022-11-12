@@ -28,10 +28,21 @@ export const Header = styled.header`
       padding: 0 5rem;
     `)}
 
-  h1 {
-    font-size: ${({ theme }) => theme.fontSizes['2xl']};
-    color: ${({ theme }) => theme.colors.gray[50]};
-    pointer-events: none;
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    img {
+      max-width: 2.5rem;
+    }
+
+    h1 {
+      font-size: ${({ theme }) => theme.fontSizes['2xl']};
+      color: ${({ theme }) => theme.colors.gray[50]};
+      pointer-events: none;
+    }
   }
 
   a {

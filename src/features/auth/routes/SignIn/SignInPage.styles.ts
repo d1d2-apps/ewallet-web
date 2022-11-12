@@ -23,9 +23,20 @@ export const SignInForm = styled.form`
   header {
     text-align: center;
 
-    h1 {
-      font-family: ${({ theme }) => theme.fontFamilies.montserrat};
-      font-size: ${({ theme }) => theme.fontSizes['2xl']};
+    & > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+
+      img {
+        max-width: 2.5rem;
+      }
+
+      h1 {
+        font-family: ${({ theme }) => theme.fontFamilies.montserrat};
+        font-size: ${({ theme }) => theme.fontSizes['2xl']};
+      }
     }
 
     h2 {
@@ -33,7 +44,7 @@ export const SignInForm = styled.form`
       font-size: ${({ theme }) => theme.fontSizes.lg};
       font-weight: 400;
       color: ${({ theme }) => theme.colors.secondary[300]};
-      margin-top: 0.5rem;
+      margin-top: 1.5rem;
     }
   }
 

@@ -3,13 +3,18 @@ import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/elements';
 
+import logoImg from '@/assets/images/logo.png';
+
 import * as S from './LandingPage.styles';
 
 export function LandingPage() {
   return (
     <S.Container>
       <S.Header>
-        <h1>eWallet</h1>
+        <div>
+          <img src={logoImg} alt="eWallet Logo" />
+          <h1>eWallet</h1>
+        </div>
 
         <Link to="/auth/sign-in">
           <FiLogIn />
