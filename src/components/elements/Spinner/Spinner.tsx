@@ -1,4 +1,5 @@
 import { FiLoader } from 'react-icons/fi';
+
 import * as S from './Spinner.styles';
 
 interface SpinnerProps {

@@ -2,7 +2,7 @@ import { ComponentType, InputHTMLAttributes } from 'react';
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { IconBaseProps } from 'react-icons';
 
-import { TextInput } from '@/components/ui';
+import { TextInput } from '@/components/elements';
 
 import * as S from './ControlledTextInput.styles';
 

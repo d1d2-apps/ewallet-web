@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { FiMail, FiLock } from 'react-icons/fi';
 
 import { ControlledTextInput } from '@/components/forms';
-import { Button } from '@/components/ui';
+import { Button } from '@/components/elements';
 
 import * as S from './SignInPage.styles';
 
