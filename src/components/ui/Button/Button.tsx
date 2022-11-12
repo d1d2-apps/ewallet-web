@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from 'react';
 
-import * as S from './styles';
+import * as S from './Button.styles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: string;

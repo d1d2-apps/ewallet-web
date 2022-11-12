@@ -1,6 +1,6 @@
 import { InputHTMLAttributes, ReactNode } from 'react';
 
-import * as S from './styles';
+import * as S from './TextInput.styles';
 
 export interface TextInputBaseProps {
   children: ReactNode;

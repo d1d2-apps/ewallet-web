@@ -1,16 +1,11 @@
-import { ThemeProvider } from 'styled-components';
+import { AppRoutes } from '@/routes';
 
-import { SignInPage } from './pages/SignInPage';
-
-import { GlobalStyle } from './styles/GlobalStyles';
-import { theme } from './styles/theme';
+import { AppProvider } from '@/providers/app';
 
 export function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <SignInPage />
-
-      <GlobalStyle theme={theme} />
-    </ThemeProvider>
+    <AppProvider>
+      <AppRoutes />
+    </AppProvider>
   );
 }

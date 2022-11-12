@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
 import { FiMail, FiLock } from 'react-icons/fi';
 
-import { Button } from '../../components/atoms/Button';
-import { ControlledTextInput } from '../../components/molecules/ControlledTextInput';
+import { ControlledTextInput } from '@/components/forms';
+import { Button } from '@/components/ui';
 
-import * as S from './styles';
+import * as S from './SignInPage.styles';
 
 interface SignInFormData {
   email: string;

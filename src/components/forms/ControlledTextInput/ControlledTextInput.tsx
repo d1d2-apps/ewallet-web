@@ -2,9 +2,9 @@ import { ComponentType, InputHTMLAttributes } from 'react';
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { IconBaseProps } from 'react-icons';
 
-import { TextInput } from '../../atoms/TextInput';
+import { TextInput } from '@/components/ui';
 
-import * as S from './styles';
+import * as S from './ControlledTextInput.styles';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
