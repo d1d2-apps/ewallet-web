@@ -6,20 +6,20 @@ import { ControlledTextInput } from '@/components/forms';
 
 import * as S from './SignInForm.styles';
 
-interface SignInFormData {
+interface FormData {
   email: string;
   password: string;
 }
 
 export function SignInForm() {
-  const { handleSubmit, control } = useForm<SignInFormData>({
+  const { handleSubmit, control } = useForm<FormData>({
     defaultValues: {
       email: '',
       password: ''
     }
   });
 
-  const handleSignIn = (formData: SignInFormData) => {
+  const handleSignIn = (formData: FormData) => {
     console.log(formData);
   };
 
