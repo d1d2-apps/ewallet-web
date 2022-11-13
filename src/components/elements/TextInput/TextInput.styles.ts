@@ -38,8 +38,8 @@ export const BaseContainer = styled.div<BaseContainerProps>`
     `}
 `;
 
-export const IconContainer = styled.span`
-  font-size: 1.25rem;
+export const IconContainer = styled.i`
+  font-size: 1rem;
   color: var(--icon-color);
   transition: all 0.2s;
 
