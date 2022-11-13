@@ -7,12 +7,6 @@ export const Title = styled.h3`
   margin-bottom: 2rem;
 `;
 
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
 export const Footer = styled.footer`
   margin-top: 2rem;
   text-align: center;
