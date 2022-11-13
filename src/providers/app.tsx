@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, useTheme } from 'styled-components';
 
@@ -59,9 +60,11 @@ export function AppProvider({ children }: AppProviderProps) {
     <ThemeProvider theme={theme}>
       <Suspense fallback={LoadingFeedback}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <Router>{children}</Router>
+          <HelmetProvider>
+            <Router>{children}</Router>
 
-          <GlobalStyle theme={theme} />
+            <GlobalStyle theme={theme} />
+          </HelmetProvider>
         </ErrorBoundary>
       </Suspense>
     </ThemeProvider>

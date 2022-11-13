@@ -2,6 +2,7 @@ import { FiLogIn } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/elements';
+import { Head } from '@/components/head';
 
 import logoImg from '@/assets/images/logo.png';
 
@@ -9,36 +10,40 @@ import * as S from './LandingPage.styles';
 
 export function LandingPage() {
   return (
-    <S.Container>
-      <S.Header>
-        <div>
-          <img src={logoImg} alt="eWallet Logo" />
-          <h1>eWallet</h1>
-        </div>
+    <>
+      <Head title="Bem vindo" />
 
-        <Link to="/auth/sign-in">
-          <FiLogIn />
-          Iniciar sessão
-        </Link>
-      </S.Header>
+      <S.Container>
+        <S.Header>
+          <div>
+            <img src={logoImg} alt="eWallet Logo" />
+            <h1>eWallet</h1>
+          </div>
 
-      <S.Hero>
-        <div>
-          <h2>
-            Venha conhecer
-            <br />o <strong>eWallet Finanças</strong>
-          </h2>
+          <Link to="/auth/sign-in">
+            <FiLogIn />
+            Iniciar sessão
+          </Link>
+        </S.Header>
 
-          <p>
-            Encontre as melhores ferramentas e soluções para organizar suas finanças de forma eficiente e alcançar os
-            melhores resultados.
-          </p>
+        <S.Hero>
+          <div>
+            <h2>
+              Venha conhecer
+              <br />o <strong>eWallet Finanças</strong>
+            </h2>
 
-          <Button>Cadastre-se</Button>
-        </div>
+            <p>
+              Encontre as melhores ferramentas e soluções para organizar suas finanças de forma eficiente e alcançar os
+              melhores resultados.
+            </p>
 
-        <S.HeroImage />
-      </S.Hero>
-    </S.Container>
+            <Button>Cadastre-se</Button>
+          </div>
+
+          <S.HeroImage />
+        </S.Hero>
+      </S.Container>
+    </>
   );
 }
