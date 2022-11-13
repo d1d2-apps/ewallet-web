@@ -6,6 +6,7 @@ export const Container = styled.label`
   gap: 0.5rem;
 
   span {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
     font-weight: 500;
   }
 `;

@@ -4,7 +4,7 @@ import { FiMail, FiLock } from 'react-icons/fi';
 import { ControlledTextInput } from '@/components/forms';
 import { Button } from '@/components/elements';
 
-import logoImg from '@/assets/images/logo.png';
+import { Layout } from '../../components/Layout/Layout';
 
 import * as S from './SignInPage.styles';
 
@@ -26,47 +26,35 @@ export function SignInPage() {
   };
 
   return (
-    <S.SignInPageContainer>
-      <S.SignInForm onSubmit={signInForm.handleSubmit(handleSignIn)}>
-        <header>
-          <div>
-            <img src={logoImg} alt="eWallet Logo" />
-            <h1>eWallet</h1>
-          </div>
+    <Layout title="Entrar">
+      <S.Title>Entre na sua conta</S.Title>
 
-          <h2>Organize suas finanças de forma eficiente</h2>
-        </header>
+      <S.Form onSubmit={signInForm.handleSubmit(handleSignIn)}>
+        <ControlledTextInput
+          name="email"
+          control={signInForm.control}
+          type="email"
+          label="Seu e-mail"
+          icon={FiMail}
+          placeholder="fulano@email.com.br"
+        />
 
-        <h3>Entre na sua conta</h3>
+        <ControlledTextInput
+          name="password"
+          control={signInForm.control}
+          type="password"
+          label="Sua senha"
+          icon={FiLock}
+          placeholder="********"
+        />
 
-        <main>
-          <ControlledTextInput
-            name="email"
-            control={signInForm.control}
-            type="email"
-            label="Seu e-mail"
-            icon={FiMail}
-            placeholder="fulano@email.com.br"
-          />
+        <Button type="submit">Entrar</Button>
+      </S.Form>
 
-          <ControlledTextInput
-            name="password"
-            control={signInForm.control}
-            type="password"
-            label="Sua senha"
-            icon={FiLock}
-            placeholder="********"
-          />
-
-          <Button type="submit">Entrar</Button>
-        </main>
-
-        <footer>
-          <span>Não tem uma conta?</span>
-          {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-          <a href="#">Cadastrar</a>
-        </footer>
-      </S.SignInForm>
-    </S.SignInPageContainer>
+      <S.Footer>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a href="#">Esqueceu sua senha?</a>
+      </S.Footer>
+    </Layout>
   );
 }
