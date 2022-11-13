@@ -38,7 +38,9 @@ export function LandingPage() {
               melhores resultados.
             </p>
 
-            <Button>Cadastre-se</Button>
+            <Button asChild>
+              <Link to="/auth/sign-up">Cadastre-se</Link>
+            </Button>
           </div>
 
           <S.HeroImage />

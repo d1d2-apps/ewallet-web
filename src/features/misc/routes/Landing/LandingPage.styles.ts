@@ -112,7 +112,7 @@ export const Hero = styled.main`
         `)}
     }
 
-    button {
+    a {
       width: fit-content;
       margin: 0 auto;
 
