@@ -1,5 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { FiMail, FiLock } from 'react-icons/fi';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+import { useAuth } from '@/stores/auth';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
@@ -11,16 +15,35 @@ interface FormData {
   password: string;
 }
 
-export function SignInForm() {
+interface SignInFormProps {
+  onSuccess: () => void;
+}
+
+const validationSchema = yup
+  .object({
+    email: yup.string().required('E-mail é obrigatório').email('Formato de e-mail inválido'),
+    password: yup.string().required('Senha é orbigatória')
+  })
+  .required();
+
+export function SignInForm({ onSuccess }: SignInFormProps) {
+  const { signIn } = useAuth();
+
   const { handleSubmit, control } = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       email: '',
       password: ''
     }
   });
 
-  const handleSignIn = (formData: FormData) => {
-    console.log(formData);
+  const handleSignIn = async (formData: FormData) => {
+    try {
+      await signIn(formData);
+      onSuccess();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

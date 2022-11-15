@@ -13,7 +13,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 
   header {
     width: 100%;
@@ -25,6 +25,8 @@ export const Container = styled.div`
       `)}
 
     a {
+      width: fit-content;
+
       display: flex;
       align-items: center;
       gap: 1rem;
