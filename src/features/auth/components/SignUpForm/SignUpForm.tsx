@@ -1,5 +1,9 @@
 import { useForm } from 'react-hook-form';
-import { FiMail, FiLock, FiUser } from 'react-icons/fi';
+import { FiMail, FiLock, FiUser, FiKey } from 'react-icons/fi';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+
+import { useAuth } from '@/stores/auth';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
@@ -10,24 +14,60 @@ interface FormData {
   name: string;
   email: string;
   password: string;
+  passwordConfirmation: string;
 }
 
-export function SignUpForm() {
-  const { handleSubmit, control } = useForm<FormData>({
+interface SignUpFormProps {
+  onSuccess: () => void;
+}
+
+const validationSchema = yup
+  .object({
+    name: yup.string().required('Nome é obrigatório'),
+    email: yup.string().required('E-mail é obrigatório').email('Formato de e-mail inválido'),
+    password: yup.string().min(6, 'Mínimo de 6 caracteres'),
+    passwordConfirmation: yup
+      .string()
+      .required('Confirmação de senha é obrigatória')
+      .oneOf([yup.ref('password'), undefined], 'Confirmação incorreta')
+  })
+  .required();
+
+export function SignUpForm({ onSuccess }: SignUpFormProps) {
+  const { signUp } = useAuth();
+
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting }
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       name: '',
       email: '',
-      password: ''
+      password: '',
+      passwordConfirmation: ''
     }
   });
 
-  const handleSignUp = (formData: FormData) => {
-    console.log(formData);
+  const handleSignUp = async (formData: FormData) => {
+    try {
+      await signUp(formData);
+      onSuccess();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <S.Container onSubmit={handleSubmit(handleSignUp)}>
-      <ControlledTextInput name="name" control={control} label="Seu nome" icon={FiUser} placeholder="Fulano de tal" />
+      <ControlledTextInput
+        name="name"
+        control={control}
+        label="Seu nome completo"
+        icon={FiUser}
+        placeholder="Fulano de tal"
+      />
 
       <ControlledTextInput
         name="email"
@@ -47,7 +87,18 @@ export function SignUpForm() {
         placeholder="********"
       />
 
-      <Button type="submit">Cadastrar</Button>
+      <ControlledTextInput
+        name="passwordConfirmation"
+        control={control}
+        type="password"
+        label="Confirme sua senha"
+        icon={FiKey}
+        placeholder="********"
+      />
+
+      <Button type="submit" isLoading={isSubmitting} loadingText="Cadastrando...">
+        Cadastrar
+      </Button>
     </S.Container>
   );
 }

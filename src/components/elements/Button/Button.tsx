@@ -1,19 +1,33 @@
-import { ButtonHTMLAttributes } from 'react';
-import { Slot } from '@radix-ui/react-slot';
+import React, { ButtonHTMLAttributes } from 'react';
 
 import * as S from './Button.styles';
+import { Spinner } from '../Spinner/Spinner';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   asChild?: boolean;
+  isLoading?: boolean;
+  loadingText?: string;
 }
 
-export function Button({ children, asChild = false, ...rest }: ButtonProps) {
-  const component = asChild ? Slot : 'button';
+export function Button({
+  children,
+  asChild = false,
+  isLoading = false,
+  loadingText = '',
+  disabled,
+  ...rest
+}: ButtonProps) {
+  if (asChild) {
+    return <S.Slot {...rest}>{children}</S.Slot>;
+  }
 
   return (
-    <S.Container as={component} {...rest}>
-      {children}
+    <S.Container {...rest} disabled={disabled || isLoading}>
+      <>
+        {!!isLoading && <Spinner size="lg" />}
+        {isLoading ? loadingText : children}
+      </>
     </S.Container>
   );
 }

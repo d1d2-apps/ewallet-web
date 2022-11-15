@@ -3,9 +3,17 @@ import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, useTheme } from 'styled-components';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { ENV_MODE } from '@/config';
 import { theme } from '@/config/styles/theme';
 import { GlobalStyle } from '@/config/styles/GlobalStyles';
+
+import { queryClient } from '@/lib/react-query';
+
+import { AuthProvider } from '@/stores/auth';
+
 import { Button, Spinner } from '@/components/elements';
 
 interface AppProviderProps {
@@ -26,7 +34,6 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
       style={{
         width: '100vw',
         height: '100vh',
-        color: appTheme.colors.red[500],
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -37,19 +44,20 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
     >
       <h2
         style={{
+          fontFamily: appTheme.fontFamilies.montserrat,
           fontSize: appTheme.fontSizes['2xl'],
           fontWeight: 600,
-          margin: 0,
-          fontFamily: appTheme.fontFamilies.montserrat
+          color: appTheme.colors.red[500],
+          margin: 0
         }}
       >
-        Ooops, something went wrong :(
+        Ooops, alguma coisa deu errado :(
       </h2>
 
       <pre style={{ fontSize: appTheme.fontSizes.lg, margin: 0 }}>{error.message}</pre>
 
       <Button style={{ width: 'fit-content' }} onClick={resetErrorBoundary}>
-        Refresh
+        Recarregar
       </Button>
     </div>
   );
@@ -61,12 +69,18 @@ export function AppProvider({ children }: AppProviderProps) {
       <Suspense fallback={LoadingFeedback}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <HelmetProvider>
-            <Router>{children}</Router>
+            <QueryClientProvider client={queryClient}>
+              {ENV_MODE !== 'test' && <ReactQueryDevtools />}
 
-            <GlobalStyle theme={theme} />
+              <AuthProvider>
+                <Router>{children}</Router>
+              </AuthProvider>
+            </QueryClientProvider>
           </HelmetProvider>
         </ErrorBoundary>
       </Suspense>
+
+      <GlobalStyle theme={theme} />
     </ThemeProvider>
   );
 }
