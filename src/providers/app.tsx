@@ -11,6 +11,7 @@ import { theme } from '@/config/styles/theme';
 import { GlobalStyle } from '@/config/styles/GlobalStyles';
 
 import { queryClient } from '@/lib/react-query';
+import { ToastProvider } from '@/lib/react-toastify';
 
 import { AuthProvider } from '@/stores/auth';
 
@@ -75,6 +76,8 @@ export function AppProvider({ children }: AppProviderProps) {
               <AuthProvider>
                 <Router>{children}</Router>
               </AuthProvider>
+
+              <ToastProvider />
             </QueryClientProvider>
           </HelmetProvider>
         </ErrorBoundary>

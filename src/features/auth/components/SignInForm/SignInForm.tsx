@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 
 import { useAuth } from '@/stores/auth';
 
@@ -38,12 +39,14 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
   });
 
   const handleSignIn = async (formData: FormData) => {
-    try {
-      await signIn(formData);
-      onSuccess();
-    } catch (err) {
-      console.log(err);
-    }
+    toast('Teste toast', { type: 'info' });
+
+    // try {
+    //   await signIn(formData);
+    //   onSuccess();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (
