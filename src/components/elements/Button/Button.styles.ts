@@ -18,12 +18,7 @@ const buttonStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
-
-  span {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
+  gap: 0.75rem;
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.primary[600]};

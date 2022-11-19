@@ -24,10 +24,8 @@ export function Button({
 
   return (
     <S.Container {...rest} disabled={disabled || isLoading}>
-      <>
-        {!!isLoading && <Spinner size="lg" />}
-        {isLoading ? loadingText : children}
-      </>
+      {!!isLoading && <Spinner size="lg" />}
+      {isLoading ? loadingText : children}
     </S.Container>
   );
 }
