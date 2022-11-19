@@ -69,6 +69,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
         label="Seu nome completo"
         icon={FiUser}
         placeholder="Fulano de tal"
+        isDisabled={isSubmitting}
       />
 
       <ControlledTextInput
@@ -78,6 +79,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
         label="Seu e-mail"
         icon={FiMail}
         placeholder="fulano@email.com.br"
+        isDisabled={isSubmitting}
       />
 
       <ControlledTextInput
@@ -87,6 +89,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
         label="Sua senha"
         icon={FiLock}
         placeholder="********"
+        isDisabled={isSubmitting}
       />
 
       <ControlledTextInput
@@ -96,6 +99,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
         label="Confirme sua senha"
         icon={FiKey}
         placeholder="********"
+        isDisabled={isSubmitting}
       />
 
       <Button type="submit" isLoading={isSubmitting} loadingText="Cadastrando...">

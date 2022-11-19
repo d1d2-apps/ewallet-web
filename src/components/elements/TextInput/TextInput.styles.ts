@@ -2,13 +2,13 @@ import styled, { css } from 'styled-components';
 
 interface BaseContainerProps {
   hasError?: boolean;
+  isDisabled?: boolean;
 }
 
 export const BaseContainer = styled.div<BaseContainerProps>`
   width: 100%;
   height: 3rem;
   padding-left: 1rem;
-  background-color: ${({ theme }) => theme.colors.gray[50]};
   border: 1px solid ${({ theme }) => theme.colors.gray[300]};
   border-radius: 0.5rem;
   transition: all 0.2s;
@@ -20,7 +20,7 @@ export const BaseContainer = styled.div<BaseContainerProps>`
   --icon-color: ${({ theme }) => theme.colors.gray[300]};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[100]};
+    background-color: ${({ theme }) => theme.colors.gray[50]};
   }
 
   &:focus-within {
@@ -35,6 +35,13 @@ export const BaseContainer = styled.div<BaseContainerProps>`
     hasError &&
     css`
       border-color: ${theme.colors.red[500]};
+    `}
+
+  ${({ isDisabled, theme }) =>
+    isDisabled &&
+    css`
+      background-color: ${theme.colors.gray[100]};
+      pointer-events: none;
     `}
 `;
 

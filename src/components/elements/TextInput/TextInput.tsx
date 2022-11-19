@@ -5,10 +5,15 @@ import * as S from './TextInput.styles';
 export interface TextInputBaseProps {
   children: ReactNode;
   hasError?: boolean;
+  isDisabled?: boolean;
 }
 
-function TextInputBase({ children, hasError = false }: TextInputBaseProps) {
-  return <S.BaseContainer hasError={hasError}>{children}</S.BaseContainer>;
+function TextInputBase({ children, hasError = false, isDisabled = false }: TextInputBaseProps) {
+  return (
+    <S.BaseContainer hasError={hasError} isDisabled={isDisabled}>
+      {children}
+    </S.BaseContainer>
+  );
 }
 
 TextInputBase.displayName = 'TextInput.Base';

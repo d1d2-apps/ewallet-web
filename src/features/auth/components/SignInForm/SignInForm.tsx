@@ -30,7 +30,11 @@ const validationSchema = yup
 export function SignInForm({ onSuccess }: SignInFormProps) {
   const { signIn } = useAuth();
 
-  const { handleSubmit, control } = useForm<FormData>({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting }
+  } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       email: '',
@@ -57,6 +61,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
         label="Seu e-mail"
         icon={FiMail}
         placeholder="fulano@email.com.br"
+        isDisabled={isSubmitting}
       />
 
       <ControlledTextInput
@@ -66,9 +71,12 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
         label="Sua senha"
         icon={FiLock}
         placeholder="********"
+        isDisabled={isSubmitting}
       />
 
-      <Button type="submit">Entrar</Button>
+      <Button type="submit" isLoading={isSubmitting} loadingText="Entrando...">
+        Entrar
+      </Button>
     </S.Container>
   );
 }
