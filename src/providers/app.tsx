@@ -4,9 +4,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, useTheme } from 'styled-components';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import { ENV_MODE } from '@/config';
 import { theme } from '@/config/styles/theme';
 import { GlobalStyle } from '@/config/styles/GlobalStyles';
 
@@ -71,8 +69,6 @@ export function AppProvider({ children }: AppProviderProps) {
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <HelmetProvider>
             <QueryClientProvider client={queryClient}>
-              {ENV_MODE !== 'test' && <ReactQueryDevtools />}
-
               <AuthProvider>
                 <Router>{children}</Router>
               </AuthProvider>
