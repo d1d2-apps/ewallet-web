@@ -1,6 +1,8 @@
 import { FiLogIn } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
+import { useAuth } from '@/stores/auth';
+
 import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
 
@@ -9,6 +11,8 @@ import logoImg from '@/assets/images/logo.png';
 import * as S from './LandingPage.styles';
 
 export function LandingPage() {
+  const { user } = useAuth();
+
   return (
     <>
       <Head title="Bem vindo" />
@@ -20,9 +24,9 @@ export function LandingPage() {
             <h1>eWallet</h1>
           </div>
 
-          <Link to="/auth/sign-in">
+          <Link to={user ? '/app/profile' : '/auth/sign-in'}>
             <FiLogIn />
-            Iniciar sessão
+            {user ? 'Acessar plataforma' : 'Iniciar sessão'}
           </Link>
         </S.Header>
 
@@ -39,7 +43,7 @@ export function LandingPage() {
             </p>
 
             <Button asChild>
-              <Link to="/auth/sign-up">Cadastre-se</Link>
+              <Link to={user ? '/app/profile' : '/auth/sign-up'}>{user ? 'Acessar plataforma' : 'Cadastre-se'}</Link>
             </Button>
           </div>
 
