@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { FiMail, FiLock, FiUser, FiKey } from 'react-icons/fi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 
 import { useAuth } from '@/stores/auth';
 
@@ -56,6 +57,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
       onSuccess();
     } catch (err) {
       console.log(err);
+      toast.error('Ocorreu um erro ao tentar criar a sua conta. Tente novamente mais tarde, por favor.');
     }
   };
 
