@@ -23,8 +23,15 @@ export const Container = styled.main`
 export const ContentContainer = styled.div`
   width: 100%;
   height: 100%;
-  padding-left: 4.5rem;
+  padding-top: 4.5rem;
+  padding-left: 0;
   overflow-y: auto;
+
+  ${({ theme }) =>
+    theme.mixins.screen.md(css`
+      padding-top: 0;
+      padding-left: 4.5rem;
+    `)}
 
   & > div {
     width: 100%;
@@ -34,15 +41,12 @@ export const ContentContainer = styled.div`
 `;
 
 export const SideMenu = styled.nav<SideMenuProps>`
-  width: 4.5rem;
-  max-width: 20rem;
-  height: 100%;
-  padding: 1.5rem 0.5rem;
+  width: 100%;
+  height: ${({ collapsed }) => (collapsed ? '4rem' : '100%')};
+  padding: 1rem 0.5rem;
   background-color: white;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
   transition: all 0.5s;
-  box-shadow: ${({ theme }) => theme.shadows.lg};
+  box-shadow: ${({ theme }) => theme.shadows.md};
 
   position: absolute;
   top: 0;
@@ -52,65 +56,99 @@ export const SideMenu = styled.nav<SideMenuProps>`
   display: flex;
   flex-direction: column;
 
-  ${({ collapsed }) =>
-    !collapsed &&
-    css`
-      width: 100%;
-    `}
+  ${({ theme, collapsed }) =>
+    theme.mixins.screen.md(css`
+      width: ${collapsed ? '4.5rem' : '100%'};
+      max-width: 20rem;
+      height: 100%;
+      padding: 1.5rem 0.5rem;
+      border-top-right-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+      box-shadow: ${collapsed ? theme.shadows.md : theme.shadows.lg};
+    `)}
 
   header {
     padding: 0 0.75rem;
-    pointer-events: none;
 
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1.5rem;
 
-    img {
-      max-width: 2rem;
-      width: 100%;
-    }
+    & > div {
+      pointer-events: none;
 
-    h1 {
-      font-family: ${({ theme }) => theme.fontFamilies.montserrat};
-      font-size: ${({ theme }) => theme.fontSizes.lg};
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
 
-      display: ${({ collapsed }) => (collapsed ? 'none' : 'inline')};
+      img {
+        max-width: 2rem;
+        width: 100%;
+      }
+
+      h1 {
+        font-family: ${({ theme }) => theme.fontFamilies.montserrat};
+        font-size: ${({ theme }) => theme.fontSizes.lg};
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        display: block;
+
+        ${({ theme, collapsed }) =>
+          theme.mixins.screen.md(css`
+            display: ${collapsed ? 'none' : 'block'};
+          `)}
+      }
     }
   }
 
   ul {
     width: 100%;
     margin-top: 2rem;
+    display: ${({ collapsed }) => (collapsed ? 'none' : 'block')};
+
+    ${({ theme }) =>
+      theme.mixins.screen.md(css`
+        display: block;
+      `)}
   }
 `;
 
 export const CollapseButton = styled.button`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 2rem;
+  height: 2rem;
   background-color: white;
   border: none;
   border-radius: 50%;
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  transform: rotate(270deg);
   transition: all 0.2s;
 
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
   color: ${({ theme }) => theme.colors.gray[500]};
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  position: absolute;
-  top: 1rem;
-  right: -0.5rem;
-
   &:hover {
     box-shadow: ${({ theme }) => theme.shadows.md};
   }
+
+  ${({ theme }) =>
+    theme.mixins.screen.md(css`
+      width: 1.5rem;
+      height: 1.5rem;
+      box-shadow: ${theme.shadows.sm};
+      transform: rotate(0deg);
+
+      font-size: ${theme.fontSizes.sm};
+
+      position: absolute;
+      top: 1rem;
+      right: -0.5rem;
+    `)}
 `;
 
 export const NavItem = styled.li<NavItemProps>`
@@ -166,6 +204,13 @@ export const LoggedUser = styled.div<LoggedUserProps>`
 
   display: flex;
   align-items: flex-end;
+
+  display: ${({ collapsed }) => (collapsed ? 'none' : 'flex')};
+
+  ${({ theme }) =>
+    theme.mixins.screen.md(css`
+      display: flex;
+    `)}
 
   & > div {
     width: 100%;

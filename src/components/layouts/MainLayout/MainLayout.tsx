@@ -55,13 +55,15 @@ export function MainLayout({ children }: MainLayoutProps) {
   return (
     <S.Container>
       <S.SideMenu collapsed={isMenuCollapsed}>
-        <S.CollapseButton onClick={handleToggleSideMenu}>
-          {isMenuCollapsed ? <FiChevronRight /> : <FiChevronLeft />}
-        </S.CollapseButton>
-
         <header>
-          <img src={logoImg} alt="eWallet Logo" />
-          <h1>eWallet Finanças</h1>
+          <div>
+            <img src={logoImg} alt="eWallet Logo" />
+            <h1>eWallet Finanças</h1>
+          </div>
+
+          <S.CollapseButton onClick={handleToggleSideMenu}>
+            {isMenuCollapsed ? <FiChevronRight /> : <FiChevronLeft />}
+          </S.CollapseButton>
         </header>
 
         <ul>
