@@ -39,14 +39,13 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
   });
 
   const handleSignIn = async (formData: FormData) => {
-    toast('Teste toast', { type: 'info' });
-
-    // try {
-    //   await signIn(formData);
-    //   onSuccess();
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      await signIn(formData);
+      onSuccess();
+    } catch (err) {
+      console.log(err);
+      toast.error('Ocorreu um erro ao tentar entrar na sua conta. Verifique as credenciais e tente novamente.');
+    }
   };
 
   return (
