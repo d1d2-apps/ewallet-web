@@ -46,7 +46,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
   padding: 1rem 0.5rem;
   background-color: white;
   transition: all 0.5s;
-  box-shadow: ${({ theme }) => theme.shadows.md};
+  box-shadow: var(--shadow-md);
 
   position: absolute;
   top: 0;
@@ -62,9 +62,9 @@ export const SideMenu = styled.nav<SideMenuProps>`
       max-width: 20rem;
       height: 100%;
       padding: 1.5rem 0.5rem;
-      border-top-right-radius: 1rem;
-      border-bottom-right-radius: 1rem;
-      box-shadow: ${collapsed ? theme.shadows.md : theme.shadows.lg};
+      border-top-right-radius: var(--rounded-lg);
+      border-bottom-right-radius: var(--rounded-lg);
+      box-shadow: ${collapsed ? 'var(--shadow-md)' : 'var(--shadow-lg)'};
     `)}
 
   header {
@@ -88,8 +88,8 @@ export const SideMenu = styled.nav<SideMenuProps>`
       }
 
       h1 {
-        font-family: ${({ theme }) => theme.fontFamilies.montserrat};
-        font-size: ${({ theme }) => theme.fontSizes.lg};
+        font-family: var(--font-family-montserrat);
+        font-size: var(--font-size-lg);
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -121,11 +121,11 @@ export const CollapseButton = styled.button`
   height: 2rem;
   background-color: white;
   border: none;
-  border-radius: 50%;
+  border-radius: var(--rounded-full);
   transform: rotate(270deg);
   transition: all 0.2s;
 
-  font-size: ${({ theme }) => theme.fontSizes.lg};
+  font-size: var(--font-size-lg);
   color: ${({ theme }) => theme.colors.gray[500]};
 
   display: flex;
@@ -133,17 +133,17 @@ export const CollapseButton = styled.button`
   align-items: center;
 
   &:hover {
-    box-shadow: ${({ theme }) => theme.shadows.md};
+    box-shadow: var(--shadow-md);
   }
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
       width: 1.5rem;
       height: 1.5rem;
-      box-shadow: ${theme.shadows.sm};
+      box-shadow: var(--shadow-sm);
       transform: rotate(0deg);
 
-      font-size: ${theme.fontSizes.sm};
+      font-size: var(--font-size-sm);
 
       position: absolute;
       top: 1rem;
@@ -159,33 +159,33 @@ export const NavItem = styled.li<NavItemProps>`
     width: 100%;
     height: 100%;
     padding: 1rem;
-    border-radius: 0.5rem;
+    border-radius: var(--rounded-sm);
     transition: all 0.2s;
 
-    font-size: ${({ theme }) => theme.fontSizes.xl};
-    color: ${({ theme }) => theme.colors.gray[400]};
+    font-size: var(--font-size-xl);
+    color: var(--gray-400);
 
     display: flex;
     align-items: center;
     gap: 1.5rem;
 
     &:hover {
-      background-color: ${({ theme }) => theme.colors.gray[100]};
-      color: ${({ theme }) => theme.colors.gray[500]};
+      background-color: var(--gray-100);
+      color: var(--gray-500);
     }
 
-    ${({ active, theme }) =>
+    ${({ active }) =>
       active &&
       css`
-        background-color: ${theme.colors.primary[50]};
-        color: ${theme.colors.primary[500]};
+        background-color: var(--primary-50);
+        color: var(--primary-500);
         pointer-events: none;
       `}
 
     span {
       flex: 1;
 
-      font-size: ${({ theme }) => theme.fontSizes.md};
+      font-size: var(--font-size-md);
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -215,7 +215,7 @@ export const LoggedUser = styled.div<LoggedUserProps>`
   & > div {
     width: 100%;
     padding: 0.5rem;
-    border-radius: 0.5rem;
+    border-radius: var(--rounded-sm);
     cursor: pointer;
     transition: all 0.2s;
 
@@ -224,13 +224,13 @@ export const LoggedUser = styled.div<LoggedUserProps>`
     gap: 1.5rem;
 
     &:hover {
-      background-color: ${({ theme }) => theme.colors.gray[100]};
+      background-color: var(--gray-100);
     }
 
     strong {
       flex: 1;
       text-transform: uppercase;
-      color: ${({ theme }) => theme.colors.secondary[400]};
+      color: var(--secondary-400);
 
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -239,11 +239,11 @@ export const LoggedUser = styled.div<LoggedUserProps>`
       display: ${({ collapsed }) => (collapsed ? 'none' : 'inline')};
     }
 
-    ${({ active, theme }) =>
+    ${({ active }) =>
       active &&
       css`
-        background-color: ${theme.colors.primary[50]};
-        color: ${theme.colors.primary[500]};
+        background-color: var(--primary-50);
+        color: var(--primary-500);
         pointer-events: none;
       `}
   }

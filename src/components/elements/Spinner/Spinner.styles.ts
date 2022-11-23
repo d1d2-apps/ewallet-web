@@ -16,7 +16,7 @@ const spin = keyframes`
 `;
 
 export const Container = styled.span<ContainerProps>`
-  font-size: ${({ theme, size }) => theme.fontSizes[size]};
+  font-size: ${({ size }) => `var(--font-size-${size})`};
 
   display: flex;
 

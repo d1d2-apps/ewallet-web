@@ -1,4 +1,29 @@
 import { createGlobalStyle, css } from 'styled-components';
+import { theme as themeConfig } from './theme';
+
+const generateColorsCssVariables = (colors: typeof themeConfig.colors) => {
+  const colorsKeys = Object.keys(colors) as Array<keyof typeof themeConfig.colors>;
+
+  let cssVariables = '';
+
+  colorsKeys.forEach(color => {
+    Object.entries(colors[color]).forEach(([prop, value]) => {
+      cssVariables += `--${color}-${prop}: ${value};`;
+    });
+  });
+
+  return cssVariables;
+};
+
+const generateCssVariablesFor = (config: keyof typeof themeConfig) => {
+  let cssVariables = '';
+
+  Object.entries(themeConfig[config]).forEach(([prop, value]) => {
+    cssVariables += `--${config}-${prop}: ${value};`;
+  });
+
+  return cssVariables;
+};
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -29,13 +54,13 @@ export const GlobalStyle = createGlobalStyle`
     )}
 
   body {
-    background: ${({ theme }) => theme.colors.gray[50]};
-    color: ${({ theme }) => theme.colors.secondary[500]};
+    background: var(--gray-50);
+    color: var(--secondary-500);
     -webkit-font-smoothing: antialiased;
   }
 
   body, input, textarea, select, button {
-    font: 400 1rem ${({ theme }) => theme.fontFamilies.inter};
+    font: 400 1rem var(--font-family-inter);
   }
 
   button {
@@ -48,19 +73,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    ${props => {
-      const themeColors = props.theme.colors;
-      let cssVariables = '';
-
-      const colors = Object.keys(themeColors);
-
-      colors.forEach(color => {
-        Object.entries(themeColors[color]).forEach(([prop, value]) => {
-          cssVariables += `--${color}-${prop}: ${value};`;
-        });
-      });
-
-      return cssVariables;
-    }}
+    ${({ theme }) => generateColorsCssVariables(theme.colors)}
+    ${generateCssVariablesFor('font-size')}
+    ${generateCssVariablesFor('font-family')}
+    ${generateCssVariablesFor('shadow')}
+    ${generateCssVariablesFor('ring')}
+    ${generateCssVariablesFor('rounded')}
   }
 `;

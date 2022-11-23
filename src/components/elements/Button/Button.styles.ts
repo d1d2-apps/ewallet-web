@@ -7,12 +7,12 @@ const buttonStyle = css`
   height: 3rem;
   padding: 0 1.5rem;
   border: 0;
-  border-radius: 0.5rem;
-  background-color: ${({ theme }) => theme.colors.primary[500]};
+  border-radius: var(--rounded-sm);
+  background-color: var(--primary-500);
   font-weight: bold;
   color: white;
 
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  box-shadow: var(--shadow-sm);
   transition: all 0.2s;
 
   display: flex;
@@ -21,12 +21,12 @@ const buttonStyle = css`
   gap: 0.75rem;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary[600]};
-    box-shadow: ${({ theme }) => theme.shadows.md};
+    background-color: var(--primary-600);
+    box-shadow: var(--shadow-md);
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.colors.primary[700]};
+    background-color: var(--primary-700);
     transform: scale(0.975);
   }
 

@@ -9,38 +9,38 @@ export const BaseContainer = styled.div<BaseContainerProps>`
   width: 100%;
   height: 3rem;
   padding-left: 1rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray[300]};
-  border-radius: 0.5rem;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--rounded-sm);
   transition: all 0.2s;
 
   display: flex;
   align-items: center;
   gap: 0.75rem;
 
-  --icon-color: ${({ theme }) => theme.colors.gray[300]};
+  --icon-color: var(--gray-300);
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.gray[50]};
+    background-color: var(--gray-50);
   }
 
   &:focus-within {
     background-color: white;
-    border-color: ${({ theme }) => theme.colors.primary[500]};
-    box-shadow: ${({ theme }) => theme.rings.primary};
+    border-color: var(--primary-500);
+    box-shadow: var(--ring-primary);
 
-    --icon-color: ${({ theme }) => theme.colors.primary[500]};
+    --icon-color: var(--primary-500);
   }
 
-  ${({ hasError, theme }) =>
+  ${({ hasError }) =>
     hasError &&
     css`
-      border-color: ${theme.colors.red[500]};
+      border-color: var(--red-500);
     `}
 
-  ${({ isDisabled, theme }) =>
+  ${({ isDisabled }) =>
     isDisabled &&
     css`
-      background-color: ${theme.colors.gray[100]};
+      background-color: var(--gray-100);
       pointer-events: none;
     `}
 `;
@@ -61,9 +61,9 @@ export const InputContainer = styled.input`
   background-color: transparent;
   padding-right: 1rem;
   border: none;
-  color: ${({ theme }) => theme.colors.secondary[500]};
+  color: var(--secondary-500);
 
   &::placeholder {
-    color: ${({ theme }) => theme.colors.gray[300]};
+    color: var(--gray-300);
   }
 `;

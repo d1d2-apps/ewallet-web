@@ -4,8 +4,7 @@ import financesImg from '../../assets/images/finances.png';
 
 export const Container = styled.div`
   height: 100vh;
-  background: ${({ theme }) =>
-    `linear-gradient(to bottom, ${theme.colors.secondary[900]} 20%, ${theme.colors.secondary[500]} 100%)`};
+  background: linear-gradient(to bottom, var(--secondary-900) 20%, var(--secondary-500) 100%);
 
   display: flex;
   flex-direction: column;
@@ -16,8 +15,8 @@ export const Header = styled.header`
   width: 100%;
   height: 3.5rem;
   padding: 0 0 0 1rem;
-  background-color: ${({ theme }) => theme.colors.secondary[900]};
-  color: ${({ theme }) => theme.colors.gray[200]};
+  background-color: var(--secondary-900);
+  color: var(--gray-200);
 
   display: flex;
   align-items: center;
@@ -39,8 +38,8 @@ export const Header = styled.header`
     }
 
     h1 {
-      font-size: ${({ theme }) => theme.fontSizes['2xl']};
-      color: ${({ theme }) => theme.colors.gray[50]};
+      font-size: var(--font-size-2xl);
+      color: var(--gray-50);
       pointer-events: none;
     }
   }
@@ -48,7 +47,7 @@ export const Header = styled.header`
   a {
     font-weight: 500;
     padding: 0.75rem 1rem;
-    border-radius: 9999px;
+    border-radius: var(--rounded-full);
     transition: all 0.2s;
 
     display: flex;
@@ -56,8 +55,8 @@ export const Header = styled.header`
     gap: 0.75rem;
 
     &:hover {
-      color: ${({ theme }) => theme.colors.primary[500]};
-      background-color: ${({ theme }) => theme.colors.secondary[800]};
+      color: var(--primary-500);
+      background-color: var(--secondary-800);
     }
   }
 `;
@@ -80,30 +79,30 @@ export const Hero = styled.main`
     gap: 2rem;
 
     h2 {
-      font-size: ${({ theme }) => theme.fontSizes['3xl']};
+      font-size: var(--font-size-3xl);
       font-weight: 800;
       text-align: center;
-      color: ${({ theme }) => theme.colors.gray[200]};
+      color: var(--gray-200);
 
       ${({ theme }) =>
         theme.mixins.screen.md(css`
-          font-size: ${theme.fontSizes['5xl']};
+          font-size: var(--font-size-5xl);
           text-align: left;
         `)}
 
       strong {
         font-weight: 900;
-        color: ${({ theme }) => theme.colors.primary[500]};
+        color: var(--primary-500);
       }
     }
 
     p {
       max-width: 30rem;
       margin: 0 auto;
-      font-size: ${({ theme }) => theme.fontSizes.lg};
+      font-size: var(--font-size-lg);
       font-weight: 300;
       text-align: center;
-      color: ${({ theme }) => theme.colors.gray[300]};
+      color: var(--gray-300);
 
       ${({ theme }) =>
         theme.mixins.screen.md(css`
@@ -135,7 +134,7 @@ export const HeroImage = styled.img.attrs({
       display: block;
       max-width: 20rem;
       object-fit: contain;
-      filter: drop-shadow(0 0 4rem ${theme.colors.secondary[300]});
+      filter: drop-shadow(0 0 4rem var(--secondary-300));
     `)}
 
   ${({ theme }) =>

@@ -43,8 +43,8 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
     >
       <h2
         style={{
-          fontFamily: appTheme.fontFamilies.montserrat,
-          fontSize: appTheme.fontSizes['2xl'],
+          fontFamily: appTheme['font-family'].montserrat,
+          fontSize: appTheme['font-size']['2xl'],
           fontWeight: 600,
           color: appTheme.colors.red[500],
           margin: 0
@@ -53,7 +53,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
         Ooops, alguma coisa deu errado :(
       </h2>
 
-      <pre style={{ fontSize: appTheme.fontSizes.lg, margin: 0 }}>{error.message}</pre>
+      <pre style={{ fontSize: appTheme['font-size'].lg, margin: 0 }}>{error.message}</pre>
 
       <Button style={{ width: 'fit-content' }} onClick={resetErrorBoundary}>
         Recarregar

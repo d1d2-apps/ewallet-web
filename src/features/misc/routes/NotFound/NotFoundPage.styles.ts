@@ -23,15 +23,15 @@ export const Container = styled.div`
     gap: 1rem;
 
     h2 {
-      font-family: ${({ theme }) => theme.fontFamilies.montserrat};
-      font-size: ${({ theme }) => theme.fontSizes['2xl']};
+      font-family: var(--font-family-montserrat);
+      font-size: var(--font-size-2xl);
       font-weight: 900;
       margin: 0;
     }
 
     p {
       max-width: 35rem;
-      font-size: ${({ theme }) => theme.fontSizes.lg};
+      font-size: var(--font-size-lg);
       font-weight: 300;
       text-align: center;
       margin: 0;

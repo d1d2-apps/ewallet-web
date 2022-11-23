@@ -36,8 +36,8 @@ export const Container = styled.div`
       }
 
       h1 {
-        font-family: ${({ theme }) => theme.fontFamilies.montserrat};
-        font-size: ${({ theme }) => theme.fontSizes['2xl']};
+        font-family: var(--font-family-montserrat);
+        font-size: var(--font-size-2xl);
       }
     }
   }
@@ -75,8 +75,8 @@ export const ImageSection = styled.section`
     `)}
 
   h2 {
-    font-family: ${({ theme }) => theme.fontFamilies.montserrat};
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-family: var(--font-family-montserrat);
+    font-size: var(--font-size-xl);
     font-weight: 900;
     text-align: center;
     color: ${({ theme }) => theme.colors.secondary[500]};
@@ -84,7 +84,7 @@ export const ImageSection = styled.section`
 
     ${({ theme }) =>
       theme.mixins.screen.md(css`
-        font-size: ${theme.fontSizes['2xl']};
+        font-size: var(--font-size-2xl);
       `)}
   }
 
@@ -97,14 +97,14 @@ export const ImageSection = styled.section`
 
   p {
     max-width: 40rem;
-    font-size: ${({ theme }) => theme.fontSizes.sm};
-    color: ${({ theme }) => theme.colors.gray[500]};
+    font-size: var(--font-size-sm);
+    color: var(--gray-500);
     text-align: center;
     line-height: 1.5;
 
     ${({ theme }) =>
       theme.mixins.screen.md(css`
-        font-size: ${theme.fontSizes.md};
+        font-size: var(--font-size-md);
       `)}
   }
 `;
@@ -113,8 +113,8 @@ export const FormSection = styled.section`
   max-width: 30rem;
   width: 100%;
   padding: 2rem;
-  border: 1px solid ${({ theme }) => theme.colors.gray[200]};
-  border-radius: 1rem;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--rounded-lg);
 `;
 
 export const Tabs = styled.div`
@@ -130,24 +130,24 @@ export const Tab = styled(Link)<TabProps>`
   padding: 0 0 1rem;
   border-bottom: 2px solid transparent;
 
-  font-size: ${({ theme }) => theme.fontSizes.sm};
+  font-size: var(--font-size-sm);
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.gray[400]};
+  color: var(--gray-400);
   text-align: center;
   text-transform: uppercase;
 
   transition: all 0.2s;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.secondary[500]};
-    border-bottom-color: ${({ theme }) => theme.colors.gray[500]};
+    color: var(--secondary-500);
+    border-bottom-color: var(--gray-500);
   }
 
-  ${({ theme, $isActive }) =>
+  ${({ $isActive }) =>
     $isActive &&
     css`
-      border-bottom-color: ${theme.colors.primary[500]};
-      color: ${theme.colors.secondary[500]};
+      border-bottom-color: var(--primary-500);
+      color: var(--secondary-500);
       pointer-events: none;
     `}
 `;

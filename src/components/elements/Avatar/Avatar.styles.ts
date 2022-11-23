@@ -18,7 +18,7 @@ export const Container = styled.div<ContainerProps>`
   img {
     width: ${({ size }) => containerSizes[size]};
     height: ${({ size }) => containerSizes[size]};
-    border-radius: 50%;
+    border-radius: var(--rounded-full);
     object-fit: cover;
   }
 `;

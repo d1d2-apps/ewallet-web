@@ -1,7 +1,7 @@
 import { mixins } from './mixins';
 
 export const theme = {
-  fontSizes: {
+  'font-size': {
     xs: '0.75rem',
     sm: '0.875rem',
     md: '1rem',
@@ -12,7 +12,7 @@ export const theme = {
     '4xl': '3rem',
     '5xl': '3.5rem'
   },
-  fontFamilies: {
+  'font-family': {
     inter: 'Inter, sans-serif',
     montserrat: 'Montserrat, sans-serif'
   },
@@ -61,13 +61,20 @@ export const theme = {
       500: '#eb4d4b'
     }
   },
-  shadows: {
+  rounded: {
+    xs: '0.25rem',
+    sm: '0.5rem',
+    md: '0.75rem',
+    lg: '1rem',
+    full: '99999px'
+  },
+  shadow: {
     sm: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
     md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
     lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
     inner: 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)'
   },
-  rings: {
+  ring: {
     primary: '0 0 0 1px var(--primary-500)'
   },
   mixins

@@ -6,12 +6,12 @@ export const Container = styled.label`
   gap: 0.5rem;
 
   span {
-    font-size: ${({ theme }) => theme.fontSizes.sm};
+    font-size: var(--font-size-sm);
     font-weight: 500;
   }
 `;
 
 export const ErrorMessage = styled.small`
-  font-size: ${({ theme }) => theme.fontSizes.xs};
-  color: ${({ theme }) => theme.colors.red[500]};
+  font-size: var(--font-size-xs);
+  color: var(--red-500);
 `;
