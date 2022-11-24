@@ -36,7 +36,12 @@ export const ContentContainer = styled.div`
   & > div {
     width: 100%;
     height: 100%;
-    padding: 1rem 2rem;
+    padding: 1rem;
+
+    ${({ theme }) =>
+      theme.mixins.screen.md(css`
+        padding: 2rem 3rem;
+      `)}
   }
 `;
 
@@ -47,6 +52,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
   background-color: white;
   transition: all 0.5s;
   box-shadow: var(--shadow-md);
+  z-index: 10;
 
   position: absolute;
   top: 0;
@@ -64,7 +70,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
       padding: 1.5rem 0.5rem;
       border-top-right-radius: var(--rounded-lg);
       border-bottom-right-radius: var(--rounded-lg);
-      box-shadow: ${collapsed ? 'var(--shadow-md)' : 'var(--shadow-lg)'};
+      box-shadow: ${collapsed ? 'var(--shadow-xl)' : 'var(--shadow-2xl)'};
     `)}
 
   header {

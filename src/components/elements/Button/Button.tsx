@@ -1,18 +1,28 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
+import { IconBaseProps } from 'react-icons';
 
-import * as S from './Button.styles';
 import { Spinner } from '../Spinner/Spinner';
 
+import * as S from './Button.styles';
+
+export type ButtonColorScheme = 'primary' | 'gray' | 'white';
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
   asChild?: boolean;
+  children: React.ReactNode;
+  colorScheme?: ButtonColorScheme;
+  leftIcon?: React.ComponentType<IconBaseProps>;
+  isRounded?: boolean;
   isLoading?: boolean;
   loadingText?: string;
 }
 
 export function Button({
-  children,
   asChild = false,
+  children,
+  colorScheme = 'primary',
+  leftIcon: LeftIcon,
+  isRounded = false,
   isLoading = false,
   loadingText = '',
   disabled,
@@ -23,8 +33,11 @@ export function Button({
   }
 
   return (
-    <S.Container {...rest} disabled={disabled || isLoading}>
-      {!!isLoading && <Spinner size="lg" />}
+    <S.Container {...rest} disabled={disabled || isLoading} isRounded={isRounded} colorScheme={colorScheme}>
+      {isLoading && <Spinner size="lg" />}
+
+      {!isLoading && !isRounded && LeftIcon && <LeftIcon />}
+
       {isLoading ? loadingText : children}
     </S.Container>
   );

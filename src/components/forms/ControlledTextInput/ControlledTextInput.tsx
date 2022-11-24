@@ -27,21 +27,22 @@ export function ControlledTextInput<T extends FieldValues>({
 }: ControlledTextInputProps<T>) {
   const {
     field: { ref, ...inputProps },
-    fieldState: { error }
+    fieldState: { error },
+    formState: { isSubmitting }
   } = useController({ name, control, defaultValue, rules, shouldUnregister });
 
   return (
     <S.Container>
       {!!label && <span>{label}</span>}
 
-      <TextInput.Base hasError={!!error?.message} isDisabled={isDisabled}>
+      <TextInput.Base hasError={!!error?.message} isDisabled={isDisabled || isSubmitting}>
         {!!Icon && (
           <TextInput.Icon>
             <Icon />
           </TextInput.Icon>
         )}
 
-        <TextInput.Input disabled={isDisabled} {...rest} {...inputProps} />
+        <TextInput.Input disabled={isDisabled || isSubmitting} {...rest} {...inputProps} />
       </TextInput.Base>
 
       {!!error?.message && <S.ErrorMessage>{error.message}</S.ErrorMessage>}
