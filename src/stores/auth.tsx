@@ -16,6 +16,7 @@ import { Spinner } from '@/components/elements';
 
 interface AuthContextData {
   user: AuthUser | null;
+  isLoadingUser: boolean;
   signIn(data: SignInCredentialsDTO): Promise<void>;
   signUp(data: SignUpCredentialsDTO): Promise<void>;
   signOut(): void;
@@ -80,7 +81,10 @@ function AuthProvider({ children }: AuthProviderProps) {
     setUser(null);
   }, []);
 
-  const providerValue = useMemo(() => ({ user, signIn, signUp, signOut }), [user, signIn, signUp, signOut]);
+  const providerValue = useMemo(
+    () => ({ user, isLoadingUser, signIn, signUp, signOut }),
+    [user, isLoadingUser, signIn, signUp, signOut]
+  );
 
   useEffect(() => {
     loadUser();
