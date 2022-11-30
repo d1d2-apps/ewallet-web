@@ -7,14 +7,14 @@ import { AuthUser } from '@/features/auth';
 
 import { useAuth } from '@/stores/auth';
 
-export type UpdateUserDTO = {
+export type UpdateProfileDTO = {
   data: {
     name: string;
     email: string;
   };
 };
 
-export const updateProfile = async ({ data }: UpdateUserDTO) => {
+export const updateProfile = async ({ data }: UpdateProfileDTO) => {
   const response = await axios.put<AuthUser>('/users/profile', data);
   return response.data;
 };
