@@ -23,7 +23,7 @@ type UseUpdateProfileOptions = {
   config?: MutationConfig<typeof updateProfile>;
 };
 
-export const useUpdateProfile = ({ config }: UseUpdateProfileOptions = {}) => {
+export function useUpdateProfile({ config }: UseUpdateProfileOptions = {}) {
   const { refetchUser } = useAuth();
 
   return useMutation({
@@ -33,4 +33,4 @@ export const useUpdateProfile = ({ config }: UseUpdateProfileOptions = {}) => {
     ...config,
     mutationFn: updateProfile
   });
-};
+}
