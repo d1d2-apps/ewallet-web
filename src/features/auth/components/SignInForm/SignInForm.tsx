@@ -44,7 +44,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
 
   const handleSignIn = async (formData: FormData) => {
     try {
-      await signIn(formData);
+      await signIn({ data: formData });
       onSuccess();
     } catch (err) {
       console.log(err);

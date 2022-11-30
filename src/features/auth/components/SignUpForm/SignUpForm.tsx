@@ -53,7 +53,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
 
   const handleSignUp = async (formData: FormData) => {
     try {
-      await signUp(formData);
+      await signUp({ data: formData });
       onSuccess();
     } catch (err) {
       console.log(err);
