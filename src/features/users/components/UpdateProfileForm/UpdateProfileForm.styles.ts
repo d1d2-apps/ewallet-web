@@ -20,7 +20,7 @@ export const Container = styled.form`
     gap: 1.5rem;
 
     ${({ theme }) =>
-      theme.mixins.screen.md(css`
+      theme.mixins.screen.lg(css`
         grid-template-columns: repeat(2, 1fr);
         gap: 3rem;
       `)}

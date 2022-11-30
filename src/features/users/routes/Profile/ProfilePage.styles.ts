@@ -23,13 +23,18 @@ export const Container = styled.div`
 `;
 
 export const ProfilePictureSection = styled.section`
-  max-width: 15rem;
+  max-width: 12rem;
   width: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
+
+  ${({ theme }) =>
+    theme.mixins.screen.md(css`
+      max-width: 15rem;
+    `)}
 
   section {
     width: 100%;
