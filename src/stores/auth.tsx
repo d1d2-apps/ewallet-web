@@ -20,6 +20,7 @@ interface AuthContextData {
   signIn(data: SignInCredentialsDTO): Promise<void>;
   signUp(data: SignUpCredentialsDTO): Promise<void>;
   signOut(): void;
+  refetchUser(): Promise<void>;
 }
 
 interface AuthProviderProps {
@@ -46,9 +47,7 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoadingUser, setIsLoadingUser] = useState(true);
 
-  const loadUser = useCallback(async () => {
-    setIsLoadingUser(true);
-
+  const refetchUser = useCallback(async () => {
     try {
       const token = storage.getToken();
 
@@ -58,8 +57,6 @@ function AuthProvider({ children }: AuthProviderProps) {
       }
     } catch (err) {
       console.log(err);
-    } finally {
-      setIsLoadingUser(false);
     }
   }, []);
 
@@ -82,13 +79,15 @@ function AuthProvider({ children }: AuthProviderProps) {
   }, []);
 
   const providerValue = useMemo(
-    () => ({ user, isLoadingUser, signIn, signUp, signOut }),
-    [user, isLoadingUser, signIn, signUp, signOut]
+    () => ({ user, isLoadingUser, signIn, signUp, signOut, refetchUser }),
+    [user, isLoadingUser, signIn, signUp, signOut, refetchUser]
   );
 
   useEffect(() => {
-    loadUser();
-  }, [loadUser]);
+    setIsLoadingUser(true);
+
+    refetchUser().then(() => setIsLoadingUser(false));
+  }, [refetchUser]);
 
   if (isLoadingUser) {
     return <LoadingFeedback />;

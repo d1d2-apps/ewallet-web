@@ -8,7 +8,7 @@ import { Button } from '@/components/elements';
 
 import personPlaceholderImg from '@/assets/images/person-placeholder.png';
 
-import { EditProfileForm } from '../../components/EditProfileForm/EditProfileForm';
+import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProfileForm';
 import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 
 import * as S from './ProfilePage.styles';
@@ -62,7 +62,7 @@ export function ProfilePage() {
 
             <S.ProfileInfoWrapper>
               <section>
-                <EditProfileForm />
+                <UpdateProfileForm />
               </section>
 
               <section>

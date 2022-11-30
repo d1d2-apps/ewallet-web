@@ -2,13 +2,16 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { FiMail, FiUser } from 'react-icons/fi';
+import { toast } from 'react-toastify';
 
 import { useAuth } from '@/stores/auth';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 
-import * as S from './EditProfileForm.styles';
+import { useUpdateProfile } from '../../api/updateProfile';
+
+import * as S from './UpdateProfileForm.styles';
 
 interface FormData {
   name: string;
@@ -22,8 +25,9 @@ const validationSchema = yup
   })
   .required();
 
-export function EditProfileForm() {
+export function UpdateProfileForm() {
   const { user } = useAuth();
+  const updateProfileMutation = useUpdateProfile();
 
   const {
     handleSubmit,
@@ -37,8 +41,17 @@ export function EditProfileForm() {
     }
   });
 
-  const handleSaveProfile = (formData: FormData) => {
-    console.log(formData);
+  const handleSaveProfile = async (formData: FormData) => {
+    if (!user) {
+      return;
+    }
+
+    try {
+      await updateProfileMutation.mutateAsync({ data: formData });
+      toast.success('Perfil atualizado com sucesso.');
+    } catch (err) {
+      toast.error('Ocorreu um erro ao tentar atualizar seu perfil. Tente novamente mais tarde, por favor.');
+    }
   };
 
   return (
