@@ -2,57 +2,65 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { FiKey, FiLock } from 'react-icons/fi';
-
-import { useAuth } from '@/stores/auth';
+import { toast } from 'react-toastify';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
+
+import { useChangePassword } from '../../api/changePassword';
 
 import * as S from './ChangePasswordForm.styles';
 
 interface FormData {
   oldPassword: string;
-  newPassword: string;
-  newPasswordConfirmation: string;
+  password: string;
+  passwordConfirmation: string;
 }
 
 const validationSchema = yup
   .object({
     oldPassword: yup.string(),
-    newPassword: yup.string().when('oldPassword', {
+    password: yup.string().when('oldPassword', {
       is: (val: string) => !!val.length,
       then: yup.string().min(6, 'Mínimo de 6 caracteres'),
       otherwise: yup.string()
     }),
-    newPasswordConfirmation: yup
+    passwordConfirmation: yup
       .string()
       .when('oldPassword', {
         is: (val: string) => !!val.length,
-        then: yup.string().min(6, 'Mínimo de 6 caracteres'),
+        then: yup.string().required('Confirmação de senha é obrigatória'),
         otherwise: yup.string()
       })
-      .oneOf([yup.ref('newPassword'), undefined], 'Confirmação incorreta')
+      .oneOf([yup.ref('password'), undefined], 'Confirmação incorreta')
   })
   .required();
 
 export function ChangePasswordForm() {
-  const { user } = useAuth();
+  const changePasswordMutation = useChangePassword();
 
   const {
     handleSubmit,
     control,
+    reset: resetForm,
     formState: { isSubmitting, isDirty }
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       oldPassword: '',
-      newPassword: '',
-      newPasswordConfirmation: ''
+      password: '',
+      passwordConfirmation: ''
     }
   });
 
-  const handleSaveProfile = (formData: FormData) => {
-    console.log(formData);
+  const handleSaveProfile = async (formData: FormData) => {
+    try {
+      await changePasswordMutation.mutateAsync({ data: formData });
+      resetForm();
+      toast.success('Sua senha foi alterada com sucesso.');
+    } catch {
+      toast.error('Ocorreu um erro ao tentar alterar sua senha. Tente novamente mais tarde, por favor.');
+    }
   };
 
   return (
@@ -70,7 +78,7 @@ export function ChangePasswordForm() {
         />
 
         <ControlledTextInput
-          name="newPassword"
+          name="password"
           control={control}
           type="password"
           label="Sua nova senha"
@@ -79,7 +87,7 @@ export function ChangePasswordForm() {
         />
 
         <ControlledTextInput
-          name="newPasswordConfirmation"
+          name="passwordConfirmation"
           control={control}
           type="password"
           label="Confirme sua nova senha"
