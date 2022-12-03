@@ -218,7 +218,7 @@ export const LoggedUser = styled.div<LoggedUserProps>`
       display: flex;
     `)}
 
-  & > div {
+  & > a {
     width: 100%;
     padding: 0.5rem;
     border-radius: var(--rounded-sm);

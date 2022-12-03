@@ -71,17 +71,17 @@ export function MainLayout({ children }: MainLayoutProps) {
             <NavItem
               key={navItem.to}
               {...navItem}
-              isActive={location.pathname.includes(navItem.to)}
+              isActive={location.pathname.includes(navItem.to.replace('.', ''))}
               isCollapsed={isMenuCollapsed}
             />
           ))}
         </ul>
 
         <S.LoggedUser collapsed={isMenuCollapsed} active={location.pathname.includes('profile')}>
-          <div title="Ver perfil">
+          <Link to="./profile" title="Ver perfil">
             <Avatar size="sm" />
             <strong>Diego Ferreira</strong>
-          </div>
+          </Link>
         </S.LoggedUser>
       </S.SideMenu>
 
