@@ -1,13 +1,12 @@
 import { format } from 'date-fns';
-import { FiCamera, FiLogOut } from 'react-icons/fi';
+import { FiLogOut } from 'react-icons/fi';
 
 import { useAuth } from '@/stores/auth';
 
 import { Head } from '@/components/head';
 import { Button } from '@/components/elements';
 
-import personPlaceholderImg from '@/assets/images/person-placeholder.png';
-
+import { ChangeProfilePictureForm } from '../../components/ChangeProfilePictureForm/ChangeProfilePictureForm';
 import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProfileForm';
 import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 
@@ -30,13 +29,7 @@ export function ProfilePage() {
       <S.Container>
         <main>
           <S.ProfilePictureSection>
-            <S.ProfilePicture>
-              <img src={user?.picture || personPlaceholderImg} alt={`${user?.name || 'User'}'s profile`} />
-
-              <Button colorScheme="white" isRounded>
-                <FiCamera />
-              </Button>
-            </S.ProfilePicture>
+            <ChangeProfilePictureForm />
 
             <Button leftIcon={FiLogOut} colorScheme="white" onClick={handleSignOut}>
               Sair
