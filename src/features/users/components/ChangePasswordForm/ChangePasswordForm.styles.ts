@@ -7,11 +7,6 @@ export const Container = styled.form`
   flex-direction: column;
   gap: 2rem;
 
-  h3 {
-    font-family: var(--font-family-montserrat);
-    text-transform: uppercase;
-  }
-
   & > div {
     width: 100%;
 

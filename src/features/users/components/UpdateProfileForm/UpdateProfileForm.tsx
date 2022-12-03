@@ -8,7 +8,7 @@ import { useAuth } from '@/stores/auth';
 
 import { useAlertDialog } from '@/hooks';
 
-import { Button } from '@/components/elements';
+import { Button, Heading } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 
 import { useUpdateProfile } from '../../api/updateProfile';
@@ -66,7 +66,9 @@ export function UpdateProfileForm() {
 
   return (
     <S.Container onSubmit={handleSubmit(handleSaveProfile)}>
-      <h3>Suas informações</h3>
+      <Heading variant="h3" asChild>
+        <h3>Suas informações</h3>
+      </Heading>
 
       <div>
         <ControlledTextInput

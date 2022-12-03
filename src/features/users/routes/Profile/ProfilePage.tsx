@@ -4,7 +4,7 @@ import { FiLogOut } from 'react-icons/fi';
 import { useAuth } from '@/stores/auth';
 
 import { Head } from '@/components/head';
-import { Button } from '@/components/elements';
+import { Button, Heading } from '@/components/elements';
 
 import { ChangeProfilePictureForm } from '../../components/ChangeProfilePictureForm/ChangeProfilePictureForm';
 import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProfileForm';
@@ -50,7 +50,7 @@ export function ProfilePage() {
 
           <S.ProfileDataSection>
             <header>
-              <h2>Meu perfil</h2>
+              <Heading>Meu perfil</Heading>
             </header>
 
             <S.ProfileInfoWrapper>

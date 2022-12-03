@@ -15,7 +15,7 @@ export const Container = styled.div`
   align-items: center;
   gap: 1rem;
 
-  header {
+  & > header {
     width: 100%;
     padding: 1rem 1rem;
 

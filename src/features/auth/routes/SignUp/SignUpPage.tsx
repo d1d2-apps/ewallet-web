@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import { Heading } from '@/components/elements';
+
 import { Layout } from '../../components/Layout/Layout';
 import { SignUpForm } from '../../components/SignUpForm/SignUpForm';
 
@@ -14,7 +16,12 @@ export function SignUpPage() {
 
   return (
     <Layout title="Cadastre-se">
-      <S.Title>Crie sua conta</S.Title>
+      <S.Header>
+        <Heading variant="h3" asChild>
+          <h3>Crie sua conta</h3>
+        </Heading>
+      </S.Header>
+
       <SignUpForm onSuccess={onSignUpSuccess} />
     </Layout>
   );

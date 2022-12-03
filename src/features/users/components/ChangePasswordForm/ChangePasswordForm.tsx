@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { useAlertDialog } from '@/hooks';
 
-import { Button } from '@/components/elements';
+import { Button, Heading } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 
 import { useChangePassword } from '../../api/changePassword';
@@ -75,7 +75,9 @@ export function ChangePasswordForm() {
 
   return (
     <S.Container onSubmit={handleSubmit(handleSaveProfile)}>
-      <h3>Altere sua senha</h3>
+      <Heading variant="h3" asChild>
+        <h3>Altere sua senha</h3>
+      </Heading>
 
       <div>
         <ControlledTextInput

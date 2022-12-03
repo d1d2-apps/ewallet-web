@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import { Heading } from '@/components/elements';
+
 import { Layout } from '../../components/Layout/Layout';
 import { SignInForm } from '../../components/SignInForm/SignInForm';
 
@@ -14,7 +16,11 @@ export function SignInPage() {
 
   return (
     <Layout title="Entrar">
-      <S.Title>Entre na sua conta</S.Title>
+      <S.Header>
+        <Heading variant="h3" asChild>
+          <h3>Entre na sua conta</h3>
+        </Heading>
+      </S.Header>
 
       <SignInForm onSuccess={onSignInSuccess} />
 

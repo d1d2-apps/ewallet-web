@@ -82,15 +82,6 @@ export const ProfileDataSection = styled.section`
     theme.mixins.screen.md(css`
       gap: 4rem;
     `)}
-
-  header {
-    h2 {
-      font-family: var(--font-family-montserrat);
-      font-size: var(--font-size-2xl);
-      font-weight: 500;
-      color: var(--gray-400);
-    }
-  }
 `;
 
 export const ProfileInfoWrapper = styled.main`
