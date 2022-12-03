@@ -7,6 +7,7 @@ import { Spinner } from '@/components/elements';
 import { MainLayout } from '@/components/layouts';
 
 const { ProfilePage } = lazyImport(() => import('@/features/users'), 'ProfilePage');
+const { DebtorsRoutes } = lazyImport(() => import('@/features/debtors'), 'DebtorsRoutes');
 
 function App() {
   return (
@@ -33,6 +34,7 @@ export const protectedRoutes: RouteObject[] = [
     children: [
       { index: true, element: <Navigate to="profile" /> },
       { path: 'profile', element: <ProfilePage /> },
+      { path: 'debtors/*', element: <DebtorsRoutes /> },
       { path: '*', element: <Navigate to="profile" /> }
     ]
   }
