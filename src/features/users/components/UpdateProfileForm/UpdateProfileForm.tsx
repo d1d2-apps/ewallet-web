@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 
 import { useAuth } from '@/stores/auth';
 
+import { useAlertDialog } from '@/hooks';
+
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 
@@ -27,6 +29,7 @@ const validationSchema = yup
 
 export function UpdateProfileForm() {
   const { user } = useAuth();
+  const alertDialog = useAlertDialog();
   const updateProfileMutation = useUpdateProfile();
 
   const {
@@ -50,7 +53,14 @@ export function UpdateProfileForm() {
       await updateProfileMutation.mutateAsync({ data: formData });
       toast.success('Perfil atualizado com sucesso.');
     } catch (err) {
-      toast.error('Ocorreu um erro ao tentar atualizar seu perfil. Tente novamente mais tarde, por favor.');
+      console.log(err);
+
+      alertDialog.show({
+        type: 'error',
+        title: 'Não foi possível atualizar seu perfil',
+        description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
+        okButtonLabel: 'Fechar'
+      });
     }
   };
 

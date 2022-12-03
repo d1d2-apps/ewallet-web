@@ -2,9 +2,10 @@ import { useForm } from 'react-hook-form';
 import { FiMail, FiLock } from 'react-icons/fi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
 
 import { useAuth } from '@/stores/auth';
+
+import { useAlertDialog } from '@/hooks';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
@@ -29,6 +30,7 @@ const validationSchema = yup
 
 export function SignInForm({ onSuccess }: SignInFormProps) {
   const { signIn } = useAuth();
+  const alertDialog = useAlertDialog();
 
   const {
     handleSubmit,
@@ -48,7 +50,14 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
       onSuccess();
     } catch (err) {
       console.log(err);
-      toast.error('Ocorreu um erro ao tentar entrar na sua conta. Verifique as credenciais e tente novamente.');
+
+      alertDialog.show({
+        type: 'error',
+        title: 'Não foi possível entrar na sua conta',
+        description:
+          'O problema pode ter ocorrido devido a alguma intermitência em nossos serviços ou suas credenciais (e-mail e senha) estão incorretos. Por favor, verifique suas credenciais e tente novamente.',
+        okButtonLabel: 'Fechar'
+      });
     }
   };
 

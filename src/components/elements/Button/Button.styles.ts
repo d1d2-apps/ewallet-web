@@ -1,17 +1,19 @@
 import styled, { css } from 'styled-components';
 import { Slot as RadixSlot } from '@radix-ui/react-slot';
 
-import { ButtonColorScheme } from './Button';
+import { ButtonColorScheme, ButtonSize } from './Button';
 
 interface ContainerProps {
   colorScheme: ButtonColorScheme;
+  size: ButtonSize;
   isRounded: boolean;
 }
 
 interface ButtonColorSchemeConfig {
   backgroundColor: string;
   textColor: string;
-  hover: Omit<ButtonColorSchemeConfig, 'hover'>;
+  hover: Omit<ButtonColorSchemeConfig, 'hover' | 'active'>;
+  active: Omit<ButtonColorSchemeConfig, 'hover' | 'active'>;
 }
 
 const BUTTON_COLOR_SCHEMES_CONFIGS: Record<ButtonColorScheme, ButtonColorSchemeConfig> = {
@@ -21,6 +23,10 @@ const BUTTON_COLOR_SCHEMES_CONFIGS: Record<ButtonColorScheme, ButtonColorSchemeC
     hover: {
       backgroundColor: 'var(--primary-600)',
       textColor: 'white'
+    },
+    active: {
+      backgroundColor: 'var(--primary-700)',
+      textColor: 'white'
     }
   },
   gray: {
@@ -29,6 +35,10 @@ const BUTTON_COLOR_SCHEMES_CONFIGS: Record<ButtonColorScheme, ButtonColorSchemeC
     hover: {
       backgroundColor: 'var(--gray-200)',
       textColor: 'var(--secondary-600)'
+    },
+    active: {
+      backgroundColor: 'var(--gray-300)',
+      textColor: 'var(--secondary-700)'
     }
   },
   white: {
@@ -37,8 +47,70 @@ const BUTTON_COLOR_SCHEMES_CONFIGS: Record<ButtonColorScheme, ButtonColorSchemeC
     hover: {
       backgroundColor: 'var(--gray-50)',
       textColor: 'var(--secondary-600)'
+    },
+    active: {
+      backgroundColor: 'var(--gray-100)',
+      textColor: 'var(--secondary-700)'
+    }
+  },
+  blue: {
+    backgroundColor: 'var(--blue-500)',
+    textColor: 'white',
+    hover: {
+      backgroundColor: 'var(--blue-600)',
+      textColor: 'white'
+    },
+    active: {
+      backgroundColor: 'var(--blue-700)',
+      textColor: 'white'
+    }
+  },
+  red: {
+    backgroundColor: 'var(--red-500)',
+    textColor: 'white',
+    hover: {
+      backgroundColor: 'var(--red-600)',
+      textColor: 'white'
+    },
+    active: {
+      backgroundColor: 'var(--red-700)',
+      textColor: 'white'
+    }
+  },
+  green: {
+    backgroundColor: 'var(--green-500)',
+    textColor: 'white',
+    hover: {
+      backgroundColor: 'var(--green-600)',
+      textColor: 'white'
+    },
+    active: {
+      backgroundColor: 'var(--green-700)',
+      textColor: 'white'
+    }
+  },
+  yellow: {
+    backgroundColor: 'var(--yellow-500)',
+    textColor: 'white',
+    hover: {
+      backgroundColor: 'var(--yellow-600)',
+      textColor: 'white'
+    },
+    active: {
+      backgroundColor: 'var(--yellow-700)',
+      textColor: 'white'
     }
   }
+};
+
+interface ButtonSizeConfig {
+  height: string;
+  rounded: string;
+}
+
+const BUTTON_SIZES: Record<ButtonSize, ButtonSizeConfig> = {
+  sm: { height: '2.5rem', rounded: 'xs' },
+  md: { height: '3rem', rounded: 'sm' }
 };
 
 const buttonStyle = css`
@@ -92,16 +164,24 @@ export const Slot = styled(RadixSlot)`
 export const Container = styled.button<ContainerProps>`
   ${buttonStyle}
 
-  ${({ colorScheme }) => {
-    const config = BUTTON_COLOR_SCHEMES_CONFIGS[colorScheme];
+  ${({ colorScheme, size }) => {
+    const colorConfig = BUTTON_COLOR_SCHEMES_CONFIGS[colorScheme];
+    const sizeConfig = BUTTON_SIZES[size];
 
     return css`
-      background-color: ${config.backgroundColor};
-      color: ${config.textColor};
+      height: ${sizeConfig.height};
+      border-radius: ${`var(--rounded-${sizeConfig.rounded})`};
+      background-color: ${colorConfig.backgroundColor};
+      color: ${colorConfig.textColor};
 
       &:hover {
-        background-color: ${config.hover.backgroundColor};
-        color: ${config.hover.textColor};
+        background-color: ${colorConfig.hover.backgroundColor};
+        color: ${colorConfig.hover.textColor};
+      }
+
+      &:active {
+        background-color: ${colorConfig.active.backgroundColor};
+        color: ${colorConfig.active.textColor};
       }
     `;
   }}

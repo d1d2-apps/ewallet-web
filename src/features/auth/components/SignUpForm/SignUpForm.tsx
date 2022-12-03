@@ -2,9 +2,10 @@ import { useForm } from 'react-hook-form';
 import { FiMail, FiLock, FiUser, FiKey } from 'react-icons/fi';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { toast } from 'react-toastify';
 
 import { useAuth } from '@/stores/auth';
+
+import { useAlertDialog } from '@/hooks';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
@@ -36,6 +37,7 @@ const validationSchema = yup
 
 export function SignUpForm({ onSuccess }: SignUpFormProps) {
   const { signUp } = useAuth();
+  const alertDialog = useAlertDialog();
 
   const {
     handleSubmit,
@@ -57,7 +59,13 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
       onSuccess();
     } catch (err) {
       console.log(err);
-      toast.error('Ocorreu um erro ao tentar criar a sua conta. Tente novamente mais tarde, por favor.');
+
+      alertDialog.show({
+        type: 'error',
+        title: 'Não foi possível criar a sua conta',
+        description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
+        okButtonLabel: 'Fechar'
+      });
     }
   };
 

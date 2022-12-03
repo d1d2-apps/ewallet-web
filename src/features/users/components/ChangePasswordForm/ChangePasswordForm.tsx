@@ -4,6 +4,8 @@ import * as yup from 'yup';
 import { FiKey, FiLock } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
+import { useAlertDialog } from '@/hooks';
+
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 
@@ -37,6 +39,7 @@ const validationSchema = yup
   .required();
 
 export function ChangePasswordForm() {
+  const alertDialog = useAlertDialog();
   const changePasswordMutation = useChangePassword();
 
   const {
@@ -58,8 +61,15 @@ export function ChangePasswordForm() {
       await changePasswordMutation.mutateAsync({ data: formData });
       resetForm();
       toast.success('Sua senha foi alterada com sucesso.');
-    } catch {
-      toast.error('Ocorreu um erro ao tentar alterar sua senha. Tente novamente mais tarde, por favor.');
+    } catch (err) {
+      console.log(err);
+
+      alertDialog.show({
+        type: 'error',
+        title: 'Não foi possível alterar a sua senha',
+        description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
+        okButtonLabel: 'Fechar'
+      });
     }
   };
 
