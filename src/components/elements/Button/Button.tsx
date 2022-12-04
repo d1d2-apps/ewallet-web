@@ -6,7 +6,7 @@ import { Spinner } from '../Spinner/Spinner';
 import * as S from './Button.styles';
 
 export type ButtonColorScheme = 'primary' | 'gray' | 'white' | 'blue' | 'red' | 'green' | 'yellow';
-export type ButtonSize = 'sm' | 'md';
+export type ButtonSize = 'xs' | 'sm' | 'md';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
@@ -37,7 +37,7 @@ export const Button = React.forwardRef<any, ButtonProps>(
   ) => {
     if (asChild) {
       return (
-        <S.Slot ref={ref} {...rest}>
+        <S.Slot ref={ref} isRounded={isRounded} colorScheme={colorScheme} size={size} {...rest}>
           {children}
         </S.Slot>
       );

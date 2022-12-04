@@ -12,12 +12,19 @@ const HEADING_VARIANTS_STYLES_CONFIG: Record<HeadingVariant, FlattenSimpleInterp
     font-family: var(--font-family-montserrat);
     font-size: var(--font-size-2xl);
     font-weight: 500;
-    color: var(--gray-400);
+    color: var(--gray-500);
   `,
   h3: css`
     font-family: var(--font-family-montserrat);
+    font-size: var(--font-size-md);
     font-weight: bold;
     text-transform: uppercase;
+  `,
+  h4: css`
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    color: var(--gray-400);
   `
 };
 

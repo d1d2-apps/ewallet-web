@@ -106,22 +106,19 @@ const BUTTON_COLOR_SCHEMES_CONFIGS: Record<ButtonColorScheme, ButtonColorSchemeC
 interface ButtonSizeConfig {
   height: string;
   rounded: string;
+  iconSize: string;
 }
 
 const BUTTON_SIZES: Record<ButtonSize, ButtonSizeConfig> = {
-  sm: { height: '2.5rem', rounded: 'xs' },
-  md: { height: '3rem', rounded: 'sm' }
+  xs: { height: '2rem', rounded: 'xs', iconSize: 'sm' },
+  sm: { height: '2.5rem', rounded: 'xs', iconSize: 'md' },
+  md: { height: '3rem', rounded: 'sm', iconSize: 'lg' }
 };
 
-const buttonStyle = css`
-  width: 100%;
-  height: 3rem;
+const buttonStyle = ({ colorScheme, size, isRounded }: ContainerProps) => css`
   padding: 0 1.5rem;
   border: 0;
-  border-radius: var(--rounded-sm);
-  background-color: var(--primary-500);
   font-weight: 500;
-  color: white;
   overflow: hidden;
 
   box-shadow: var(--shadow-sm);
@@ -131,10 +128,6 @@ const buttonStyle = css`
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-
-  svg {
-    font-size: var(--font-size-lg);
-  }
 
   &:hover {
     background-color: var(--primary-600);
@@ -155,16 +148,8 @@ const buttonStyle = css`
     pointer-events: none;
     box-shadow: none;
   }
-`;
 
-export const Slot = styled(RadixSlot)`
-  ${buttonStyle}
-`;
-
-export const Container = styled.button<ContainerProps>`
-  ${buttonStyle}
-
-  ${({ colorScheme, size }) => {
+  ${() => {
     const colorConfig = BUTTON_COLOR_SCHEMES_CONFIGS[colorScheme];
     const sizeConfig = BUTTON_SIZES[size];
 
@@ -183,19 +168,30 @@ export const Container = styled.button<ContainerProps>`
         background-color: ${colorConfig.active.backgroundColor};
         color: ${colorConfig.active.textColor};
       }
+
+      svg {
+        font-size: ${`var(--font-size-${sizeConfig.iconSize})`};
+      }
     `;
   }}
 
-  ${({ isRounded }) =>
+  ${() =>
     isRounded &&
     css`
-      width: 3rem;
-      height: 3rem;
       padding: 0;
+      aspect-ratio: 1 / 1;
       border-radius: var(--rounded-full);
 
       span {
         padding: 0;
       }
     `}
+`;
+
+export const Slot = styled(RadixSlot)<ContainerProps>`
+  ${({ colorScheme, size, isRounded }) => buttonStyle({ colorScheme, size, isRounded })}
+`;
+
+export const Container = styled.button<ContainerProps>`
+  ${({ colorScheme, size, isRounded }) => buttonStyle({ colorScheme, size, isRounded })}
 `;

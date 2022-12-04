@@ -1,6 +1,6 @@
 import * as S from './Heading.styles';
 
-export type HeadingVariant = 'h2' | 'h3';
+export type HeadingVariant = 'h2' | 'h3' | 'h4';
 
 interface HeadingProps {
   variant?: HeadingVariant;
