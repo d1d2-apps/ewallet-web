@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { IconType } from 'react-icons';
 import { FiChevronLeft, FiChevronRight, FiCreditCard, FiDollarSign, FiUsers } from 'react-icons/fi';
 
+import { useAuth } from '@/stores/auth';
+
 import { Avatar } from '@/components/elements';
 
 import logoImg from '@/assets/images/logo.png';
@@ -44,6 +46,8 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
+  const { user } = useAuth();
+
   const location = useLocation();
 
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(true);
@@ -79,7 +83,7 @@ export function MainLayout({ children }: MainLayoutProps) {
 
         <S.LoggedUser collapsed={isMenuCollapsed} active={location.pathname.includes('profile')}>
           <Link to="./profile" title="Ver perfil">
-            <Avatar size="sm" />
+            <Avatar size="sm" source={user?.picture} />
             <strong>Diego Ferreira</strong>
           </Link>
         </S.LoggedUser>
