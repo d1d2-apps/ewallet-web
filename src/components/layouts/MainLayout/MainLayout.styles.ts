@@ -52,7 +52,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
   background-color: white;
   transition: all 0.5s;
   box-shadow: var(--shadow-md);
-  z-index: 10;
+  z-index: 1;
 
   position: absolute;
   top: 0;
