@@ -3,10 +3,17 @@ import { FiPlus } from 'react-icons/fi';
 import { Button, Heading } from '@/components/elements';
 
 import { DebtorsTable } from '../../components/DebtorsTable/DebtorsTable';
+import { useCreateDebtorModal } from '../../components/CreateDebtorModal/CreateDebtorModal';
 
 import * as S from './DebtorsPage.styles';
 
 export function DebtorsPage() {
+  const createDebtorsModal = useCreateDebtorModal();
+
+  const handleShowCreateDebtorsModal = () => {
+    createDebtorsModal.show();
+  };
+
   return (
     <S.Container>
       <header>
@@ -17,7 +24,9 @@ export function DebtorsPage() {
           </Heading>
         </div>
 
-        <Button leftIcon={FiPlus}>Cadastrar devedor</Button>
+        <Button leftIcon={FiPlus} onClick={handleShowCreateDebtorsModal}>
+          Cadastrar devedor
+        </Button>
       </header>
 
       <DebtorsTable />
