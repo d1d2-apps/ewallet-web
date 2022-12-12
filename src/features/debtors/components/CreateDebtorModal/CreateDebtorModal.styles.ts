@@ -1,9 +1,5 @@
-import styled, { css, keyframes } from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
-
-interface ColorProps {
-  color: string;
-}
+import styled, { keyframes } from 'styled-components';
 
 const overlayShow = keyframes`
   from {
@@ -36,9 +32,9 @@ const contentShow = keyframes`
   }
 `;
 
-export const Content = styled(Dialog.Content)<ColorProps>`
+export const Content = styled(Dialog.Content)`
   width: 90vw;
-  max-width: 30rem;
+  max-width: 40rem;
   max-height: 85vh;
   background-color: white;
   border-radius: var(--rounded-lg);
@@ -51,41 +47,24 @@ export const Content = styled(Dialog.Content)<ColorProps>`
   left: 50%;
   animation: ${contentShow} 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 
-  display: flex;
-  flex-direction: column;
+  header {
+    padding: 1rem 1.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--gray-100);
+
+    & > button {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+    }
+  }
 
   main {
     padding: 1.5rem;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-
-    ${({ theme }) =>
-      theme.mixins.screen.md(css`
-        flex-direction: row;
-        align-items: flex-start;
-      `)}
-
-    i {
-      width: fit-content;
-      height: fit-content;
-      background-color: ${({ color }) => `var(--${color}-100)`};
-      padding: 0.5rem;
-      border-radius: var(--rounded-full);
-
-      font-size: var(--font-size-xl);
-      color: ${({ color }) => `var(--${color}-500)`};
-
-      display: flex;
-    }
-
-    div {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+    gap: 1rem;
   }
 
   footer {
@@ -95,6 +74,7 @@ export const Content = styled(Dialog.Content)<ColorProps>`
 
     display: flex;
     justify-content: flex-end;
+    gap: 0.75rem;
 
     button {
       width: fit-content;
@@ -103,21 +83,11 @@ export const Content = styled(Dialog.Content)<ColorProps>`
 `;
 
 export const Title = styled(Dialog.Title)`
-  margin: 0;
+  max-width: calc(100% - 2rem);
+  margin: 0 auto;
   font-family: var(--font-family-montserrat);
   font-size: var(--font-size-lg);
-  font-weight: 500;
+  font-weight: bold;
   text-align: center;
   color: var(--secondary-500);
-
-  ${({ theme }) =>
-    theme.mixins.screen.md(css`
-      text-align: left;
-    `)}
-`;
-
-export const Description = styled(Dialog.Description)`
-  font-size: var(--font-size-sm);
-  color: var(--secondary-200);
-  line-height: 1.5;
 `;
