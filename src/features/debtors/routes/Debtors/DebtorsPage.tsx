@@ -2,6 +2,8 @@ import { FiPlus } from 'react-icons/fi';
 
 import { Button, Heading } from '@/components/elements';
 
+import { Debtor } from '../../types';
+
 import { DebtorsTable } from '../../components/DebtorsTable/DebtorsTable';
 import { useCreateDebtorModal } from '../../components/CreateDebtorModal/CreateDebtorModal';
 
@@ -10,8 +12,14 @@ import * as S from './DebtorsPage.styles';
 export function DebtorsPage() {
   const createDebtorsModal = useCreateDebtorModal();
 
+  const onCreateDebtorSuccess = (createdDebtor: Debtor) => {
+    console.log({ createdDebtor });
+  };
+
   const handleShowCreateDebtorsModal = () => {
-    createDebtorsModal.show();
+    createDebtorsModal.show({
+      onSuccess: onCreateDebtorSuccess
+    });
   };
 
   return (

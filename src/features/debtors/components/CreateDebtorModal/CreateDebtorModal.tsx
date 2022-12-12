@@ -4,17 +4,25 @@ import { FiUser, FiX } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
+
+import { useAlertDialog } from '@/hooks';
 
 import { Button } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 
-import { useCreateDebtorModal } from '../../api/createDebtor';
+import { useCreateDebtor } from '../../api/createDebtor';
+import { Debtor } from '../../types';
 
 import * as S from './CreateDebtorModal.styles';
 
 interface FormData {
   name: string;
   color: string;
+}
+
+interface CreateDebtorModalProps {
+  onSuccess: (createdDebtor: Debtor) => void;
 }
 
 const validationSchema = yup
@@ -24,10 +32,11 @@ const validationSchema = yup
   })
   .required();
 
-export const CreateDebtorModal = NiceModal.create(() => {
+export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ onSuccess }) => {
   const modal = useModal();
 
-  const createDebtorMutation = useCreateDebtorModal();
+  const alertDialog = useAlertDialog();
+  const createDebtorMutation = useCreateDebtor();
 
   const {
     handleSubmit,
@@ -48,14 +57,19 @@ export const CreateDebtorModal = NiceModal.create(() => {
 
   const handleSaveDebtor = async (formData: FormData) => {
     try {
-      await createDebtorMutation.mutateAsync({ data: formData });
+      const createdDebtor = await createDebtorMutation.mutateAsync({ data: formData });
+
       toast.success('Perfil atualizado com sucesso.');
+
+      onSuccess(createdDebtor);
+
+      await handleCloseModal();
     } catch (err) {
       console.log(err);
 
       alertDialog.show({
         type: 'error',
-        title: 'Não foi possível atualizar seu perfil',
+        title: 'Não foi possível criar o devedor',
         description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
         okButtonLabel: 'Fechar'
       });
@@ -108,8 +122,8 @@ export const CreateDebtorModal = NiceModal.create(() => {
 });
 
 export function useCreateDebtorModal() {
-  const show = async () => {
-    await NiceModal.show(CreateDebtorModal);
+  const show = async (props: CreateDebtorModalProps) => {
+    await NiceModal.show(CreateDebtorModal, props);
   };
 
   return { show };
