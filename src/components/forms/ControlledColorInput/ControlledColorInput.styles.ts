@@ -28,7 +28,7 @@ export const SelectedColor = styled.div<SelectedColorProps>`
   figure {
     width: 3rem;
     height: 3rem;
-    background-color: ${({ $color }) => `var(--${$color}-500)`};
+    background-color: ${({ $color }) => $color};
     border-radius: var(--rounded-full);
     box-shadow: var(--shadow-lg);
   }

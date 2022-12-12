@@ -1,4 +1,5 @@
 import { FieldValues, useController, UseControllerProps } from 'react-hook-form';
+import { useTheme } from 'styled-components';
 
 import * as S from './ControlledColorInput.styles';
 
@@ -9,13 +10,15 @@ interface Props {
 
 type ControlledColorInputProps<T extends FieldValues> = Props & UseControllerProps<T>;
 
-const COLORS = ['gray', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'violet', 'pink'];
+const COLORS = ['gray', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'violet', 'pink'] as const;
 
 export function ControlledColorInput<T extends FieldValues>({
   label,
   isDisabled,
   ...controllerProps
 }: ControlledColorInputProps<T>) {
+  const theme = useTheme();
+
   const {
     field: { ref, ...inputProps },
     fieldState: { error },
@@ -30,15 +33,19 @@ export function ControlledColorInput<T extends FieldValues>({
         <figure />
 
         <div>
-          {COLORS.map(color => (
-            <S.ColorButton
-              key={color}
-              disabled={color === inputProps.value || isSubmitting || isDisabled}
-              $color={color}
-              $isSelected={color === inputProps.value}
-              onClick={() => inputProps.onChange(color)}
-            />
-          ))}
+          {COLORS.map(colorName => {
+            const colorHex = theme.colors[colorName as typeof COLORS[number]][500];
+
+            return (
+              <S.ColorButton
+                key={colorName}
+                disabled={colorHex === inputProps.value || isSubmitting || isDisabled}
+                $color={colorName}
+                $isSelected={colorHex === inputProps.value}
+                onClick={() => inputProps.onChange(colorHex)}
+              />
+            );
+          })}
         </div>
       </S.SelectedColor>
 
