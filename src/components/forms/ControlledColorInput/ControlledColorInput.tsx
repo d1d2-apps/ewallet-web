@@ -9,7 +9,7 @@ interface Props {
 
 type ControlledColorInputProps<T extends FieldValues> = Props & UseControllerProps<T>;
 
-const COLORS = ['blue', 'green', 'red', 'yellow'];
+const COLORS = ['gray', 'red', 'orange', 'yellow', 'green', 'teal', 'blue', 'violet', 'pink'];
 
 export function ControlledColorInput<T extends FieldValues>({
   label,
@@ -35,6 +35,7 @@ export function ControlledColorInput<T extends FieldValues>({
               key={color}
               disabled={color === inputProps.value || isSubmitting || isDisabled}
               $color={color}
+              $isSelected={color === inputProps.value}
               onClick={() => inputProps.onChange(color)}
             />
           ))}

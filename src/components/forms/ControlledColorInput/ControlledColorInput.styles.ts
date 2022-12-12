@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface SelectedColorProps {
   $color: string;
@@ -6,6 +6,7 @@ interface SelectedColorProps {
 
 interface ColorButtonProps {
   $color: string;
+  $isSelected: boolean;
 }
 
 export const Container = styled.label`
@@ -39,7 +40,7 @@ export const ColorButton = styled.button.attrs({
   width: 2rem;
   height: 2rem;
   background-color: ${({ $color }) => `var(--${$color}-500)`};
-  border: none;
+  border: 0.5rem solid transparent;
   border-radius: var(--rounded-full);
   box-shadow: var(--shadow-sm);
   transition: all 0.2s;
@@ -57,11 +58,16 @@ export const ColorButton = styled.button.attrs({
   }
 
   &:disabled {
-    transform: scale(0.85);
     opacity: 0.8;
     pointer-events: none;
     box-shadow: none;
   }
+
+  ${({ $isSelected }) =>
+    $isSelected &&
+    css`
+      transform: scale(0.6);
+    `}
 `;
 
 export const ErrorMessage = styled.small`

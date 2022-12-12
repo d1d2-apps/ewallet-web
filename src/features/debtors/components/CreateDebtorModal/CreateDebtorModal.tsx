@@ -2,11 +2,13 @@ import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { FiUser, FiX } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { Button } from '@/components/elements';
-import { ControlledTextInput } from '@/components/forms';
+import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 
-import { ControlledColorInput } from '../ControlledColorInput/ControlledColorInput';
+import { useCreateDebtorModal } from '../../api/createDebtor';
 
 import * as S from './CreateDebtorModal.styles';
 
@@ -15,18 +17,27 @@ interface FormData {
   color: string;
 }
 
+const validationSchema = yup
+  .object({
+    name: yup.string().required('Nome é obrigatório').min(5, 'Mínimo de 5 caracteres'),
+    color: yup.string().required('Cor é orbigatória')
+  })
+  .required();
+
 export const CreateDebtorModal = NiceModal.create(() => {
   const modal = useModal();
+
+  const createDebtorMutation = useCreateDebtorModal();
 
   const {
     handleSubmit,
     control,
     formState: { isSubmitting }
   } = useForm<FormData>({
-    // resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       name: '',
-      color: 'blue'
+      color: 'gray'
     }
   });
 
@@ -35,8 +46,20 @@ export const CreateDebtorModal = NiceModal.create(() => {
     modal.remove();
   };
 
-  const handleSaveDebtor = (formData: FormData) => {
-    console.log({ formData });
+  const handleSaveDebtor = async (formData: FormData) => {
+    try {
+      await createDebtorMutation.mutateAsync({ data: formData });
+      toast.success('Perfil atualizado com sucesso.');
+    } catch (err) {
+      console.log(err);
+
+      alertDialog.show({
+        type: 'error',
+        title: 'Não foi possível atualizar seu perfil',
+        description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
+        okButtonLabel: 'Fechar'
+      });
+    }
   };
 
   return (
