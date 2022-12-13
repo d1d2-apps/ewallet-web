@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
-import { MutationConfig } from '@/lib/react-query';
+import { MutationConfig, queryClient } from '@/lib/react-query';
 
 import { Debtor } from '../types';
 
@@ -23,6 +23,21 @@ type UseCreateDebtorsOptions = {
 
 export function useCreateDebtor({ config }: UseCreateDebtorsOptions = {}) {
   return useMutation({
+    onMutate: async () => {
+      await queryClient.cancelQueries(['debtors']);
+    },
+    onError: (_, __, context: any) => {
+      if (context?.previousDiscussions) {
+        queryClient.setQueryData(['debtors'], context.previousDiscussions);
+      }
+    },
+    onSuccess: createdDebtor => {
+      queryClient.invalidateQueries(['debtors']);
+
+      const previousDebtors = queryClient.getQueryData<Debtor[]>(['debtors']);
+
+      queryClient.setQueryData(['debtors'], [...(previousDebtors || []), createdDebtor]);
+    },
     ...config,
     mutationFn: createDebtor
   });

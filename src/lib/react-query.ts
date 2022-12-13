@@ -18,7 +18,7 @@ type Fn = (...args: any) => any;
 export type ExtractFnReturnType<FnType extends Fn> = ReturnType<FnType>;
 
 export type QueryConfig<QueryFnType extends Fn> = Omit<
-  UseQueryOptions<ExtractFnReturnType<QueryFnType>>,
+  UseQueryOptions<AsyncReturnType<QueryFnType>>,
   'queryKey' | 'queryFn'
 >;
 

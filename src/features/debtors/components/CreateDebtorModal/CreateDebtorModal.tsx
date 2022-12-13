@@ -13,17 +13,12 @@ import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 
 import { theme } from '@/config/styles/theme';
 import { useCreateDebtor } from '../../api/createDebtor';
-import { Debtor } from '../../types';
 
 import * as S from './CreateDebtorModal.styles';
 
 interface FormData {
   name: string;
   color: string;
-}
-
-interface CreateDebtorModalProps {
-  onSuccess: (createdDebtor: Debtor) => void;
 }
 
 const validationSchema = yup
@@ -33,7 +28,7 @@ const validationSchema = yup
   })
   .required();
 
-export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ onSuccess }) => {
+export const CreateDebtorModal = NiceModal.create(() => {
   const modal = useModal();
 
   const alertDialog = useAlertDialog();
@@ -58,11 +53,9 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ onS
 
   const handleSaveDebtor = async (formData: FormData) => {
     try {
-      const createdDebtor = await createDebtorMutation.mutateAsync({ data: formData });
+      await createDebtorMutation.mutateAsync({ data: formData });
 
       toast.success('Perfil atualizado com sucesso.');
-
-      onSuccess(createdDebtor);
 
       await handleCloseModal();
     } catch (err) {
@@ -123,8 +116,8 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ onS
 });
 
 export function useCreateDebtorModal() {
-  const show = async (props: CreateDebtorModalProps) => {
-    await NiceModal.show(CreateDebtorModal, props);
+  const show = async () => {
+    await NiceModal.show(CreateDebtorModal);
   };
 
   return { show };

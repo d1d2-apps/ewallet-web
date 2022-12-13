@@ -1,9 +1,17 @@
-import { Button, Table } from '@/components/elements';
+import { format } from 'date-fns';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
+
+import { Button, Table } from '@/components/elements';
+
+import { Debtor } from '../../types';
 
 import * as S from './DebtorsTable.styles';
 
-export function DebtorsTable() {
+interface DebtorsTableProps {
+  data: Debtor[];
+}
+
+export function DebtorsTable({ data }: DebtorsTableProps) {
   return (
     <Table.Root>
       <Table.Head>
@@ -16,27 +24,32 @@ export function DebtorsTable() {
       </Table.Head>
 
       <Table.Body>
-        <tr>
-          <S.NameTableCell color="red">
-            <div>
-              <div />
-              <span>Diego Ferreira</span>
-            </div>
-          </S.NameTableCell>
-          <td align="center">04/12/20222</td>
-          <td align="center">04/12/2022</td>
-          <S.ActionsTableCell>
-            <div>
-              <Button size="xs" colorScheme="gray" isRounded title="Editar devedor">
-                <FiEdit2 />
-              </Button>
+        {data.map(debtor => (
+          <tr key={debtor.id}>
+            <S.NameTableCell color={debtor.color}>
+              <div>
+                <div />
+                <span>{debtor.name}</span>
+              </div>
+            </S.NameTableCell>
 
-              <Button size="xs" colorScheme="gray" isRounded title="Excluir devedor">
-                <FiTrash2 />
-              </Button>
-            </div>
-          </S.ActionsTableCell>
-        </tr>
+            <td align="center">{format(new Date(debtor.createdAt), "dd/MM/yyy 'às' HH:mm")}</td>
+
+            <td align="center">{format(new Date(debtor.updatedAt), "dd/MM/yyy 'às' HH:mm")}</td>
+
+            <S.ActionsTableCell>
+              <div>
+                <Button size="xs" colorScheme="gray" isRounded title="Editar devedor">
+                  <FiEdit2 />
+                </Button>
+
+                <Button size="xs" colorScheme="gray" isRounded title="Excluir devedor">
+                  <FiTrash2 />
+                </Button>
+              </div>
+            </S.ActionsTableCell>
+          </tr>
+        ))}
       </Table.Body>
     </Table.Root>
   );
