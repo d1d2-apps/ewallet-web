@@ -11,6 +11,7 @@ import { useAlertDialog } from '@/hooks';
 import { Button } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 
+import { theme } from '@/config/styles/theme';
 import { useCreateDebtor } from '../../api/createDebtor';
 import { Debtor } from '../../types';
 
@@ -46,7 +47,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ onS
     resolver: yupResolver(validationSchema),
     defaultValues: {
       name: '',
-      color: 'gray'
+      color: theme.colors.gray[500]
     }
   });
 
