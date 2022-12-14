@@ -55,7 +55,7 @@ export const CreateDebtorModal = NiceModal.create(() => {
     try {
       await createDebtorMutation.mutateAsync({ data: formData });
 
-      toast.success('Perfil atualizado com sucesso.');
+      toast.success('Devedor criado com sucesso.');
 
       await handleCloseModal();
     } catch (err) {
