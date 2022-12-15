@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
-import { useAlertDialog } from '@/hooks';
+import { useAlertDialog, useConfirmationDialog } from '@/hooks';
 
 import { Button, Table } from '@/components/elements';
 
@@ -19,13 +18,10 @@ interface DebtorsTableProps {
 
 export function DebtorsTable({ data }: DebtorsTableProps) {
   const alertDialog = useAlertDialog();
+  const confirmationDialog = useConfirmationDialog();
   const deleteDebtorMutation = useDeleteDebtor();
 
-  const [deletingDebtorId, setDeletingDebtorId] = useState<string | null>(null);
-
-  const handleDeleteDebtorClick = async (debtorId: string) => {
-    setDeletingDebtorId(debtorId);
-
+  const deleteDebtor = async (debtorId: string) => {
     try {
       await deleteDebtorMutation.mutateAsync({ debtorId });
 
@@ -39,9 +35,17 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
         description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
         okButtonLabel: 'Fechar'
       });
-    } finally {
-      setDeletingDebtorId(null);
     }
+  };
+
+  const handleDeleteDebtorClick = async (debtor: Debtor) => {
+    confirmationDialog.show({
+      title: 'Excluir devedor',
+      description: `Tem certeza que desenha excluir o devedor "${debtor.name}"?`,
+      okButtonLabel: 'Excluir',
+      okButtonLoadingText: 'Excluindo...',
+      onConfirm: () => deleteDebtor(debtor.id)
+    });
   };
 
   return (
@@ -80,8 +84,7 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
                   colorScheme="gray"
                   isRounded
                   title="Excluir devedor"
-                  isLoading={deleteDebtorMutation.isLoading && deletingDebtorId === debtor.id}
-                  onClick={() => handleDeleteDebtorClick(debtor.id)}
+                  onClick={() => handleDeleteDebtorClick(debtor)}
                 >
                   <FiTrash2 />
                 </Button>
