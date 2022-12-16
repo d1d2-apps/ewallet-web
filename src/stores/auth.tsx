@@ -12,7 +12,7 @@ import {
 
 import { storage } from '@/utils/storage';
 
-import { Spinner } from '@/components/elements';
+import { LoadingFeedback } from '@/components/feedbacks';
 
 interface AuthContextData {
   user: AuthUser | null;
@@ -25,14 +25,6 @@ interface AuthContextData {
 
 interface AuthProviderProps {
   children: React.ReactNode;
-}
-
-function LoadingFeedback() {
-  return (
-    <div style={{ width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Spinner size="2xl" />
-    </div>
-  );
 }
 
 const handleUserResponse = async (data: UserResponse) => {

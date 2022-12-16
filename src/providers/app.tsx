@@ -14,17 +14,12 @@ import { ToastProvider } from '@/lib/react-toastify';
 
 import { AuthProvider } from '@/stores/auth';
 
-import { Button, Spinner } from '@/components/elements';
+import { Button } from '@/components/elements';
+import { LoadingFeedback } from '@/components/feedbacks';
 
 interface AppProviderProps {
   children: React.ReactNode;
 }
-
-const LoadingFeedback = (
-  <div style={{ width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <Spinner size="2xl" />
-  </div>
-);
 
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   const appTheme = useTheme();
@@ -66,7 +61,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <ThemeProvider theme={theme}>
-      <Suspense fallback={LoadingFeedback}>
+      <Suspense fallback={<LoadingFeedback />}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <HelmetProvider>
             <QueryClientProvider client={queryClient}>
