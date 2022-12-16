@@ -37,7 +37,7 @@ export const Button = React.forwardRef<any, ButtonProps>(
   ) => {
     if (asChild) {
       return (
-        <S.Slot ref={ref} isRounded={isRounded} colorScheme={colorScheme} size={size} {...rest}>
+        <S.Slot ref={ref} $isRounded={isRounded} $colorScheme={colorScheme} $size={size} {...rest}>
           {children}
         </S.Slot>
       );
@@ -48,9 +48,9 @@ export const Button = React.forwardRef<any, ButtonProps>(
         {...rest}
         ref={ref}
         disabled={disabled || isLoading}
-        isRounded={isRounded}
-        colorScheme={colorScheme}
-        size={size}
+        $isRounded={isRounded}
+        $colorScheme={colorScheme}
+        $size={size}
       >
         {isLoading && <Spinner size="lg" />}
 

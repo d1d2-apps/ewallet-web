@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface ContainerProps {
-  size: 'xs' | 'sm' | 'md' | 'lg';
+  $size: 'xs' | 'sm' | 'md' | 'lg';
 }
 
 const containerSizes = {
@@ -12,12 +12,12 @@ const containerSizes = {
 };
 
 export const Container = styled.div<ContainerProps>`
-  width: ${({ size }) => containerSizes[size]};
-  height: ${({ size }) => containerSizes[size]};
+  width: ${({ $size }) => containerSizes[$size]};
+  height: ${({ $size }) => containerSizes[$size]};
 
   img {
-    width: ${({ size }) => containerSizes[size]};
-    height: ${({ size }) => containerSizes[size]};
+    width: ${({ $size }) => containerSizes[$size]};
+    height: ${({ $size }) => containerSizes[$size]};
     border-radius: var(--rounded-full);
     object-fit: cover;
   }

@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 export type SpinnerSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
 
 interface ContainerProps {
-  size: SpinnerSize;
+  $size: SpinnerSize;
 }
 
 const spin = keyframes`
@@ -16,7 +16,7 @@ const spin = keyframes`
 `;
 
 export const Container = styled.span<ContainerProps>`
-  font-size: ${({ size }) => `var(--font-size-${size})`};
+  font-size: ${({ $size }) => `var(--font-size-${$size})`};
 
   display: flex;
 

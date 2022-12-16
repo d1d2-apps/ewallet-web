@@ -8,7 +8,7 @@ interface SpinnerProps {
 
 export function Spinner({ size = 'md' }: SpinnerProps) {
   return (
-    <S.Container size={size}>
+    <S.Container $size={size}>
       <FiLoader />
     </S.Container>
   );

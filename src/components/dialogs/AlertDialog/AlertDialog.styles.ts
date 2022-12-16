@@ -2,7 +2,7 @@ import styled, { css, keyframes } from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 
 interface ColorProps {
-  color: string;
+  $color: string;
 }
 
 const overlayShow = keyframes`
@@ -71,12 +71,12 @@ export const Content = styled(Dialog.Content)<ColorProps>`
     i {
       width: fit-content;
       height: fit-content;
-      background-color: ${({ color }) => `var(--${color}-100)`};
+      background-color: ${({ $color }) => `var(--${$color}-100)`};
       padding: 0.5rem;
       border-radius: var(--rounded-full);
 
       font-size: var(--font-size-xl);
-      color: ${({ color }) => `var(--${color}-500)`};
+      color: ${({ $color }) => `var(--${$color}-500)`};
 
       display: flex;
     }

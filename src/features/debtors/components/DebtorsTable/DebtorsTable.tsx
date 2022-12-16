@@ -62,7 +62,7 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
       <Table.Body>
         {data.map(debtor => (
           <tr key={debtor.id}>
-            <S.NameTableCell color={debtor.color}>
+            <S.NameTableCell $color={debtor.color}>
               <div>
                 <div />
                 <span>{debtor.name}</span>

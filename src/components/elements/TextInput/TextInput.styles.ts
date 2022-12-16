@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
 
 interface BaseContainerProps {
-  hasError?: boolean;
-  isDisabled?: boolean;
+  $hasError?: boolean;
+  $isDisabled?: boolean;
 }
 
 export const BaseContainer = styled.div<BaseContainerProps>`
@@ -31,14 +31,14 @@ export const BaseContainer = styled.div<BaseContainerProps>`
     --icon-color: var(--primary-500);
   }
 
-  ${({ hasError }) =>
-    hasError &&
+  ${({ $hasError }) =>
+    $hasError &&
     css`
       border-color: var(--red-500);
     `}
 
-  ${({ isDisabled }) =>
-    isDisabled &&
+  ${({ $isDisabled }) =>
+    $isDisabled &&
     css`
       background-color: var(--gray-100);
       pointer-events: none;

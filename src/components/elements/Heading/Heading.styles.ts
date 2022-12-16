@@ -4,7 +4,7 @@ import { Slot as RadixSlot } from '@radix-ui/react-slot';
 import { HeadingVariant } from './Heading';
 
 interface ContainerProps {
-  variant: HeadingVariant;
+  $variant: HeadingVariant;
 }
 
 const HEADING_VARIANTS_STYLES_CONFIG: Record<HeadingVariant, FlattenSimpleInterpolation> = {
@@ -29,9 +29,9 @@ const HEADING_VARIANTS_STYLES_CONFIG: Record<HeadingVariant, FlattenSimpleInterp
 };
 
 export const Container = styled.h2<ContainerProps>`
-  ${({ variant }) => HEADING_VARIANTS_STYLES_CONFIG[variant]}
+  ${({ $variant }) => HEADING_VARIANTS_STYLES_CONFIG[$variant]}
 `;
 
 export const Slot = styled(RadixSlot)<ContainerProps>`
-  ${({ variant }) => HEADING_VARIANTS_STYLES_CONFIG[variant]}
+  ${({ $variant }) => HEADING_VARIANTS_STYLES_CONFIG[$variant]}
 `;

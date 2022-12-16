@@ -30,7 +30,7 @@ const NAVIGATION: NavigationItem[] = [
 
 function NavItem({ name, to, icon: Icon, isActive = false, isCollapsed }: NavItemProps) {
   return (
-    <S.NavItem active={isActive} collapsed={isCollapsed} title={name}>
+    <S.NavItem $active={isActive} $collapsed={isCollapsed} title={name}>
       <Link to={to}>
         <i>
           <Icon />
@@ -58,7 +58,7 @@ export function MainLayout({ children }: MainLayoutProps) {
 
   return (
     <S.Container>
-      <S.SideMenu collapsed={isMenuCollapsed}>
+      <S.SideMenu $collapsed={isMenuCollapsed}>
         <header>
           <div>
             <img src={logoImg} alt="eWallet Logo" />
@@ -81,7 +81,7 @@ export function MainLayout({ children }: MainLayoutProps) {
           ))}
         </ul>
 
-        <S.LoggedUser collapsed={isMenuCollapsed} active={location.pathname.includes('profile')}>
+        <S.LoggedUser $collapsed={isMenuCollapsed} $active={location.pathname.includes('profile')}>
           <Link to="./profile" title="Ver perfil">
             <Avatar size="sm" source={user?.picture} />
             <strong>Diego Ferreira</strong>

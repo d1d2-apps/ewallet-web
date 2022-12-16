@@ -9,7 +9,7 @@ interface AvatarProps {
 
 export function Avatar({ size = 'md', source }: AvatarProps) {
   return (
-    <S.Container size={size}>
+    <S.Container $size={size}>
       <img src={source || personPlaceholderImg} alt="Foto de perfil" />
     </S.Container>
   );

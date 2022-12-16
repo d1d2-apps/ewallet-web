@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface NameTableCellProps {
-  color: string;
+  $color: string;
 }
 
 export const NameTableCell = styled.td<NameTableCellProps>`
@@ -23,7 +23,7 @@ export const NameTableCell = styled.td<NameTableCellProps>`
         content: '';
         width: 1rem;
         height: 1rem;
-        background-color: ${({ color }) => color};
+        background-color: ${({ $color }) => $color};
         border-radius: var(--rounded-full);
       }
     }

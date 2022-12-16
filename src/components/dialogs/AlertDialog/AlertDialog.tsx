@@ -45,7 +45,7 @@ export const AlertDialog = NiceModal.create<AlertDialogProps>(
         <Dialog.Portal>
           <S.Overlay />
 
-          <S.Content color={color}>
+          <S.Content $color={color}>
             <main>
               <i>
                 <Icon />

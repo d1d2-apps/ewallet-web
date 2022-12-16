@@ -10,7 +10,7 @@ export interface TextInputBaseProps {
 
 function TextInputBase({ children, hasError = false, isDisabled = false }: TextInputBaseProps) {
   return (
-    <S.BaseContainer hasError={hasError} isDisabled={isDisabled}>
+    <S.BaseContainer $hasError={hasError} $isDisabled={isDisabled}>
       {children}
     </S.BaseContainer>
   );

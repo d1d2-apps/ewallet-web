@@ -4,9 +4,9 @@ import { Slot as RadixSlot } from '@radix-ui/react-slot';
 import { ButtonColorScheme, ButtonSize } from './Button';
 
 interface ContainerProps {
-  colorScheme: ButtonColorScheme;
-  size: ButtonSize;
-  isRounded: boolean;
+  $colorScheme: ButtonColorScheme;
+  $size: ButtonSize;
+  $isRounded: boolean;
 }
 
 interface ButtonColorSchemeConfig {
@@ -115,7 +115,7 @@ const BUTTON_SIZES: Record<ButtonSize, ButtonSizeConfig> = {
   md: { height: '3rem', rounded: 'sm', iconSize: 'lg' }
 };
 
-const buttonStyle = ({ colorScheme, size, isRounded }: ContainerProps) => css`
+const buttonStyle = ({ $colorScheme, $size, $isRounded }: ContainerProps) => css`
   padding: 0 1.5rem;
   border: 0;
   font-weight: 500;
@@ -150,8 +150,8 @@ const buttonStyle = ({ colorScheme, size, isRounded }: ContainerProps) => css`
   }
 
   ${() => {
-    const colorConfig = BUTTON_COLOR_SCHEMES_CONFIGS[colorScheme];
-    const sizeConfig = BUTTON_SIZES[size];
+    const colorConfig = BUTTON_COLOR_SCHEMES_CONFIGS[$colorScheme];
+    const sizeConfig = BUTTON_SIZES[$size];
 
     return css`
       height: ${sizeConfig.height};
@@ -176,7 +176,7 @@ const buttonStyle = ({ colorScheme, size, isRounded }: ContainerProps) => css`
   }}
 
   ${() =>
-    isRounded &&
+    $isRounded &&
     css`
       padding: 0;
       aspect-ratio: 1 / 1;
@@ -189,9 +189,9 @@ const buttonStyle = ({ colorScheme, size, isRounded }: ContainerProps) => css`
 `;
 
 export const Slot = styled(RadixSlot)<ContainerProps>`
-  ${({ colorScheme, size, isRounded }) => buttonStyle({ colorScheme, size, isRounded })}
+  ${({ $colorScheme, $size, $isRounded }) => buttonStyle({ $colorScheme, $size, $isRounded })}
 `;
 
 export const Container = styled.button<ContainerProps>`
-  ${({ colorScheme, size, isRounded }) => buttonStyle({ colorScheme, size, isRounded })}
+  ${({ $colorScheme, $size, $isRounded }) => buttonStyle({ $colorScheme, $size, $isRounded })}
 `;

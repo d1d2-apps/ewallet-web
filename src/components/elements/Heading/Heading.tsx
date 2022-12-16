@@ -11,5 +11,5 @@ interface HeadingProps {
 export function Heading({ variant = 'h2', asChild = false, children }: HeadingProps) {
   const Component = asChild ? S.Slot : S.Container;
 
-  return <Component variant={variant}>{children}</Component>;
+  return <Component $variant={variant}>{children}</Component>;
 }
