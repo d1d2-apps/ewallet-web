@@ -12,13 +12,21 @@ import { Button } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 
 import { theme } from '@/config/styles/theme';
+
 import { useCreateDebtor } from '../../api/createDebtor';
+import { useUpdateDebtor } from '../../api/updateDebtor';
+
+import { Debtor } from '../../types';
 
 import * as S from './CreateDebtorModal.styles';
 
 interface FormData {
   name: string;
   color: string;
+}
+
+interface CreateDebtorModalProps {
+  debtor?: Debtor;
 }
 
 const validationSchema = yup
@@ -28,11 +36,12 @@ const validationSchema = yup
   })
   .required();
 
-export const CreateDebtorModal = NiceModal.create(() => {
+export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ debtor }) => {
   const modal = useModal();
 
   const alertDialog = useAlertDialog();
   const createDebtorMutation = useCreateDebtor();
+  const updateDebtorMutation = useUpdateDebtor();
 
   const {
     handleSubmit,
@@ -41,8 +50,8 @@ export const CreateDebtorModal = NiceModal.create(() => {
   } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
-      name: '',
-      color: theme.colors.gray[500]
+      name: debtor?.name || '',
+      color: debtor?.color || theme.colors.gray[500]
     }
   });
 
@@ -53,9 +62,13 @@ export const CreateDebtorModal = NiceModal.create(() => {
 
   const handleSaveDebtor = async (formData: FormData) => {
     try {
-      await createDebtorMutation.mutateAsync({ data: formData });
+      if (debtor?.id) {
+        await updateDebtorMutation.mutateAsync({ data: formData, debtorId: debtor.id });
+      } else {
+        await createDebtorMutation.mutateAsync({ data: formData });
+      }
 
-      toast.success('Devedor criado com sucesso.');
+      toast.success('Devedor salvo com sucesso.');
 
       await handleCloseModal();
     } catch (err) {
@@ -63,7 +76,7 @@ export const CreateDebtorModal = NiceModal.create(() => {
 
       alertDialog.show({
         type: 'error',
-        title: 'Não foi possível criar o devedor',
+        title: 'Não foi possível salvar o devedor',
         description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
         okButtonLabel: 'Fechar'
       });
@@ -78,7 +91,7 @@ export const CreateDebtorModal = NiceModal.create(() => {
         <S.Content asChild>
           <form onSubmit={handleSubmit(handleSaveDebtor)}>
             <header>
-              <S.Title>Cadastrar devedor</S.Title>
+              <S.Title>{debtor?.id ? 'Editar' : 'Cadastrar'} devedor</S.Title>
 
               <Button size="xs" colorScheme="gray" isRounded onClick={handleCloseModal}>
                 <FiX />
@@ -116,8 +129,8 @@ export const CreateDebtorModal = NiceModal.create(() => {
 });
 
 export function useCreateDebtorModal() {
-  const show = async () => {
-    await NiceModal.show(CreateDebtorModal);
+  const show = async (props: CreateDebtorModalProps) => {
+    await NiceModal.show(CreateDebtorModal, props);
   };
 
   return { show };

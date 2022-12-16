@@ -10,6 +10,8 @@ import { useDeleteDebtor } from '../../api/deleteDebtor';
 
 import { Debtor } from '../../types';
 
+import { useCreateDebtorModal } from '../CreateDebtorModal/CreateDebtorModal';
+
 import * as S from './DebtorsTable.styles';
 
 interface DebtorsTableProps {
@@ -19,6 +21,7 @@ interface DebtorsTableProps {
 export function DebtorsTable({ data }: DebtorsTableProps) {
   const alertDialog = useAlertDialog();
   const confirmationDialog = useConfirmationDialog();
+  const createDebtorModal = useCreateDebtorModal();
   const deleteDebtorMutation = useDeleteDebtor();
 
   const deleteDebtor = async (debtorId: string) => {
@@ -48,6 +51,10 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
     });
   };
 
+  const handleEditDebtorClick = (debtor: Debtor) => {
+    createDebtorModal.show({ debtor });
+  };
+
   return (
     <Table.Root>
       <Table.Head>
@@ -75,7 +82,13 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
 
             <S.ActionsTableCell>
               <div>
-                <Button size="xs" colorScheme="gray" isRounded title="Editar devedor">
+                <Button
+                  size="xs"
+                  colorScheme="gray"
+                  isRounded
+                  title="Editar devedor"
+                  onClick={() => handleEditDebtorClick(debtor)}
+                >
                   <FiEdit2 />
                 </Button>
 
