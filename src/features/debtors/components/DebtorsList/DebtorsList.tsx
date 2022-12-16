@@ -1,8 +1,11 @@
 import { Spinner } from '@/components/elements';
+import { EmptyFeedback } from '@/components/feedbacks';
 
 import { useDebtors } from '../../api/getDebtors';
 
 import { DebtorsTable } from '../DebtorsTable/DebtorsTable';
+
+import debtorsImg from '../../assets/images/debtors.png';
 
 function LoadingFeedback() {
   return (
@@ -20,7 +23,13 @@ export function DebtorsList() {
   }
 
   if (!debtorsQuery.data?.length) {
-    return <h1>Nenhum devedor</h1>;
+    return (
+      <EmptyFeedback
+        image={debtorsImg}
+        title="Ooops! Está vazio"
+        description="Parece que você não tem nenhum devedor cadastrado."
+      />
+    );
   }
 
   return <DebtorsTable data={debtorsQuery.data} />;
