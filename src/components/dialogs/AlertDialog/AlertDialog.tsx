@@ -1,6 +1,6 @@
 import React from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import * as Dialog from '@radix-ui/react-dialog';
+import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
 import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
@@ -41,8 +41,8 @@ export const AlertDialog = NiceModal.create<AlertDialogProps>(
     };
 
     return (
-      <Dialog.Root open={alert.visible}>
-        <Dialog.Portal>
+      <RadixAlertDialog.Root open={alert.visible}>
+        <RadixAlertDialog.Portal>
           <S.Overlay />
 
           <S.Content $color={color}>
@@ -58,15 +58,15 @@ export const AlertDialog = NiceModal.create<AlertDialogProps>(
             </main>
 
             <footer>
-              <Dialog.Close asChild>
+              <RadixAlertDialog.Cancel asChild>
                 <Button colorScheme={color} size="sm" onClick={handleCloseAlert}>
                   {okButtonLabel}
                 </Button>
-              </Dialog.Close>
+              </RadixAlertDialog.Cancel>
             </footer>
           </S.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
+        </RadixAlertDialog.Portal>
+      </RadixAlertDialog.Root>
     );
   }
 );

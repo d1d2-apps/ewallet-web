@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import * as Dialog from '@radix-ui/react-dialog';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import { Button } from '@/components/elements';
 
@@ -42,8 +42,8 @@ export const ConfirmationDialog = NiceModal.create<ConfirmationDialogProps>(
     };
 
     return (
-      <Dialog.Root open={alert.visible}>
-        <Dialog.Portal>
+      <AlertDialog.Root open={alert.visible}>
+        <AlertDialog.Portal>
           <S.Overlay />
 
           <S.Content>
@@ -53,19 +53,19 @@ export const ConfirmationDialog = NiceModal.create<ConfirmationDialogProps>(
             </main>
 
             <footer>
-              <Dialog.Close asChild>
+              <AlertDialog.Cancel asChild>
                 <Button colorScheme="white" size="sm" onClick={handleCancelClick} disabled={isSubmiting}>
                   {cancelButtonLabel}
                 </Button>
-              </Dialog.Close>
+              </AlertDialog.Cancel>
 
               <Button size="sm" onClick={handleConfirmClick} isLoading={isSubmiting} loadingText={okButtonLoadingText}>
                 {okButtonLabel}
               </Button>
             </footer>
           </S.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
+        </AlertDialog.Portal>
+      </AlertDialog.Root>
     );
   }
 );

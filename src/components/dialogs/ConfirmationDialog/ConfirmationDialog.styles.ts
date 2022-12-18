@@ -1,54 +1,12 @@
-import styled, { css, keyframes } from 'styled-components';
-import * as Dialog from '@radix-ui/react-dialog';
+import styled, { css } from 'styled-components';
+import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
-const overlayShow = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+export const Overlay = styled(AlertDialog.Overlay)`
+  ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}
 `;
 
-export const Overlay = styled(Dialog.Overlay)`
-  background-color: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(8px);
-  z-index: 2;
-
-  position: fixed;
-  inset: 0;
-
-  animation: ${overlayShow} 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-`;
-
-const contentShow = keyframes`
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-`;
-
-export const Content = styled(Dialog.Content)`
-  width: 90vw;
-  max-width: 30rem;
-  max-height: 85vh;
-  background-color: white;
-  border-radius: var(--rounded-lg);
-  box-shadow: var(--shadow-lg);
-  transform: translate(-50%, -50%);
-  z-index: 3;
-
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  animation: ${contentShow} 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-
-  display: flex;
-  flex-direction: column;
+export const Content = styled(AlertDialog.Content)`
+  ${({ theme }) => theme.mixins.dialogs.getContentBaseStyles()}
 
   main {
     padding: 1.5rem;
@@ -57,23 +15,9 @@ export const Content = styled(Dialog.Content)`
     flex-direction: column;
     gap: 0.5rem;
   }
-
-  footer {
-    background-color: var(--gray-50);
-    padding: 0.75rem 1.5rem;
-    border-radius: 0 0 var(--rounded-lg) var(--rounded-lg);
-
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.75rem;
-
-    button {
-      width: fit-content;
-    }
-  }
 `;
 
-export const Title = styled(Dialog.Title)`
+export const Title = styled(AlertDialog.Title)`
   margin: 0;
   font-family: var(--font-family-montserrat);
   font-size: var(--font-size-lg);
@@ -87,7 +31,7 @@ export const Title = styled(Dialog.Title)`
     `)}
 `;
 
-export const Description = styled(Dialog.Description)`
+export const Description = styled(AlertDialog.Description)`
   font-size: var(--font-size-sm);
   color: var(--secondary-200);
   line-height: 1.5;
