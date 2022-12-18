@@ -60,7 +60,6 @@ export const mixins = {
       return css`
         background-color: rgba(0, 0, 0, 0.25);
         backdrop-filter: blur(8px);
-        z-index: 2;
 
         position: fixed;
         inset: 0;
@@ -88,7 +87,6 @@ export const mixins = {
         border-radius: var(--rounded-lg);
         box-shadow: var(--shadow-lg);
         transform: translate(-50%, -50%);
-        z-index: 3;
 
         position: fixed;
         top: 50%;

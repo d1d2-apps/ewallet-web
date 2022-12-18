@@ -1,17 +1,17 @@
 import styled, { css } from 'styled-components';
 
 interface SideMenuProps {
-  $collapsed: boolean;
+  $isCollapsed: boolean;
 }
 
 interface NavItemProps {
-  $active?: boolean;
-  $collapsed: boolean;
+  $isActive?: boolean;
+  $isCollapsed: boolean;
 }
 
 interface LoggedUserProps {
-  $active: boolean;
-  $collapsed: boolean;
+  $isActive: boolean;
+  $isCollapsed: boolean;
 }
 
 export const Container = styled.main`
@@ -47,12 +47,11 @@ export const ContentContainer = styled.div`
 
 export const SideMenu = styled.nav<SideMenuProps>`
   width: 100%;
-  height: ${({ $collapsed }) => ($collapsed ? '4rem' : '100%')};
+  height: ${({ $isCollapsed: $collapsed }) => ($collapsed ? '4rem' : '100%')};
   padding: 1rem 0.5rem;
   background-color: white;
   transition: all 0.5s;
   box-shadow: var(--shadow-md);
-  z-index: 1;
 
   position: absolute;
   top: 0;
@@ -62,7 +61,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
   display: flex;
   flex-direction: column;
 
-  ${({ theme, $collapsed }) =>
+  ${({ theme, $isCollapsed: $collapsed }) =>
     theme.mixins.screen.md(css`
       width: ${$collapsed ? '4.5rem' : '100%'};
       max-width: 20rem;
@@ -102,7 +101,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
 
         display: block;
 
-        ${({ theme, $collapsed }) =>
+        ${({ theme, $isCollapsed: $collapsed }) =>
           theme.mixins.screen.md(css`
             display: ${$collapsed ? 'none' : 'block'};
           `)}
@@ -113,7 +112,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
   ul {
     width: 100%;
     margin-top: 2rem;
-    display: ${({ $collapsed }) => ($collapsed ? 'none' : 'block')};
+    display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'block')};
 
     ${({ theme }) =>
       theme.mixins.screen.md(css`
@@ -180,7 +179,7 @@ export const NavItem = styled.li<NavItemProps>`
       color: var(--gray-500);
     }
 
-    ${({ $active }) =>
+    ${({ $isActive: $active }) =>
       $active &&
       css`
         background-color: var(--primary-50);
@@ -196,7 +195,7 @@ export const NavItem = styled.li<NavItemProps>`
       text-overflow: ellipsis;
       overflow: hidden;
 
-      display: ${({ $collapsed }) => ($collapsed ? 'none' : 'inline')};
+      display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'inline')};
     }
   }
 
@@ -211,7 +210,7 @@ export const LoggedUser = styled.div<LoggedUserProps>`
   display: flex;
   align-items: flex-end;
 
-  display: ${({ $collapsed }) => ($collapsed ? 'none' : 'flex')};
+  display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'flex')};
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
@@ -242,10 +241,10 @@ export const LoggedUser = styled.div<LoggedUserProps>`
       text-overflow: ellipsis;
       overflow: hidden;
 
-      display: ${({ $collapsed }) => ($collapsed ? 'none' : 'inline')};
+      display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'inline')};
     }
 
-    ${({ $active }) =>
+    ${({ $isActive: $active }) =>
       $active &&
       css`
         background-color: var(--primary-50);
