@@ -22,7 +22,7 @@ export function AppRoutes() {
   const routesElement = useRoutes([...routes, ...commonRoutes]);
 
   if (isLoadingUser) {
-    return <LoadingFeedback />;
+    return <LoadingFeedback title="Carregando informações..." />;
   }
 
   return routesElement;

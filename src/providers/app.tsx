@@ -61,7 +61,7 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
 export function AppProvider({ children }: AppProviderProps) {
   return (
     <ThemeProvider theme={theme}>
-      <Suspense fallback={<LoadingFeedback />}>
+      <Suspense fallback={<LoadingFeedback title="Carregando informações..." />}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <HelmetProvider>
             <QueryClientProvider client={queryClient}>

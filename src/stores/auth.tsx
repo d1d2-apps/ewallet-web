@@ -81,10 +81,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     refetchUser().then(() => setIsLoadingUser(false));
   }, [refetchUser]);
 
-  if (isLoadingUser) {
-    return <LoadingFeedback />;
-  }
-
   return <AuthContext.Provider value={providerValue}>{children}</AuthContext.Provider>;
 }
 
