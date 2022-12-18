@@ -112,7 +112,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
 
             <footer>
               <Dialog.Close asChild>
-                <Button colorScheme="white" size="sm" onClick={handleCloseModal}>
+                <Button colorScheme="white" size="sm" onClick={handleCloseModal} disabled={isSubmitting}>
                   Fechar
                 </Button>
               </Dialog.Close>
