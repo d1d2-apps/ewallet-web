@@ -52,11 +52,6 @@ export const ProfilePictureSection = styled.section`
       flex-direction: column;
       gap: 0.5rem;
 
-      ${({ theme }) =>
-        theme.mixins.screen.md(css`
-          text-align: left;
-        `)}
-
       span {
         text-transform: uppercase;
         font-size: var(--font-size-xs);
