@@ -1,7 +1,10 @@
-import { FiLogIn } from 'react-icons/fi';
+import { FiLogIn, FiMoon, FiSun } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import { useAuth } from '@/stores/auth';
+import { useColorMode } from '@/stores/colorMode';
+
+import { useColorModeValue } from '@/hooks';
 
 import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
@@ -12,6 +15,12 @@ import * as S from './LandingPage.styles';
 
 export function LandingPage() {
   const { user } = useAuth();
+  const { toggleColorMode } = useColorMode();
+
+  const colorModeButtonConfig = {
+    title: useColorModeValue('Habilitar modo escuro', 'Habilitar modo claro'),
+    icon: useColorModeValue(<FiMoon />, <FiSun />)
+  };
 
   return (
     <>
@@ -24,10 +33,22 @@ export function LandingPage() {
             <h1>eWallet</h1>
           </div>
 
-          <Link to={user ? '/app/profile' : '/auth/sign-in'}>
-            <FiLogIn />
-            {user ? 'Acessar plataforma' : 'Iniciar sessão'}
-          </Link>
+          <div>
+            <Button
+              colorScheme="white"
+              size="sm"
+              isRounded
+              title={colorModeButtonConfig.title}
+              onClick={toggleColorMode}
+            >
+              {colorModeButtonConfig.icon}
+            </Button>
+
+            <Link to={user ? '/app/profile' : '/auth/sign-in'}>
+              <FiLogIn />
+              {user ? 'Acessar plataforma' : 'Iniciar sessão'}
+            </Link>
+          </div>
         </S.Header>
 
         <S.Hero>

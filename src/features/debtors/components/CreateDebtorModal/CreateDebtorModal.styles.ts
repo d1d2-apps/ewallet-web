@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
+import { opacify } from 'polished';
 
 export const Overlay = styled(Dialog.Overlay)`
   ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}
@@ -13,7 +14,7 @@ export const Content = styled(Dialog.Content)`
   header {
     padding: 1rem 1.5rem;
     position: relative;
-    border-bottom: 1px solid var(--gray-100);
+    border-bottom: 1px solid ${({ theme }) => opacify(-0.95, theme.colors.neutral)};
 
     & > button {
       position: absolute;
@@ -34,9 +35,9 @@ export const Content = styled(Dialog.Content)`
 export const Title = styled(Dialog.Title)`
   max-width: calc(100% - 2rem);
   margin: 0 auto;
-  font-family: var(--font-family-montserrat);
-  font-size: var(--font-size-lg);
+  font-family: ${({ theme }) => theme.fontFamily.montserrat};
+  font-size: ${({ theme }) => theme.fontSize.lg};
   font-weight: bold;
   text-align: center;
-  color: var(--secondary-500);
+  color: ${({ theme }) => theme.colors.secondary};
 `;

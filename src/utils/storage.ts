@@ -9,5 +9,11 @@ export const storage = {
   },
   clearToken: () => {
     localStorage.removeItem(`${storagePrefix}:token`);
+  },
+  getColorMode: () => {
+    return JSON.parse(localStorage.getItem(`${storagePrefix}:colorMode`) || 'light') as 'light' | 'dark';
+  },
+  setColorMode: (colorMode: 'light' | 'dark') => {
+    localStorage.setItem(`${storagePrefix}:colorMode`, JSON.stringify(colorMode));
   }
 };

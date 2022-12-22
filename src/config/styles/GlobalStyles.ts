@@ -1,29 +1,4 @@
 import { createGlobalStyle, css } from 'styled-components';
-import { theme as themeConfig } from './theme';
-
-const generateColorsCssVariables = (colors: typeof themeConfig.colors) => {
-  const colorsKeys = Object.keys(colors) as Array<keyof typeof themeConfig.colors>;
-
-  let cssVariables = '';
-
-  colorsKeys.forEach(color => {
-    Object.entries(colors[color]).forEach(([prop, value]) => {
-      cssVariables += `--${color}-${prop}: ${value};`;
-    });
-  });
-
-  return cssVariables;
-};
-
-const generateCssVariablesFor = (config: keyof typeof themeConfig) => {
-  let cssVariables = '';
-
-  Object.entries(themeConfig[config]).forEach(([prop, value]) => {
-    cssVariables += `--${config}-${prop}: ${value};`;
-  });
-
-  return cssVariables;
-};
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -54,13 +29,13 @@ export const GlobalStyle = createGlobalStyle`
     )}
 
   body {
-    background: var(--gray-50);
-    color: var(--secondary-500);
+    background: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.secondary};
     -webkit-font-smoothing: antialiased;
   }
 
   body, input, textarea, select, button {
-    font: 400 1rem var(--font-family-inter);
+    font: 400 1rem ${({ theme }) => theme.fontFamily.inter};
   }
 
   button {
@@ -70,14 +45,5 @@ export const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
-  }
-
-  :root {
-    ${({ theme }) => generateColorsCssVariables(theme.colors)}
-    ${generateCssVariablesFor('font-size')}
-    ${generateCssVariablesFor('font-family')}
-    ${generateCssVariablesFor('shadow')}
-    ${generateCssVariablesFor('ring')}
-    ${generateCssVariablesFor('rounded')}
   }
 `;

@@ -1,4 +1,5 @@
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { opacify } from 'polished';
 import { Slot as RadixSlot } from '@radix-ui/react-slot';
 
 import { HeadingVariant } from './Heading';
@@ -7,24 +8,24 @@ interface ContainerProps {
   $variant: HeadingVariant;
 }
 
-const HEADING_VARIANTS_STYLES_CONFIG: Record<HeadingVariant, FlattenSimpleInterpolation> = {
+const HEADING_VARIANTS_STYLES_CONFIG = {
   h2: css`
-    font-family: var(--font-family-montserrat);
-    font-size: var(--font-size-2xl);
+    font-family: ${({ theme }) => theme.fontFamily.montserrat};
+    font-size: ${({ theme }) => theme.fontSize['2xl']};
     font-weight: 500;
-    color: var(--gray-500);
+    color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
   `,
   h3: css`
-    font-family: var(--font-family-montserrat);
-    font-size: var(--font-size-md);
+    font-family: ${({ theme }) => theme.fontFamily.montserrat};
+    font-size: ${({ theme }) => theme.fontSize.md};
     font-weight: bold;
     text-transform: uppercase;
   `,
   h4: css`
-    font-family: var(--font-family-inter);
-    font-size: var(--font-size-sm);
+    font-family: ${({ theme }) => theme.fontFamily.inter};
+    font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: 400;
-    color: var(--gray-400);
+    color: ${({ theme }) => opacify(-0.1, theme.colors.neutral)};
   `
 };
 

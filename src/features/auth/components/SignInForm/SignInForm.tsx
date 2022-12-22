@@ -70,7 +70,6 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
         label="Seu e-mail"
         icon={FiMail}
         placeholder="fulano@email.com.br"
-        isDisabled={isSubmitting}
       />
 
       <ControlledTextInput
@@ -80,7 +79,6 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
         label="Sua senha"
         icon={FiLock}
         placeholder="********"
-        isDisabled={isSubmitting}
       />
 
       <Button type="submit" isLoading={isSubmitting} loadingText="Entrando...">

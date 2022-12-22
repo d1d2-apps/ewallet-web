@@ -1,3 +1,4 @@
+import { opacify, tint } from 'polished';
 import styled, { css } from 'styled-components';
 
 interface SideMenuProps {
@@ -47,11 +48,11 @@ export const ContentContainer = styled.div`
 
 export const SideMenu = styled.nav<SideMenuProps>`
   width: 100%;
-  height: ${({ $isCollapsed: $collapsed }) => ($collapsed ? '4rem' : '100%')};
+  height: ${({ $isCollapsed }) => ($isCollapsed ? '4rem' : '100%')};
   padding: 1rem 0.5rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.backgroundOffset};
   transition: all 0.5s;
-  box-shadow: var(--shadow-md);
+  box-shadow: ${({ theme }) => theme.shadow.md};
 
   position: absolute;
   top: 0;
@@ -61,15 +62,15 @@ export const SideMenu = styled.nav<SideMenuProps>`
   display: flex;
   flex-direction: column;
 
-  ${({ theme, $isCollapsed: $collapsed }) =>
+  ${({ theme, $isCollapsed }) =>
     theme.mixins.screen.md(css`
-      width: ${$collapsed ? '4.5rem' : '100%'};
+      width: ${$isCollapsed ? '4.5rem' : '100%'};
       max-width: 20rem;
       height: 100%;
       padding: 1.5rem 0.5rem;
-      border-top-right-radius: var(--rounded-lg);
-      border-bottom-right-radius: var(--rounded-lg);
-      box-shadow: ${$collapsed ? 'var(--shadow-xl)' : 'var(--shadow-2xl)'};
+      border-top-right-radius: ${theme.rounded.lg};
+      border-bottom-right-radius: ${theme.rounded.lg};
+      box-shadow: ${$isCollapsed ? theme.shadow.xl : theme.shadow['2xl']};
     `)}
 
   header {
@@ -93,17 +94,17 @@ export const SideMenu = styled.nav<SideMenuProps>`
       }
 
       h1 {
-        font-family: var(--font-family-montserrat);
-        font-size: var(--font-size-lg);
+        font-family: ${({ theme }) => theme.fontFamily.montserrat};
+        font-size: ${({ theme }) => theme.fontSize.lg};
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
 
         display: block;
 
-        ${({ theme, $isCollapsed: $collapsed }) =>
+        ${({ theme, $isCollapsed }) =>
           theme.mixins.screen.md(css`
-            display: ${$collapsed ? 'none' : 'block'};
+            display: ${$isCollapsed ? 'none' : 'block'};
           `)}
       }
     }
@@ -112,7 +113,7 @@ export const SideMenu = styled.nav<SideMenuProps>`
   ul {
     width: 100%;
     margin-top: 2rem;
-    display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'block')};
+    display: ${({ $isCollapsed }) => ($isCollapsed ? 'none' : 'block')};
 
     ${({ theme }) =>
       theme.mixins.screen.md(css`
@@ -124,31 +125,31 @@ export const SideMenu = styled.nav<SideMenuProps>`
 export const CollapseButton = styled.button`
   width: 2rem;
   height: 2rem;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.backgroundOffset};
   border: none;
-  border-radius: var(--rounded-full);
+  border-radius: ${({ theme }) => theme.rounded.full};
   transform: rotate(270deg);
   transition: all 0.2s;
 
-  font-size: var(--font-size-lg);
-  color: ${({ theme }) => theme.colors.gray[500]};
+  font-size: ${({ theme }) => theme.fontSize.lg};
+  color: ${({ theme }) => theme.colors.neutral};
 
   display: flex;
   justify-content: center;
   align-items: center;
 
   &:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: ${({ theme }) => theme.shadow.md};
   }
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
       width: 1.5rem;
       height: 1.5rem;
-      box-shadow: var(--shadow-sm);
+      box-shadow: ${theme.shadow.sm};
       transform: rotate(0deg);
 
-      font-size: var(--font-size-sm);
+      font-size: ${theme.fontSize.sm};
 
       position: absolute;
       top: 1rem;
@@ -164,38 +165,38 @@ export const NavItem = styled.li<NavItemProps>`
     width: 100%;
     height: 100%;
     padding: 1rem;
-    border-radius: var(--rounded-sm);
+    border-radius: ${({ theme }) => theme.rounded.sm};
     transition: all 0.2s;
 
-    font-size: var(--font-size-xl);
-    color: var(--gray-400);
+    font-size: ${({ theme }) => theme.fontSize.xl};
+    color: ${({ theme }) => opacify(-0.6, theme.colors.neutral)};
 
     display: flex;
     align-items: center;
     gap: 1.5rem;
 
     &:hover {
-      background-color: var(--gray-100);
-      color: var(--gray-500);
+      background-color: ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
+      color: ${({ theme }) => opacify(-0.3, theme.colors.neutral)};
     }
 
-    ${({ $isActive: $active }) =>
-      $active &&
+    ${({ theme, $isActive }) =>
+      $isActive &&
       css`
-        background-color: var(--primary-50);
-        color: var(--primary-500);
+        background-color: ${opacify(-0.8, theme.colors.primary)};
+        color: ${theme.colors.primary};
         pointer-events: none;
       `}
 
     span {
       flex: 1;
 
-      font-size: var(--font-size-md);
+      font-size: ${({ theme }) => theme.fontSize.md};
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
 
-      display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'inline')};
+      display: ${({ $isCollapsed }) => ($isCollapsed ? 'none' : 'inline')};
     }
   }
 
@@ -208,9 +209,12 @@ export const LoggedUser = styled.div<LoggedUserProps>`
   flex: 1;
 
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
 
-  display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'flex')};
+  display: ${({ $isCollapsed }) => ($isCollapsed ? 'none' : 'flex')};
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
@@ -220,7 +224,8 @@ export const LoggedUser = styled.div<LoggedUserProps>`
   & > a {
     width: 100%;
     padding: 0.5rem;
-    border-radius: var(--rounded-sm);
+    border-radius: ${({ theme }) => theme.rounded.sm};
+    color: ${({ theme }) => opacify(-0.6, theme.colors.neutral)};
     cursor: pointer;
     transition: all 0.2s;
 
@@ -229,13 +234,13 @@ export const LoggedUser = styled.div<LoggedUserProps>`
     gap: 1.5rem;
 
     &:hover {
-      background-color: var(--gray-100);
+      background-color: ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
+      color: ${({ theme }) => opacify(-0.3, theme.colors.neutral)};
     }
 
     strong {
       flex: 1;
       text-transform: uppercase;
-      color: var(--secondary-400);
 
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -244,11 +249,11 @@ export const LoggedUser = styled.div<LoggedUserProps>`
       display: ${({ $isCollapsed: $collapsed }) => ($collapsed ? 'none' : 'inline')};
     }
 
-    ${({ $isActive: $active }) =>
-      $active &&
+    ${({ theme, $isActive }) =>
+      $isActive &&
       css`
-        background-color: var(--primary-50);
-        color: var(--primary-500);
+        background-color: ${opacify(-0.8, theme.colors.primary)};
+        color: ${theme.colors.primary};
         pointer-events: none;
       `}
   }

@@ -84,7 +84,7 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
               <div>
                 <Button
                   size="xs"
-                  colorScheme="gray"
+                  colorScheme="neutral"
                   isRounded
                   title="Editar devedor"
                   onClick={() => handleEditDebtorClick(debtor)}
@@ -94,7 +94,7 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
 
                 <Button
                   size="xs"
-                  colorScheme="gray"
+                  colorScheme="neutral"
                   isRounded
                   title="Excluir devedor"
                   onClick={() => handleDeleteDebtorClick(debtor)}

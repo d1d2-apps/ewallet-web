@@ -1,15 +1,18 @@
 import styled, { css } from 'styled-components';
+import { opacify, tint } from 'polished';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
-interface ColorProps {
-  $color: string;
+import { AlertDialogType } from './AlertDialog';
+
+interface ContentProps {
+  $type: AlertDialogType;
 }
 
 export const Overlay = styled(AlertDialog.Overlay)`
   ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}
 `;
 
-export const Content = styled(AlertDialog.Content)<ColorProps>`
+export const Content = styled(AlertDialog.Content)<ContentProps>`
   ${({ theme }) => theme.mixins.dialogs.getContentBaseStyles()}
 
   main {
@@ -29,12 +32,12 @@ export const Content = styled(AlertDialog.Content)<ColorProps>`
     i {
       width: fit-content;
       height: fit-content;
-      background-color: ${({ $color }) => `var(--${$color}-100)`};
+      background-color: ${({ theme, $type }) => tint(0.1, theme.colors[$type])};
       padding: 0.5rem;
-      border-radius: var(--rounded-full);
+      border-radius: ${({ theme }) => theme.rounded.full};
 
-      font-size: var(--font-size-xl);
-      color: ${({ $color }) => `var(--${$color}-500)`};
+      font-size: ${({ theme }) => theme.fontSize.xl};
+      color: ${({ theme, $type }) => theme.colors[$type]};
 
       display: flex;
     }
@@ -49,11 +52,11 @@ export const Content = styled(AlertDialog.Content)<ColorProps>`
 
 export const Title = styled(AlertDialog.Title)`
   margin: 0;
-  font-family: var(--font-family-montserrat);
-  font-size: var(--font-size-lg);
+  font-family: ${({ theme }) => theme.fontFamily.montserrat};
+  font-size: ${({ theme }) => theme.fontSize.lg};
   font-weight: 500;
   text-align: center;
-  color: var(--secondary-500);
+  color: ${({ theme }) => theme.colors.secondary};
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
@@ -62,7 +65,7 @@ export const Title = styled(AlertDialog.Title)`
 `;
 
 export const Description = styled(AlertDialog.Description)`
-  font-size: var(--font-size-sm);
-  color: var(--secondary-200);
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => opacify(-0.25, theme.colors.neutral)};
   line-height: 1.5;
 `;

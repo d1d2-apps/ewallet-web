@@ -5,7 +5,7 @@ import { Spinner } from '../Spinner/Spinner';
 
 import * as S from './Button.styles';
 
-export type ButtonColorScheme = 'primary' | 'gray' | 'white' | 'blue' | 'red' | 'green' | 'yellow';
+export type ButtonColorScheme = 'primary' | 'neutral' | 'white' | 'info' | 'error' | 'success' | 'warning';
 export type ButtonSize = 'xs' | 'sm' | 'md';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {

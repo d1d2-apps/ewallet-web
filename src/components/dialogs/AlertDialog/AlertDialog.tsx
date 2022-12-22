@@ -1,14 +1,12 @@
-import React from 'react';
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
-import { IconBaseProps } from 'react-icons';
 import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
-import { Button, ButtonColorScheme } from '@/components/elements';
+import { Button } from '@/components/elements';
 
 import * as S from './AlertDialog.styles';
 
-type AlertDialogType = 'info' | 'error' | 'success' | 'warning';
+export type AlertDialogType = 'info' | 'error' | 'success' | 'warning';
 
 export interface AlertDialogProps {
   type?: AlertDialogType;
@@ -17,23 +15,16 @@ export interface AlertDialogProps {
   okButtonLabel?: string;
 }
 
-interface AlertTypeConfig {
-  icon: React.ComponentType<IconBaseProps>;
-  color: Extract<ButtonColorScheme, 'blue' | 'red' | 'green' | 'yellow'>;
-}
-
-const ALERT_TYPES_CONFIG: Record<AlertDialogType, AlertTypeConfig> = {
-  info: { icon: FiAlertCircle, color: 'blue' },
-  error: { icon: FiXCircle, color: 'red' },
-  success: { icon: FiCheckCircle, color: 'green' },
-  warning: { icon: FiAlertTriangle, color: 'yellow' }
+const ALERT_TYPES_ICONS = {
+  info: <FiAlertCircle />,
+  error: <FiXCircle />,
+  success: <FiCheckCircle />,
+  warning: <FiAlertTriangle />
 };
 
 export const AlertDialog = NiceModal.create<AlertDialogProps>(
   ({ type = 'info', title, description, okButtonLabel = 'Ok' }) => {
     const alert = useModal();
-
-    const { icon: Icon, color } = ALERT_TYPES_CONFIG[type];
 
     const handleCloseAlert = async () => {
       await alert.hide();
@@ -45,11 +36,9 @@ export const AlertDialog = NiceModal.create<AlertDialogProps>(
         <RadixAlertDialog.Portal>
           <S.Overlay />
 
-          <S.Content $color={color}>
+          <S.Content $type={type}>
             <main>
-              <i>
-                <Icon />
-              </i>
+              <i>{ALERT_TYPES_ICONS[type]}</i>
 
               <div>
                 <S.Title>{title}</S.Title>
@@ -59,7 +48,7 @@ export const AlertDialog = NiceModal.create<AlertDialogProps>(
 
             <footer>
               <RadixAlertDialog.Cancel asChild>
-                <Button colorScheme={color} size="sm" onClick={handleCloseAlert}>
+                <Button colorScheme={type} size="sm" onClick={handleCloseAlert}>
                   {okButtonLabel}
                 </Button>
               </RadixAlertDialog.Cancel>

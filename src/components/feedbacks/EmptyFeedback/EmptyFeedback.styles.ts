@@ -1,3 +1,4 @@
+import { tint } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -13,16 +14,16 @@ export const Container = styled.div`
 
   h2 {
     margin-top: 2rem;
-    font-family: var(--font-family-montserrat);
-    font-size: var(--font-size-xl);
-    color: var(--gray-500);
+    font-family: ${({ theme }) => theme.fontFamily.montserrat};
+    font-size: ${({ theme }) => theme.fontSize.xl};
+    color: ${({ theme }) => theme.colors.neutral};
     text-align: center;
   }
 
   p {
     margin-top: 0.5rem;
-    font-size: var(--font-size-md);
-    color: var(--gray-400);
+    font-size: ${({ theme }) => theme.fontSize.md};
+    color: ${({ theme }) => tint(0.1, theme.colors.neutral)};
     text-align: center;
   }
 `;

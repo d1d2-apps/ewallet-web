@@ -11,8 +11,6 @@ import { useAlertDialog } from '@/hooks';
 import { Button } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 
-import { theme } from '@/config/styles/theme';
-
 import { useCreateDebtor } from '../../api/createDebtor';
 import { useUpdateDebtor } from '../../api/updateDebtor';
 
@@ -51,7 +49,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
     resolver: yupResolver(validationSchema),
     defaultValues: {
       name: debtor?.name || '',
-      color: debtor?.color || theme.colors.gray[500]
+      color: debtor?.color || '#6b7280'
     }
   });
 
@@ -93,7 +91,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
             <header>
               <S.Title>{debtor?.id ? 'Editar' : 'Cadastrar'} devedor</S.Title>
 
-              <Button size="xs" colorScheme="gray" isRounded onClick={handleCloseModal}>
+              <Button size="xs" colorScheme="neutral" isRounded onClick={handleCloseModal}>
                 <FiX />
               </Button>
             </header>

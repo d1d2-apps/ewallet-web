@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { opacify } from 'polished';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 export const Overlay = styled(AlertDialog.Overlay)`
@@ -19,11 +20,11 @@ export const Content = styled(AlertDialog.Content)`
 
 export const Title = styled(AlertDialog.Title)`
   margin: 0;
-  font-family: var(--font-family-montserrat);
-  font-size: var(--font-size-lg);
+  font-family: ${({ theme }) => theme.fontFamily.montserrat};
+  font-size: ${({ theme }) => theme.fontSize.lg};
   font-weight: 500;
   text-align: center;
-  color: var(--secondary-500);
+  color: ${({ theme }) => theme.colors.secondary};
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
@@ -32,7 +33,7 @@ export const Title = styled(AlertDialog.Title)`
 `;
 
 export const Description = styled(AlertDialog.Description)`
-  font-size: var(--font-size-sm);
-  color: var(--secondary-200);
+  font-size: ${({ theme }) => theme.fontSize.sm};
+  color: ${({ theme }) => opacify(-0.25, theme.colors.neutral)};
   line-height: 1.5;
 `;

@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { IconType } from 'react-icons';
-import { FiChevronLeft, FiChevronRight, FiCreditCard, FiDollarSign, FiUsers } from 'react-icons/fi';
+import { FiChevronLeft, FiChevronRight, FiCreditCard, FiDollarSign, FiMoon, FiSun, FiUsers } from 'react-icons/fi';
 
 import { useAuth } from '@/stores/auth';
+import { useColorMode } from '@/stores/colorMode';
 
-import { Avatar } from '@/components/elements';
+import { useColorModeValue } from '@/hooks';
+
+import { Avatar, Button } from '@/components/elements';
 
 import logoImg from '@/assets/images/logo.png';
 
@@ -47,8 +50,14 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   const { user } = useAuth();
+  const { toggleColorMode } = useColorMode();
 
   const location = useLocation();
+
+  const colorModeButtonConfig = {
+    title: useColorModeValue('Habilitar modo escuro', 'Habilitar modo claro'),
+    icon: useColorModeValue(<FiMoon />, <FiSun />)
+  };
 
   const [isMenuCollapsed, setIsMenuCollapsed] = useState(true);
 
@@ -86,6 +95,17 @@ export function MainLayout({ children }: MainLayoutProps) {
         </ul>
 
         <S.LoggedUser $isCollapsed={isMenuCollapsed} $isActive={location.pathname.includes('profile')}>
+          <Button
+            colorScheme="white"
+            size="sm"
+            isRounded={isMenuCollapsed}
+            title={colorModeButtonConfig.title}
+            onClick={toggleColorMode}
+          >
+            {colorModeButtonConfig.icon}
+            {!isMenuCollapsed && colorModeButtonConfig.title}
+          </Button>
+
           <Link to="./profile" title="Ver perfil">
             <Avatar size="sm" source={user?.picture} />
             <strong>Diego Ferreira</strong>

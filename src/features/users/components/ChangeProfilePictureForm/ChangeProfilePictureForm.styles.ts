@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.div`
   width: fit-content;
   padding: 0.5rem;
-  background-color: white;
-  border-radius: var(--rounded-full);
-  box-shadow: var(--shadow-sm);
+  background-color: ${({ theme }) => theme.colors.backgroundOffset};
+  border-radius: ${({ theme }) => theme.rounded.full};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
   position: relative;
 
   display: flex;
@@ -15,7 +15,7 @@ export const Container = styled.div`
   img {
     max-width: 10rem;
     aspect-ratio: 1 / 1;
-    border-radius: var(--rounded-full);
+    border-radius: ${({ theme }) => theme.rounded.full};
     object-fit: cover;
   }
 

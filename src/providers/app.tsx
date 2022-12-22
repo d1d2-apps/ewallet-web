@@ -6,7 +6,7 @@ import { ThemeProvider, useTheme } from 'styled-components';
 import { QueryClientProvider } from '@tanstack/react-query';
 import NiceModal from '@ebay/nice-modal-react';
 
-import { theme } from '@/config/styles/theme';
+import { themes } from '@/config/styles/themes';
 import { GlobalStyle } from '@/config/styles/GlobalStyles';
 
 import { queryClient } from '@/lib/react-query';
@@ -16,13 +16,14 @@ import { AuthProvider } from '@/stores/auth';
 
 import { Button } from '@/components/elements';
 import { LoadingFeedback } from '@/components/feedbacks';
+import { ColorModeProvider, useColorMode } from '@/stores/colorMode';
 
 interface AppProviderProps {
   children: React.ReactNode;
 }
 
 function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
-  const appTheme = useTheme();
+  const theme = useTheme();
 
   return (
     <div
@@ -39,17 +40,17 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
     >
       <h2
         style={{
-          fontFamily: appTheme['font-family'].montserrat,
-          fontSize: appTheme['font-size']['2xl'],
+          fontFamily: theme.fontFamily.montserrat,
+          fontSize: theme.fontSize['2xl'],
           fontWeight: 600,
-          color: appTheme.colors.red[500],
+          color: theme.colors.error,
           margin: 0
         }}
       >
         Ooops, alguma coisa deu errado :(
       </h2>
 
-      <pre style={{ fontSize: appTheme['font-size'].lg, margin: 0 }}>{error.message}</pre>
+      <pre style={{ fontSize: theme.fontSize.lg, margin: 0 }}>{error.message}</pre>
 
       <Button style={{ width: 'fit-content' }} onClick={resetErrorBoundary}>
         Recarregar
@@ -58,9 +59,13 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   );
 }
 
-export function AppProvider({ children }: AppProviderProps) {
+function App({ children }: AppProviderProps) {
+  const { colorMode } = useColorMode();
+
+  const currentTheme = themes[colorMode];
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={currentTheme}>
       <Suspense fallback={<LoadingFeedback title="Carregando informações..." />}>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <HelmetProvider>
@@ -77,7 +82,15 @@ export function AppProvider({ children }: AppProviderProps) {
         </ErrorBoundary>
       </Suspense>
 
-      <GlobalStyle theme={theme} />
+      <GlobalStyle theme={currentTheme} />
     </ThemeProvider>
+  );
+}
+
+export function AppProvider({ children }: AppProviderProps) {
+  return (
+    <ColorModeProvider>
+      <App>{children}</App>
+    </ColorModeProvider>
   );
 }

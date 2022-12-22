@@ -1,6 +1,12 @@
 import { Link, useLocation } from 'react-router-dom';
+import { FiMoon, FiSun } from 'react-icons/fi';
+
+import { useColorMode } from '@/stores/colorMode';
+
+import { useColorModeValue } from '@/hooks';
 
 import { Head } from '@/components/head';
+import { Button } from '@/components/elements';
 
 import logoImg from '@/assets/images/logo.png';
 import spreadsheetImg from '../../assets/images/spreadsheet.png';
@@ -18,6 +24,13 @@ export function Layout({ title, children }: LayoutProps) {
   const isInSignInPage = location.pathname === '/auth/sign-in';
   const isInSignUpPage = location.pathname === '/auth/sign-up';
 
+  const { toggleColorMode } = useColorMode();
+
+  const colorModeButtonConfig = {
+    title: useColorModeValue('Habilitar modo escuro', 'Habilitar modo claro'),
+    icon: useColorModeValue(<FiMoon />, <FiSun />)
+  };
+
   return (
     <>
       <Head title={title} />
@@ -28,6 +41,10 @@ export function Layout({ title, children }: LayoutProps) {
             <img src={logoImg} alt="eWallet Logo" />
             <h1>eWallet</h1>
           </Link>
+
+          <Button colorScheme="white" size="sm" isRounded title={colorModeButtonConfig.title} onClick={toggleColorMode}>
+            {colorModeButtonConfig.icon}
+          </Button>
         </header>
 
         <main>

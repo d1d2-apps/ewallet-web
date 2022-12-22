@@ -10,7 +10,7 @@ export const Footer = styled.footer`
   text-align: center;
 
   a {
-    font-size: var(--font-size-sm);
+    font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: bold;
 
     &:hover {

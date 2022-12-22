@@ -1,3 +1,4 @@
+import { opacify } from 'polished';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
@@ -7,7 +8,7 @@ interface TabProps {
 
 export const Container = styled.div`
   min-height: 100vh;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.background};
   padding-bottom: 2rem;
 
   display: flex;
@@ -18,6 +19,10 @@ export const Container = styled.div`
   & > header {
     width: 100%;
     padding: 1rem 1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     ${({ theme }) =>
       theme.mixins.screen.md(css`
@@ -36,8 +41,8 @@ export const Container = styled.div`
       }
 
       h1 {
-        font-family: var(--font-family-montserrat);
-        font-size: var(--font-size-2xl);
+        font-family: ${({ theme }) => theme.fontFamily.montserrat};
+        font-size: ${({ theme }) => theme.fontSize['2xl']};
       }
     }
   }
@@ -75,8 +80,8 @@ export const ImageSection = styled.section`
     `)}
 
   h2 {
-    font-family: var(--font-family-montserrat);
-    font-size: var(--font-size-xl);
+    font-family: ${({ theme }) => theme.fontFamily.montserrat};
+    font-size: ${({ theme }) => theme.fontSize.xl};
     font-weight: 900;
     text-align: center;
     color: ${({ theme }) => theme.colors.secondary[500]};
@@ -84,7 +89,7 @@ export const ImageSection = styled.section`
 
     ${({ theme }) =>
       theme.mixins.screen.md(css`
-        font-size: var(--font-size-2xl);
+        font-size: ${theme.fontSize['2xl']};
       `)}
   }
 
@@ -97,14 +102,14 @@ export const ImageSection = styled.section`
 
   p {
     max-width: 40rem;
-    font-size: var(--font-size-sm);
-    color: var(--gray-500);
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
     text-align: center;
     line-height: 1.5;
 
     ${({ theme }) =>
       theme.mixins.screen.md(css`
-        font-size: var(--font-size-md);
+        font-size: ${theme.fontSize.md};
       `)}
   }
 `;
@@ -113,8 +118,9 @@ export const FormSection = styled.section`
   max-width: 30rem;
   width: 100%;
   padding: 2rem;
-  border: 1px solid var(--gray-200);
-  border-radius: var(--rounded-lg);
+  background-color: ${({ theme }) => theme.colors.backgroundOffset};
+  border-radius: ${({ theme }) => theme.rounded.lg};
+  box-shadow: ${({ theme }) => theme.shadow.md};
 `;
 
 export const Tabs = styled.div`
@@ -130,24 +136,24 @@ export const Tab = styled(Link)<TabProps>`
   padding: 0 0 1rem;
   border-bottom: 2px solid transparent;
 
-  font-size: var(--font-size-sm);
+  font-size: ${({ theme }) => theme.fontSize.sm};
   font-weight: 600;
-  color: var(--gray-400);
+  color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
   text-align: center;
   text-transform: uppercase;
 
   transition: all 0.2s;
 
   &:hover {
-    color: var(--secondary-500);
-    border-bottom-color: var(--gray-500);
+    color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
+    border-bottom-color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
   }
 
   ${({ $isActive }) =>
     $isActive &&
     css`
-      border-bottom-color: var(--primary-500);
-      color: var(--secondary-500);
+      border-bottom-color: ${({ theme }) => theme.colors.primary};
+      color: ${({ theme }) => theme.colors.secondary};
       pointer-events: none;
     `}
 `;

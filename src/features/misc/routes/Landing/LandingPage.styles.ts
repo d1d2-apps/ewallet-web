@@ -1,10 +1,12 @@
+import { opacify } from 'polished';
 import styled, { css } from 'styled-components';
 
 import financesImg from '../../assets/images/finances.png';
 
 export const Container = styled.div`
   height: 100vh;
-  background: linear-gradient(to bottom, var(--secondary-900) 20%, var(--secondary-500) 100%);
+  background: ${({ theme }) =>
+    `linear-gradient(to bottom, ${theme.colors.backgroundOffset} 20%, ${theme.colors.background} 100%)`};
 
   display: flex;
   flex-direction: column;
@@ -13,10 +15,9 @@ export const Container = styled.div`
 
 export const Header = styled.header`
   width: 100%;
-  height: 3.5rem;
   padding: 0 0 0 1rem;
-  background-color: var(--secondary-900);
-  color: var(--gray-200);
+  background-color: ${({ theme }) => theme.colors.backgroundOffset};
+  color: ${({ theme }) => theme.colors.secondary};
 
   display: flex;
   align-items: center;
@@ -24,7 +25,7 @@ export const Header = styled.header`
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
-      padding: 0 5rem;
+      padding: 1rem 5rem;
     `)}
 
   & > div {
@@ -38,16 +39,17 @@ export const Header = styled.header`
     }
 
     h1 {
-      font-size: var(--font-size-2xl);
-      color: var(--gray-50);
+      font-family: ${({ theme }) => theme.fontFamily.montserrat};
+      font-size: ${({ theme }) => theme.fontSize['2xl']};
+      color: ${({ theme }) => theme.colors.secondary};
       pointer-events: none;
     }
   }
 
   a {
     font-weight: 500;
-    padding: 0.75rem 1rem;
-    border-radius: var(--rounded-full);
+    padding: 0.5rem 1rem;
+    border-radius: ${({ theme }) => theme.rounded.full};
     transition: all 0.2s;
 
     display: flex;
@@ -55,8 +57,8 @@ export const Header = styled.header`
     gap: 0.75rem;
 
     &:hover {
-      color: var(--primary-500);
-      background-color: var(--secondary-800);
+      color: ${({ theme }) => theme.colors.background};
+      background-color: ${({ theme }) => theme.colors.primary};
     }
   }
 `;
@@ -79,30 +81,30 @@ export const Hero = styled.main`
     gap: 2rem;
 
     h2 {
-      font-size: var(--font-size-3xl);
+      font-size: ${({ theme }) => theme.fontSize['3xl']};
       font-weight: 800;
       text-align: center;
-      color: var(--gray-200);
+      color: ${({ theme }) => theme.colors.secondary};
 
       ${({ theme }) =>
         theme.mixins.screen.md(css`
-          font-size: var(--font-size-5xl);
+          font-size: ${theme.fontSize['5xl']};
           text-align: left;
         `)}
 
       strong {
         font-weight: 900;
-        color: var(--primary-500);
+        color: ${({ theme }) => theme.colors.primary};
       }
     }
 
     p {
       max-width: 30rem;
       margin: 0 auto;
-      font-size: var(--font-size-lg);
+      font-size: ${({ theme }) => theme.fontSize.lg};
       font-weight: 300;
       text-align: center;
-      color: var(--gray-300);
+      color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
 
       ${({ theme }) =>
         theme.mixins.screen.md(css`
@@ -134,7 +136,7 @@ export const HeroImage = styled.img.attrs({
       display: block;
       max-width: 20rem;
       object-fit: contain;
-      filter: drop-shadow(0 0 4rem var(--secondary-300));
+      filter: ${`drop-shadow(0 0 4rem ${theme.colors.primary})`};
     `)}
 
   ${({ theme }) =>

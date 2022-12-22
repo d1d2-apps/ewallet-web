@@ -15,7 +15,7 @@ export const Container = styled.label`
   gap: 0.5rem;
 
   & > span {
-    font-size: var(--font-size-sm);
+    font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: 500;
   }
 `;
@@ -29,8 +29,8 @@ export const SelectedColor = styled.div<SelectedColorProps>`
     width: 3rem;
     height: 3rem;
     background-color: ${({ $color }) => $color};
-    border-radius: var(--rounded-full);
-    box-shadow: var(--shadow-lg);
+    border-radius: ${({ theme }) => theme.rounded.full};
+    box-shadow: ${({ theme }) => theme.shadow.lg};
   }
 `;
 
@@ -39,10 +39,10 @@ export const ColorButton = styled.button.attrs({
 })<ColorButtonProps>`
   width: 2rem;
   height: 2rem;
-  background-color: ${({ $color }) => `var(--${$color}-500)`};
+  background-color: ${({ $color }) => $color};
   border: 0.5rem solid transparent;
-  border-radius: var(--rounded-full);
-  box-shadow: var(--shadow-sm);
+  border-radius: ${({ theme }) => theme.rounded.full};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
   transition: all 0.2s;
 
   & + button {
@@ -50,7 +50,7 @@ export const ColorButton = styled.button.attrs({
   }
 
   &:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: ${({ theme }) => theme.shadow.md};
   }
 
   &:active {
@@ -71,6 +71,6 @@ export const ColorButton = styled.button.attrs({
 `;
 
 export const ErrorMessage = styled.small`
-  font-size: var(--font-size-xs);
-  color: var(--red-500);
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: ${({ theme }) => theme.colors.error};
 `;

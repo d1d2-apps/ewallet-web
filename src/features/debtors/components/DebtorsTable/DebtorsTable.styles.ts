@@ -1,3 +1,4 @@
+import { opacify } from 'polished';
 import styled from 'styled-components';
 
 interface NameTableCellProps {
@@ -12,8 +13,8 @@ export const NameTableCell = styled.td<NameTableCellProps>`
 
     & > div {
       padding: 0.25rem;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--rounded-full);
+      border: 1px solid ${({ theme }) => opacify(-0.7, theme.colors.neutral)};
+      border-radius: ${({ theme }) => theme.rounded.full};
 
       display: flex;
       align-items: center;
@@ -24,7 +25,7 @@ export const NameTableCell = styled.td<NameTableCellProps>`
         width: 1rem;
         height: 1rem;
         background-color: ${({ $color }) => $color};
-        border-radius: var(--rounded-full);
+        border-radius: ${({ theme }) => theme.rounded.full};
       }
     }
   }

@@ -1,3 +1,4 @@
+import { opacify, tint } from 'polished';
 import styled, { css } from 'styled-components';
 
 interface BaseContainerProps {
@@ -9,38 +10,38 @@ export const BaseContainer = styled.div<BaseContainerProps>`
   width: 100%;
   height: 3rem;
   padding-left: 1rem;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--rounded-sm);
+  border: 1px solid ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
+  border-radius: ${({ theme }) => theme.rounded.sm};
   transition: all 0.2s;
 
   display: flex;
   align-items: center;
   gap: 0.75rem;
 
-  --icon-color: var(--gray-300);
+  --icon-color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
 
   &:hover {
-    background-color: var(--gray-50);
+    background-color: ${({ theme }) => opacify(-0.95, theme.colors.neutral)};
   }
 
   &:focus-within {
-    background-color: white;
-    border-color: var(--primary-500);
-    box-shadow: var(--ring-primary);
+    background-color: ${({ theme }) => theme.colors.backgroundOffset};
+    border-color: ${({ theme }) => theme.colors.primary};
+    box-shadow: ${({ theme }) => theme.mixins.ring.xs(theme.colors.primary)};
 
-    --icon-color: var(--primary-500);
+    --icon-color: ${({ theme }) => theme.colors.primary};
   }
 
   ${({ $hasError }) =>
     $hasError &&
     css`
-      border-color: var(--red-500);
+      border-color: ${({ theme }) => theme.colors.error};
     `}
 
   ${({ $isDisabled }) =>
     $isDisabled &&
     css`
-      background-color: var(--gray-100);
+      background-color: ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
       pointer-events: none;
     `}
 `;
@@ -61,9 +62,9 @@ export const InputContainer = styled.input`
   background-color: transparent;
   padding-right: 1rem;
   border: none;
-  color: var(--secondary-500);
+  color: ${({ theme }) => theme.colors.secondary};
 
   &::placeholder {
-    color: var(--gray-300);
+    color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
   }
 `;

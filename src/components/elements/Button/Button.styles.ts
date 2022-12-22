@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import { Slot as RadixSlot } from '@radix-ui/react-slot';
 
+import { opacify, shade, tint } from 'polished';
 import { ButtonColorScheme, ButtonSize } from './Button';
 
 interface ContainerProps {
@@ -9,98 +10,105 @@ interface ContainerProps {
   $isRounded: boolean;
 }
 
-interface ButtonColorSchemeConfig {
-  backgroundColor: string;
-  textColor: string;
-  hover: Omit<ButtonColorSchemeConfig, 'hover' | 'active'>;
-  active: Omit<ButtonColorSchemeConfig, 'hover' | 'active'>;
-}
+const BUTTON_COLOR_SCHEMES_CONFIGS = {
+  primary: css`
+    background-color: ${({ theme }) => theme.colors.primary};
+    color: white;
 
-const BUTTON_COLOR_SCHEMES_CONFIGS: Record<ButtonColorScheme, ButtonColorSchemeConfig> = {
-  primary: {
-    backgroundColor: 'var(--primary-500)',
-    textColor: 'white',
-    hover: {
-      backgroundColor: 'var(--primary-600)',
-      textColor: 'white'
-    },
-    active: {
-      backgroundColor: 'var(--primary-700)',
-      textColor: 'white'
+    &:hover {
+      background-color: ${({ theme }) => shade(0.1, theme.colors.primary)};
+      color: white;
     }
-  },
-  gray: {
-    backgroundColor: 'var(--gray-100)',
-    textColor: 'var(--secondary-500)',
-    hover: {
-      backgroundColor: 'var(--gray-200)',
-      textColor: 'var(--secondary-600)'
-    },
-    active: {
-      backgroundColor: 'var(--gray-300)',
-      textColor: 'var(--secondary-700)'
+
+    &:active {
+      background-color: ${({ theme }) => shade(0.2, theme.colors.primary)};
+      color: white;
     }
-  },
-  white: {
-    backgroundColor: 'white',
-    textColor: 'var(--secondary-500)',
-    hover: {
-      backgroundColor: 'var(--gray-50)',
-      textColor: 'var(--secondary-600)'
-    },
-    active: {
-      backgroundColor: 'var(--gray-100)',
-      textColor: 'var(--secondary-700)'
+  `,
+  neutral: css`
+    background-color: ${({ theme }) => opacify(-0.95, theme.colors.neutral)};
+    color: ${({ theme }) => theme.colors.secondary};
+
+    &:hover {
+      background-color: ${({ theme }) => opacify(-0.85, theme.colors.neutral)};
+      color: ${({ theme }) => shade(0.1, theme.colors.secondary)};
     }
-  },
-  blue: {
-    backgroundColor: 'var(--blue-500)',
-    textColor: 'white',
-    hover: {
-      backgroundColor: 'var(--blue-600)',
-      textColor: 'white'
-    },
-    active: {
-      backgroundColor: 'var(--blue-700)',
-      textColor: 'white'
+
+    &:active {
+      background-color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
+      color: ${({ theme }) => shade(0.2, theme.colors.secondary)};
     }
-  },
-  red: {
-    backgroundColor: 'var(--red-500)',
-    textColor: 'white',
-    hover: {
-      backgroundColor: 'var(--red-600)',
-      textColor: 'white'
-    },
-    active: {
-      backgroundColor: 'var(--red-700)',
-      textColor: 'white'
+  `,
+  white: css`
+    background-color: ${({ theme }) => theme.colors.backgroundOffset};
+    color: ${({ theme }) => theme.colors.secondary};
+
+    &:hover {
+      background-color: ${({ theme }) => shade(0.1, theme.colors.backgroundOffset)};
+      color: ${({ theme }) => shade(0.1, theme.colors.secondary)};
     }
-  },
-  green: {
-    backgroundColor: 'var(--green-500)',
-    textColor: 'white',
-    hover: {
-      backgroundColor: 'var(--green-600)',
-      textColor: 'white'
-    },
-    active: {
-      backgroundColor: 'var(--green-700)',
-      textColor: 'white'
+
+    &:active {
+      background-color: ${({ theme }) => shade(0.2, theme.colors.backgroundOffset)};
+      color: ${({ theme }) => shade(0.2, theme.colors.secondary)};
     }
-  },
-  yellow: {
-    backgroundColor: 'var(--yellow-500)',
-    textColor: 'white',
-    hover: {
-      backgroundColor: 'var(--yellow-600)',
-      textColor: 'white'
-    },
-    active: {
-      backgroundColor: 'var(--yellow-700)',
-      textColor: 'white'
+  `,
+  info: css`
+    background-color: ${({ theme }) => theme.colors.info};
+    color: white;
+
+    &:hover {
+      background-color: ${({ theme }) => shade(0.1, theme.colors.info)};
+      color: white;
     }
-  }
+
+    &:active {
+      background-color: ${({ theme }) => shade(0.2, theme.colors.info)};
+      color: white;
+    }
+  `,
+  error: css`
+    background-color: ${({ theme }) => theme.colors.error};
+    color: white;
+
+    &:hover {
+      background-color: ${({ theme }) => shade(0.1, theme.colors.error)};
+      color: white;
+    }
+
+    &:active {
+      background-color: ${({ theme }) => shade(0.2, theme.colors.error)};
+      color: white;
+    }
+  `,
+  success: css`
+    background-color: ${({ theme }) => theme.colors.success};
+    color: white;
+
+    &:hover {
+      background-color: ${({ theme }) => shade(0.1, theme.colors.success)};
+      color: white;
+    }
+
+    &:active {
+      background-color: ${({ theme }) => shade(0.2, theme.colors.success)};
+      color: white;
+    }
+  `,
+  warning: css`
+    background-color: ${({ theme }) => theme.colors.warning};
+    color: white;
+
+    &:hover {
+      background-color: ${({ theme }) => shade(0.1, theme.colors.warning)};
+      color: white;
+    }
+
+    &:active {
+      background-color: ${({ theme }) => shade(0.2, theme.colors.warning)};
+      color: white;
+    }
+  `
 };
 
 interface ButtonSizeConfig {
@@ -121,7 +129,7 @@ const buttonStyle = ({ $colorScheme, $size, $isRounded }: ContainerProps) => css
   font-weight: 500;
   overflow: hidden;
 
-  box-shadow: var(--shadow-sm);
+  box-shadow: ${({ theme }) => theme.shadow.sm};
   transition: all 0.2s;
 
   display: flex;
@@ -130,16 +138,10 @@ const buttonStyle = ({ $colorScheme, $size, $isRounded }: ContainerProps) => css
   gap: 0.75rem;
 
   &:hover {
-    background-color: var(--primary-600);
-    box-shadow: var(--shadow-md);
-
-    i {
-      background-color: var(--primary-500);
-    }
+    box-shadow: ${({ theme }) => theme.shadow.md};
   }
 
   &:active {
-    background-color: var(--primary-700);
     transform: scale(0.975);
   }
 
@@ -149,28 +151,18 @@ const buttonStyle = ({ $colorScheme, $size, $isRounded }: ContainerProps) => css
     box-shadow: none;
   }
 
-  ${() => {
+  ${({ theme }) => {
     const colorConfig = BUTTON_COLOR_SCHEMES_CONFIGS[$colorScheme];
     const sizeConfig = BUTTON_SIZES[$size];
 
     return css`
+      ${colorConfig}
+
       height: ${sizeConfig.height};
-      border-radius: ${`var(--rounded-${sizeConfig.rounded})`};
-      background-color: ${colorConfig.backgroundColor};
-      color: ${colorConfig.textColor};
-
-      &:hover {
-        background-color: ${colorConfig.hover.backgroundColor};
-        color: ${colorConfig.hover.textColor};
-      }
-
-      &:active {
-        background-color: ${colorConfig.active.backgroundColor};
-        color: ${colorConfig.active.textColor};
-      }
+      border-radius: ${theme.rounded[sizeConfig.rounded as keyof typeof theme.rounded]};
 
       svg {
-        font-size: ${`var(--font-size-${sizeConfig.iconSize})`};
+        font-size: ${theme.fontSize[sizeConfig.iconSize as keyof typeof theme.fontSize]};
       }
     `;
   }}
@@ -180,7 +172,7 @@ const buttonStyle = ({ $colorScheme, $size, $isRounded }: ContainerProps) => css
     css`
       padding: 0;
       aspect-ratio: 1 / 1;
-      border-radius: var(--rounded-full);
+      border-radius: ${({ theme }) => theme.rounded.full};
 
       span {
         padding: 0;

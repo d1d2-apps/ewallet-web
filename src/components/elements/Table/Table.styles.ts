@@ -1,3 +1,4 @@
+import { opacify } from 'polished';
 import styled from 'styled-components';
 
 export const TableContainer = styled.table`
@@ -11,11 +12,11 @@ export const TableContainer = styled.table`
 `;
 
 export const TableHeadContainer = styled.thead`
-  font-family: var(--font-family-montserrat);
-  font-size: var(--font-size-sm);
+  font-family: ${({ theme }) => theme.fontFamily.montserrat};
+  font-size: ${({ theme }) => theme.fontSize.sm};
   font-weight: 500;
   text-align: left;
-  color: var(--gray-400);
+  color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
 
   th {
     padding: 0 1rem;
@@ -25,21 +26,21 @@ export const TableHeadContainer = styled.thead`
 export const TableBodyContainer = styled.tbody`
   tr {
     padding: 0.25rem 0;
-    border-radius: var(--rounded-md);
+    border-radius: ${({ theme }) => theme.rounded.lg};
     vertical-align: middle;
-    box-shadow: var(--shadow-sm);
+    box-shadow: ${({ theme }) => theme.shadow.sm};
 
     td {
-      background-color: white;
+      background-color: ${({ theme }) => theme.colors.backgroundOffset};
 
       &:first-child {
-        border-top-left-radius: var(--rounded-lg);
-        border-bottom-left-radius: var(--rounded-lg);
+        border-top-left-radius: ${({ theme }) => theme.rounded.lg};
+        border-bottom-left-radius: ${({ theme }) => theme.rounded.lg};
       }
 
       &:last-child {
-        border-top-right-radius: var(--rounded-lg);
-        border-bottom-right-radius: var(--rounded-lg);
+        border-top-right-radius: ${({ theme }) => theme.rounded.lg};
+        border-bottom-right-radius: ${({ theme }) => theme.rounded.lg};
       }
     }
   }

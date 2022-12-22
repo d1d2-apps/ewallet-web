@@ -1,3 +1,4 @@
+import { opacify, tint } from 'polished';
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
@@ -54,12 +55,12 @@ export const ProfilePictureSection = styled.section`
 
       span {
         text-transform: uppercase;
-        font-size: var(--font-size-xs);
-        color: var(--gray-400);
+        font-size: ${({ theme }) => theme.fontSize.xs};
+        color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
       }
 
       strong {
-        font-size: var(--font-size-md);
+        font-size: ${({ theme }) => theme.fontSize.md};
       }
     }
   }
@@ -80,10 +81,10 @@ export const ProfileDataSection = styled.section`
 `;
 
 export const ProfileInfoWrapper = styled.main`
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.backgroundOffset};
   padding: 2rem;
-  border-radius: var(--rounded-lg);
-  box-shadow: var(--shadow-sm);
+  border-radius: ${({ theme }) => theme.rounded.lg};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
 
   display: flex;
   flex-direction: column;
@@ -93,7 +94,7 @@ export const ProfileInfoWrapper = styled.main`
     width: 100%;
 
     & + section {
-      border-top: 1px solid var(--gray-200);
+      border-top: 1px solid ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
       padding-top: 2rem;
     }
   }
