@@ -6,7 +6,7 @@ import { useAuth } from '@/stores/auth';
 
 import { useAlertDialog } from '@/hooks';
 
-import { Button } from '@/components/elements';
+import { Button, Tooltip } from '@/components/elements';
 
 import personPlaceholderImg from '@/assets/images/person-placeholder.png';
 
@@ -53,14 +53,16 @@ export function ChangeProfilePictureForm() {
 
       <input ref={inputRef} type="file" id="avatar" onChange={handlePictureChange} />
 
-      <Button
-        colorScheme="white"
-        isRounded
-        onClick={handlePickPicture}
-        isLoading={changeProfilePictureMutation.isLoading}
-      >
-        <FiCamera />
-      </Button>
+      <Tooltip content="Alterar foto de perfil" side="bottom">
+        <Button
+          colorScheme="white"
+          isRounded
+          onClick={handlePickPicture}
+          isLoading={changeProfilePictureMutation.isLoading}
+        >
+          <FiCamera />
+        </Button>
+      </Tooltip>
     </S.Container>
   );
 }

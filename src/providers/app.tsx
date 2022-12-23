@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, useTheme } from 'styled-components';
 import { QueryClientProvider } from '@tanstack/react-query';
 import NiceModal from '@ebay/nice-modal-react';
+import { Provider as TooltipProvider } from '@radix-ui/react-tooltip';
 
 import { themes } from '@/config/styles/themes';
 import { GlobalStyle } from '@/config/styles/GlobalStyles';
@@ -72,7 +73,9 @@ function App({ children }: AppProviderProps) {
             <QueryClientProvider client={queryClient}>
               <NiceModal.Provider>
                 <AuthProvider>
-                  <Router>{children}</Router>
+                  <TooltipProvider>
+                    <Router>{children}</Router>
+                  </TooltipProvider>
                 </AuthProvider>
 
                 <ToastProvider />

@@ -8,7 +8,7 @@ import { useColorMode } from '@/stores/colorMode';
 
 import { useColorModeValue } from '@/hooks';
 
-import { Avatar, Button } from '@/components/elements';
+import { Avatar, Button, Tooltip } from '@/components/elements';
 
 import logoImg from '@/assets/images/logo.png';
 
@@ -33,14 +33,16 @@ const NAVIGATION: NavigationItem[] = [
 
 function NavItem({ name, to, icon: Icon, isActive = false, isCollapsed }: NavItemProps) {
   return (
-    <S.NavItem $isActive={isActive} $isCollapsed={isCollapsed} title={name}>
-      <Link to={to}>
-        <i>
-          <Icon />
-        </i>
-        <span>{name}</span>
-      </Link>
-    </S.NavItem>
+    <Tooltip content={name} side="right">
+      <S.NavItem $isActive={isActive} $isCollapsed={isCollapsed}>
+        <Link to={to}>
+          <i>
+            <Icon />
+          </i>
+          <span>{name}</span>
+        </Link>
+      </S.NavItem>
+    </Tooltip>
   );
 }
 
@@ -106,10 +108,12 @@ export function MainLayout({ children }: MainLayoutProps) {
             {!isMenuCollapsed && colorModeButtonConfig.title}
           </Button>
 
-          <Link to="./profile" title="Ver perfil">
-            <Avatar size="sm" source={user?.picture} />
-            <strong>Diego Ferreira</strong>
-          </Link>
+          <Tooltip content="Meu perfil" side="right">
+            <Link to="./profile">
+              <Avatar size="sm" source={user?.picture} />
+              <strong>Diego Ferreira</strong>
+            </Link>
+          </Tooltip>
         </S.LoggedUser>
       </S.SideMenu>
     </S.Container>

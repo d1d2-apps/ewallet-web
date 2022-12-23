@@ -4,7 +4,7 @@ import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 
 import { useAlertDialog, useConfirmationDialog } from '@/hooks';
 
-import { Button, Table } from '@/components/elements';
+import { Button, Table, Tooltip } from '@/components/elements';
 
 import { useDeleteDebtor } from '../../api/deleteDebtor';
 
@@ -82,25 +82,17 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
 
             <S.ActionsTableCell>
               <div>
-                <Button
-                  size="xs"
-                  colorScheme="neutral"
-                  isRounded
-                  title="Editar devedor"
-                  onClick={() => handleEditDebtorClick(debtor)}
-                >
-                  <FiEdit2 />
-                </Button>
+                <Tooltip content="Editar devedor">
+                  <Button size="xs" colorScheme="neutral" isRounded onClick={() => handleEditDebtorClick(debtor)}>
+                    <FiEdit2 />
+                  </Button>
+                </Tooltip>
 
-                <Button
-                  size="xs"
-                  colorScheme="neutral"
-                  isRounded
-                  title="Excluir devedor"
-                  onClick={() => handleDeleteDebtorClick(debtor)}
-                >
-                  <FiTrash2 />
-                </Button>
+                <Tooltip content="Excluir devedor">
+                  <Button size="xs" colorScheme="neutral" isRounded onClick={() => handleDeleteDebtorClick(debtor)}>
+                    <FiTrash2 />
+                  </Button>
+                </Tooltip>
               </div>
             </S.ActionsTableCell>
           </tr>
