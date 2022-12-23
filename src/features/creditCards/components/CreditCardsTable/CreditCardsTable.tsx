@@ -1,9 +1,14 @@
 import { format } from 'date-fns';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
+import { toast } from 'react-toastify';
+
+import { useAlertDialog, useConfirmationDialog } from '@/hooks';
 
 import { Button, Table, Tooltip } from '@/components/elements';
 
 import { CreditCard } from '../../types';
+
+import { useDeleteCreditCard } from '../../api/deleteCreditCard';
 
 import { useCreateCreditCardModal } from '../CreateCreditCardModal/CreateCreditCardModal';
 
@@ -14,7 +19,37 @@ interface CreditCardsTableProps {
 }
 
 export function CreditCardsTable({ data }: CreditCardsTableProps) {
+  const alertDialog = useAlertDialog();
+  const confirmationDialog = useConfirmationDialog();
   const createCreditCardModal = useCreateCreditCardModal();
+  const deleteCreditCardMutation = useDeleteCreditCard();
+
+  const deleteCreditCard = async (creditCardId: string) => {
+    try {
+      await deleteCreditCardMutation.mutateAsync({ creditCardId });
+
+      toast.success('Cartão de crédito excluído com sucesso.');
+    } catch (err) {
+      console.log(err);
+
+      alertDialog.show({
+        type: 'error',
+        title: 'Não foi possível excluir o cartão de crédito',
+        description: 'Ocorreu uma intermitência em nossos serviços. Por favor, tente novamente mais tarde.',
+        okButtonLabel: 'Fechar'
+      });
+    }
+  };
+
+  const handleDeleteCreditCardClick = async (creditCard: CreditCard) => {
+    confirmationDialog.show({
+      title: 'Excluir cartão de crédito',
+      description: `Tem certeza que desenha excluir o cartão de crédito "${creditCard.name}"?`,
+      okButtonLabel: 'Excluir',
+      okButtonLoadingText: 'Excluindo...',
+      onConfirm: () => deleteCreditCard(creditCard.id)
+    });
+  };
 
   const handleEditCreditCardClick = (creditCard: CreditCard) => {
     createCreditCardModal.show({ creditCard });
@@ -54,7 +89,12 @@ export function CreditCardsTable({ data }: CreditCardsTableProps) {
                 </Tooltip>
 
                 <Tooltip content="Excluir cartão de crédito">
-                  <Button size="xs" colorScheme="neutral" isRounded>
+                  <Button
+                    size="xs"
+                    colorScheme="neutral"
+                    isRounded
+                    onClick={() => handleDeleteCreditCardClick(creditCard)}
+                  >
                     <FiTrash2 />
                   </Button>
                 </Tooltip>
