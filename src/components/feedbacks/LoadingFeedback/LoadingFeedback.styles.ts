@@ -1,11 +1,11 @@
-import { tint } from 'polished';
+import { opacify } from 'polished';
 import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
   height: 100%;
   padding: 5rem 1rem;
-  color: ${({ theme }) => tint(0.1, theme.colors.neutral)};
+  color: ${({ theme }) => opacify(-0.4, theme.colors.neutral)};
 
   display: flex;
   flex-direction: column;
