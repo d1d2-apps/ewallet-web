@@ -3,10 +3,17 @@ import { FiPlus } from 'react-icons/fi';
 import { Button, Heading } from '@/components/elements';
 
 import { CreditCardsList } from '../../components/CreditCardsList/CreditCardsList';
+import { useCreateCreditCardModal } from '../../components/CreateCreditCardModal/CreateCreditCardModal';
 
 import * as S from './CreditCardsPage.styles';
 
 export function CreditCardsPage() {
+  const createCreditCardModal = useCreateCreditCardModal();
+
+  const handleShowCreateCreditCardsModal = () => {
+    createCreditCardModal.show();
+  };
+
   return (
     <S.Container>
       <header>
@@ -17,7 +24,9 @@ export function CreditCardsPage() {
           </Heading>
         </div>
 
-        <Button leftIcon={FiPlus}>Cadastrar cartão</Button>
+        <Button leftIcon={FiPlus} onClick={handleShowCreateCreditCardsModal}>
+          Cadastrar cartão
+        </Button>
       </header>
 
       <CreditCardsList />
