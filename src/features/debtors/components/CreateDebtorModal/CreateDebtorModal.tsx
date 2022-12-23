@@ -41,16 +41,13 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
   const createDebtorMutation = useCreateDebtor();
   const updateDebtorMutation = useUpdateDebtor();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { isSubmitting }
-  } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+  const { handleSubmit, control } = useForm<FormData>({
     defaultValues: {
       name: debtor?.name || '',
       color: debtor?.color || '#6b7280'
-    }
+    },
+    shouldUnregister: true,
+    resolver: yupResolver(validationSchema)
   });
 
   const handleCloseModal = async () => {
@@ -110,12 +107,22 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
 
             <footer>
               <Dialog.Close asChild>
-                <Button colorScheme="white" size="sm" onClick={handleCloseModal} disabled={isSubmitting}>
+                <Button
+                  colorScheme="white"
+                  size="sm"
+                  onClick={handleCloseModal}
+                  disabled={createDebtorMutation.isLoading || updateDebtorMutation.isLoading}
+                >
                   Fechar
                 </Button>
               </Dialog.Close>
 
-              <Button type="submit" size="sm" isLoading={isSubmitting} loadingText="Salvando...">
+              <Button
+                type="submit"
+                size="sm"
+                isLoading={createDebtorMutation.isLoading || updateDebtorMutation.isLoading}
+                loadingText="Salvando..."
+              >
                 Salvar
               </Button>
             </footer>

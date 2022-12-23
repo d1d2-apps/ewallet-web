@@ -39,15 +39,12 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
   const createCreditCardMutation = useCreateCreditCard();
   const updateCreditCardMutation = useUpdateCreditCard();
 
-  const {
-    handleSubmit,
-    control,
-    formState: { isSubmitting }
-  } = useForm<FormData>({
-    resolver: yupResolver(validationSchema),
+  const { handleSubmit, control } = useForm<FormData>({
     defaultValues: {
       name: creditCard?.name || ''
-    }
+    },
+    shouldUnregister: true,
+    resolver: yupResolver(validationSchema)
   });
 
   const handleCloseModal = async () => {
@@ -105,12 +102,22 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
 
             <footer>
               <Dialog.Close asChild>
-                <Button colorScheme="white" size="sm" onClick={handleCloseModal} disabled={isSubmitting}>
+                <Button
+                  colorScheme="white"
+                  size="sm"
+                  onClick={handleCloseModal}
+                  disabled={createCreditCardMutation.isLoading || updateCreditCardMutation.isLoading}
+                >
                   Fechar
                 </Button>
               </Dialog.Close>
 
-              <Button type="submit" size="sm" isLoading={isSubmitting} loadingText="Salvando...">
+              <Button
+                type="submit"
+                size="sm"
+                isLoading={createCreditCardMutation.isLoading || updateCreditCardMutation.isLoading}
+                loadingText="Salvando..."
+              >
                 Salvar
               </Button>
             </footer>
