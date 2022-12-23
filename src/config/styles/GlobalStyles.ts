@@ -46,4 +46,8 @@ export const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  *, button, input {
+    transition: color 0.2s ease-out, background-color 0.2s ease-out;
+  }
 `;
