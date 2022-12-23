@@ -11,7 +11,7 @@ export const storage = {
     localStorage.removeItem(`${storagePrefix}:token`);
   },
   getColorMode: () => {
-    return JSON.parse(localStorage.getItem(`${storagePrefix}:colorMode`) || 'light') as 'light' | 'dark';
+    return (JSON.parse(localStorage.getItem(`${storagePrefix}:colorMode`) as string) || 'light') as 'light' | 'dark';
   },
   setColorMode: (colorMode: 'light' | 'dark') => {
     localStorage.setItem(`${storagePrefix}:colorMode`, JSON.stringify(colorMode));
