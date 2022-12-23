@@ -5,6 +5,8 @@ import { Button, Table, Tooltip } from '@/components/elements';
 
 import { CreditCard } from '../../types';
 
+import { useCreateCreditCardModal } from '../CreateCreditCardModal/CreateCreditCardModal';
+
 import * as S from './CreditCardsTable.styles';
 
 interface CreditCardsTableProps {
@@ -12,6 +14,12 @@ interface CreditCardsTableProps {
 }
 
 export function CreditCardsTable({ data }: CreditCardsTableProps) {
+  const createCreditCardModal = useCreateCreditCardModal();
+
+  const handleEditCreditCardClick = (creditCard: CreditCard) => {
+    createCreditCardModal.show({ creditCard });
+  };
+
   return (
     <Table.Root>
       <Table.Head>
@@ -34,13 +42,18 @@ export function CreditCardsTable({ data }: CreditCardsTableProps) {
 
             <S.ActionsTableCell>
               <div>
-                <Tooltip content="Editar devedor">
-                  <Button size="xs" colorScheme="neutral" isRounded>
+                <Tooltip content="Editar cartão de crédito">
+                  <Button
+                    size="xs"
+                    colorScheme="neutral"
+                    isRounded
+                    onClick={() => handleEditCreditCardClick(creditCard)}
+                  >
                     <FiEdit2 />
                   </Button>
                 </Tooltip>
 
-                <Tooltip content="Excluir devedor">
+                <Tooltip content="Excluir cartão de crédito">
                   <Button size="xs" colorScheme="neutral" isRounded>
                     <FiTrash2 />
                   </Button>
