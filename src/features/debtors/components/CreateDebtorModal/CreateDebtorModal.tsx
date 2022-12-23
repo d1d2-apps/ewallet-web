@@ -127,7 +127,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
 });
 
 export function useCreateDebtorModal() {
-  const show = async (props: CreateDebtorModalProps) => {
+  const show = async (props: CreateDebtorModalProps = {}) => {
     await NiceModal.show(CreateDebtorModal, props);
   };
 
