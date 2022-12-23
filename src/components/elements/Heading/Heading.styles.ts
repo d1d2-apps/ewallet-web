@@ -25,7 +25,7 @@ const HEADING_VARIANTS_STYLES_CONFIG = {
     font-family: ${({ theme }) => theme.fontFamily.inter};
     font-size: ${({ theme }) => theme.fontSize.sm};
     font-weight: 400;
-    color: ${({ theme }) => opacify(-0.1, theme.colors.neutral)};
+    color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
   `
 };
 
