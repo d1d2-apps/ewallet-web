@@ -1,4 +1,4 @@
-import { opacify, tint } from 'polished';
+import { opacify } from 'polished';
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
