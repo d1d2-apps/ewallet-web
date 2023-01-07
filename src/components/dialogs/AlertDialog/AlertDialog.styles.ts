@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { opacify, tint } from 'polished';
+import { opacify } from 'polished';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
 
 import { AlertDialogType } from './AlertDialog';
@@ -32,7 +32,7 @@ export const Content = styled(AlertDialog.Content)<ContentProps>`
     i {
       width: fit-content;
       height: fit-content;
-      background-color: ${({ theme, $type }) => tint(0.1, theme.colors[$type])};
+      background-color: ${({ theme, $type }) => opacify(-0.8, theme.colors[$type])};
       padding: 0.5rem;
       border-radius: ${({ theme }) => theme.rounded.full};
 
