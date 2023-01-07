@@ -1,16 +1,13 @@
-import { Link, useLocation } from 'react-router-dom';
 import { FiMoon, FiSun } from 'react-icons/fi';
-
-import { useColorMode } from '@/stores/colorMode';
-
-import { useColorModeValue } from '@/hooks';
-
-import { Head } from '@/components/head';
-import { Button } from '@/components/elements';
+import { Link, useLocation } from 'react-router-dom';
 
 import logoImg from '@/assets/images/logo.png';
-import spreadsheetImg from '../../assets/images/spreadsheet.png';
+import { Button } from '@/components/elements';
+import { Head } from '@/components/head';
+import { useColorModeValue } from '@/hooks';
+import { useColorMode } from '@/stores/colorMode';
 
+import spreadsheetImg from '../../assets/images/spreadsheet.png';
 import * as S from './Layout.styles';
 
 interface LayoutProps {

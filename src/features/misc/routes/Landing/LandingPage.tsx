@@ -1,15 +1,12 @@
 import { FiLogIn, FiMoon, FiSun } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
-import { useAuth } from '@/stores/auth';
-import { useColorMode } from '@/stores/colorMode';
-
-import { useColorModeValue } from '@/hooks';
-
+import logoImg from '@/assets/images/logo.png';
 import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
-
-import logoImg from '@/assets/images/logo.png';
+import { useColorModeValue } from '@/hooks';
+import { useAuth } from '@/stores/auth';
+import { useColorMode } from '@/stores/colorMode';
 
 import * as S from './LandingPage.styles';
 

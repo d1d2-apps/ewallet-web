@@ -1,10 +1,9 @@
 import { Suspense } from 'react';
 import { Navigate, Outlet, RouteObject } from 'react-router-dom';
 
-import { lazyImport } from '@/utils/lazyImport';
-
 import { Spinner } from '@/components/elements';
 import { MainLayout } from '@/components/layouts';
+import { lazyImport } from '@/utils/lazyImport';
 
 const { ProfilePage } = lazyImport(() => import('@/features/users'), 'ProfilePage');
 const { DebtorsRoutes } = lazyImport(() => import('@/features/debtors'), 'DebtorsRoutes');

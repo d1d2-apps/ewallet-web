@@ -1,21 +1,19 @@
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import * as Dialog from '@radix-ui/react-dialog';
-import { FiUser, FiX } from 'react-icons/fi';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { FiUser, FiX } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-import { useAlertDialog } from '@/hooks';
+import NiceModal, { useModal } from '@ebay/nice-modal-react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Dialog from '@radix-ui/react-dialog';
+import * as yup from 'yup';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
+import { useAlertDialog } from '@/hooks';
 
 import { useCreateCreditCard } from '../../api/createCreditCard';
 import { useUpdateCreditCard } from '../../api/updateCreditCard';
-
 import { CreditCard } from '../../types';
-
 import * as S from './CreateCreditCardModal.styles';
 
 interface FormData {

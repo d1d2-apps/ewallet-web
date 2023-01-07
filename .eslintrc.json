@@ -21,7 +21,8 @@
       "react",
       "@typescript-eslint",
       "react-hooks",
-      "prettier"
+      "prettier",
+      "import-helpers"
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
@@ -55,7 +56,21 @@
     ],
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "/^react/",
+          "module",
+          "/^@\//",
+          ["parent", "sibling", "index"]
+        ],
+        "alphabetize": { "order": "asc", "ignoreCase": true }
+      }
+    ]
   },
   "settings": {
     "import/resolver": {

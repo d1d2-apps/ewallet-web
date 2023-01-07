@@ -1,7 +1,6 @@
 import { Head } from '@/components/head';
 
 import pageNotFoundImg from '../../assets/images/page-not-found.png';
-
 import * as S from './NotFoundPage.styles';
 
 export function NotFoundPage() {

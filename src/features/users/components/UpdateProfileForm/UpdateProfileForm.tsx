@@ -1,18 +1,16 @@
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { FiMail, FiUser } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-import { useAuth } from '@/stores/auth';
-
-import { useAlertDialog } from '@/hooks';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { Button, Heading } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
+import { useAlertDialog } from '@/hooks';
+import { useAuth } from '@/stores/auth';
 
 import { useUpdateProfile } from '../../api/updateProfile';
-
 import * as S from './UpdateProfileForm.styles';
 
 interface FormData {

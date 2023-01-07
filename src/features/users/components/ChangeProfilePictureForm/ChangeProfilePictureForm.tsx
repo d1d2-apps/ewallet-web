@@ -2,16 +2,12 @@ import { ChangeEvent, useRef } from 'react';
 import { FiCamera } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
+import personPlaceholderImg from '@/assets/images/person-placeholder.png';
+import { Button, Tooltip } from '@/components/elements';
+import { useAlertDialog } from '@/hooks';
 import { useAuth } from '@/stores/auth';
 
-import { useAlertDialog } from '@/hooks';
-
-import { Button, Tooltip } from '@/components/elements';
-
-import personPlaceholderImg from '@/assets/images/person-placeholder.png';
-
 import { useChangeProfilePicture } from '../../api/changePicture';
-
 import * as S from './ChangeProfilePictureForm.styles';
 
 export function ChangeProfilePictureForm() {

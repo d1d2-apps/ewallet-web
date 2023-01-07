@@ -9,7 +9,6 @@ import {
   signUpWithEmailAndPassword,
   UserResponse
 } from '@/features/auth';
-
 import { storage } from '@/utils/storage';
 
 interface AuthContextData {

@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import { opacify } from 'polished';
 import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import { opacify } from 'polished';
+import styled, { css } from 'styled-components';
 
 export const Overlay = styled(AlertDialog.Overlay)`
   ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}

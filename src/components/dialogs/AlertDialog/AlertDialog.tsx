@@ -1,6 +1,7 @@
+import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
+
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
-import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
 import { Button } from '@/components/elements';
 

@@ -2,7 +2,6 @@ import React, { ButtonHTMLAttributes } from 'react';
 import { IconBaseProps } from 'react-icons';
 
 import { Spinner } from '../Spinner/Spinner';
-
 import * as S from './Button.styles';
 
 export type ButtonColorScheme = 'primary' | 'neutral' | 'white' | 'info' | 'error' | 'success' | 'warning';

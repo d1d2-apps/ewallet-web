@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import { opacify } from 'polished';
 import { Slot as RadixSlot } from '@radix-ui/react-slot';
+import { opacify } from 'polished';
+import styled, { css } from 'styled-components';
 
 import { HeadingVariant } from './Heading';
 

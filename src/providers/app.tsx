@@ -2,21 +2,19 @@ import { Suspense } from 'react';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ThemeProvider, useTheme } from 'styled-components';
-import { QueryClientProvider } from '@tanstack/react-query';
+
 import NiceModal from '@ebay/nice-modal-react';
 import { Provider as TooltipProvider } from '@radix-ui/react-tooltip';
-
-import { themes } from '@/config/styles/themes';
-import { GlobalStyle } from '@/config/styles/GlobalStyles';
-
-import { queryClient } from '@/lib/react-query';
-import { ToastProvider } from '@/lib/react-toastify';
-
-import { AuthProvider } from '@/stores/auth';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider, useTheme } from 'styled-components';
 
 import { Button } from '@/components/elements';
 import { LoadingFeedback } from '@/components/feedbacks';
+import { GlobalStyle } from '@/config/styles/GlobalStyles';
+import { themes } from '@/config/styles/themes';
+import { queryClient } from '@/lib/react-query';
+import { ToastProvider } from '@/lib/react-toastify';
+import { AuthProvider } from '@/stores/auth';
 import { ColorModeProvider, useColorMode } from '@/stores/colorMode';
 
 interface AppProviderProps {

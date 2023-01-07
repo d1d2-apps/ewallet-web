@@ -1,10 +1,8 @@
 import { useRoutes } from 'react-router-dom';
 
-import { LandingPage, NotFoundPage } from '@/features/misc';
-
-import { useAuth } from '@/stores/auth';
-
 import { LoadingFeedback } from '@/components/feedbacks';
+import { LandingPage, NotFoundPage } from '@/features/misc';
+import { useAuth } from '@/stores/auth';
 
 import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';

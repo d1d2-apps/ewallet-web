@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import * as Dialog from '@radix-ui/react-dialog';
 import { opacify } from 'polished';
+import styled from 'styled-components';
 
 export const Overlay = styled(Dialog.Overlay)`
   ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}

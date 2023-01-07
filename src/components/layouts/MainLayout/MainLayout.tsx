@@ -1,16 +1,13 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import { IconType } from 'react-icons';
 import { FiChevronLeft, FiChevronRight, FiCreditCard, FiDollarSign, FiMoon, FiSun, FiUsers } from 'react-icons/fi';
-
-import { useAuth } from '@/stores/auth';
-import { useColorMode } from '@/stores/colorMode';
-
-import { useColorModeValue } from '@/hooks';
-
-import { Avatar, Button, Tooltip } from '@/components/elements';
+import { Link, useLocation } from 'react-router-dom';
 
 import logoImg from '@/assets/images/logo.png';
+import { Avatar, Button, Tooltip } from '@/components/elements';
+import { useColorModeValue } from '@/hooks';
+import { useAuth } from '@/stores/auth';
+import { useColorMode } from '@/stores/colorMode';
 
 import * as S from './MainLayout.styles';
 

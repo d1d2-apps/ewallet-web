@@ -1,10 +1,8 @@
 import { EmptyFeedback, LoadingFeedback } from '@/components/feedbacks';
 
 import { useCreditCards } from '../../api/getCreditCards';
-
-import { CreditCardsTable } from '../CreditCardsTable/CreditCardsTable';
-
 import creditCardsImg from '../../assets/images/credit-card.png';
+import { CreditCardsTable } from '../CreditCardsTable/CreditCardsTable';
 
 export function CreditCardsList() {
   const creditCardsQuery = useCreditCards();

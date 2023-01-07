@@ -1,17 +1,14 @@
-import { format } from 'date-fns';
 import { FiEdit2, FiTrash2 } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-import { useAlertDialog, useConfirmationDialog } from '@/hooks';
+import { format } from 'date-fns';
 
 import { Button, Table, Tooltip } from '@/components/elements';
-
-import { CreditCard } from '../../types';
+import { useAlertDialog, useConfirmationDialog } from '@/hooks';
 
 import { useDeleteCreditCard } from '../../api/deleteCreditCard';
-
+import { CreditCard } from '../../types';
 import { useCreateCreditCardModal } from '../CreateCreditCardModal/CreateCreditCardModal';
-
 import * as S from './CreditCardsTable.styles';
 
 interface CreditCardsTableProps {

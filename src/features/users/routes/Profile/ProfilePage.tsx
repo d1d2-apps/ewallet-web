@@ -1,15 +1,14 @@
-import { format } from 'date-fns';
 import { FiLogOut } from 'react-icons/fi';
 
+import { format } from 'date-fns';
+
+import { Button, Heading } from '@/components/elements';
+import { Head } from '@/components/head';
 import { useAuth } from '@/stores/auth';
 
-import { Head } from '@/components/head';
-import { Button, Heading } from '@/components/elements';
-
+import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 import { ChangeProfilePictureForm } from '../../components/ChangeProfilePictureForm/ChangeProfilePictureForm';
 import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProfileForm';
-import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
-
 import * as S from './ProfilePage.styles';
 
 export function ProfilePage() {

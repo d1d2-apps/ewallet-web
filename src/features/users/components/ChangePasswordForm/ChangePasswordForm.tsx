@@ -1,16 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { FiKey, FiLock } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-import { useAlertDialog } from '@/hooks';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { Button, Heading } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
+import { useAlertDialog } from '@/hooks';
 
 import { useChangePassword } from '../../api/changePassword';
-
 import * as S from './ChangePasswordForm.styles';
 
 interface FormData {

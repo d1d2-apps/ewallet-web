@@ -1,7 +1,7 @@
-import styled, { css } from 'styled-components';
 import { Slot as RadixSlot } from '@radix-ui/react-slot';
-
 import { opacify, shade, tint } from 'polished';
+import styled, { css } from 'styled-components';
+
 import { ButtonColorScheme, ButtonSize } from './Button';
 
 interface ContainerProps {

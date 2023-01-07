@@ -1,5 +1,6 @@
-import { opacify } from 'polished';
 import { Link } from 'react-router-dom';
+
+import { opacify } from 'polished';
 import styled, { css } from 'styled-components';
 
 interface TabProps {

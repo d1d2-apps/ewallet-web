@@ -4,7 +4,6 @@ import { Heading } from '@/components/elements';
 
 import { Layout } from '../../components/Layout/Layout';
 import { SignUpForm } from '../../components/SignUpForm/SignUpForm';
-
 import * as S from './SignUpPage.styles';
 
 export function SignUpPage() {

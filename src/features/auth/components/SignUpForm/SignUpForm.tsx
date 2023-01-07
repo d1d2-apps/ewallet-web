@@ -1,14 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { FiMail, FiLock, FiUser, FiKey } from 'react-icons/fi';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { useAuth } from '@/stores/auth';
-
-import { useAlertDialog } from '@/hooks';
-
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
+import { useAlertDialog } from '@/hooks';
+import { useAuth } from '@/stores/auth';
 
 import * as S from './SignUpForm.styles';
 
