@@ -14,7 +14,6 @@ import { GlobalStyle } from '@/config/styles/GlobalStyles';
 import { themes } from '@/config/styles/themes';
 import { queryClient } from '@/lib/react-query';
 import { ToastProvider } from '@/lib/react-toastify';
-import { AuthProvider } from '@/stores/auth';
 import { ColorModeProvider, useColorMode } from '@/stores/colorMode';
 
 interface AppProviderProps {
@@ -70,11 +69,9 @@ function App({ children }: AppProviderProps) {
           <HelmetProvider>
             <QueryClientProvider client={queryClient}>
               <NiceModal.Provider>
-                <AuthProvider>
-                  <TooltipProvider>
-                    <Router>{children}</Router>
-                  </TooltipProvider>
-                </AuthProvider>
+                <TooltipProvider>
+                  <Router>{children}</Router>
+                </TooltipProvider>
 
                 <ToastProvider />
               </NiceModal.Provider>

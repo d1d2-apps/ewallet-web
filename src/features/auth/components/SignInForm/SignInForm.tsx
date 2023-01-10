@@ -7,7 +7,7 @@ import * as yup from 'yup';
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
-import { useAuth } from '@/stores/auth';
+import { useSignIn } from '@/lib/react-query-auth';
 
 import * as S from './SignInForm.styles';
 
@@ -28,8 +28,9 @@ const validationSchema = yup
   .required();
 
 export function SignInForm({ onSuccess }: SignInFormProps) {
-  const { signIn } = useAuth();
   const alertDialog = useAlertDialog();
+
+  const signInMutation = useSignIn();
 
   const {
     handleSubmit,
@@ -45,7 +46,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
 
   const handleSignIn = async (formData: FormData) => {
     try {
-      await signIn({ data: formData });
+      await signInMutation.mutateAsync({ data: formData });
       onSuccess();
     } catch (err) {
       console.log(err);

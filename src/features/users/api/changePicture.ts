@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AuthUser } from '@/features/auth';
 import { axios } from '@/lib/axios';
 import { MutationConfig } from '@/lib/react-query';
-import { useAuth } from '@/stores/auth';
+import { useUser } from '@/lib/react-query-auth';
 
 export type ChangeProfilePictureDTO = {
   data: {
@@ -24,7 +24,7 @@ type UseChangeProfilePictureOptions = {
 };
 
 export function useChangeProfilePicture({ config }: UseChangeProfilePictureOptions = {}) {
-  const { refetchUser } = useAuth();
+  const { refetch: refetchUser } = useUser();
 
   return useMutation({
     onSuccess: () => {
