@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import { Button, Heading } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
-import { useUser } from '@/lib/react-query-auth';
+import { useAuth } from '@/stores/auth';
 
 import { useUpdateProfile } from '../../api/updateProfile';
 import * as S from './UpdateProfileForm.styles';
@@ -26,7 +26,7 @@ const validationSchema = yup
   .required();
 
 export function UpdateProfileForm() {
-  const { data: user } = useUser();
+  const { user } = useAuth();
   const alertDialog = useAlertDialog();
   const updateProfileMutation = useUpdateProfile();
 

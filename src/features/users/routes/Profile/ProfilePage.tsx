@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 
 import { Button, Heading } from '@/components/elements';
 import { Head } from '@/components/head';
-import { useSignOut, useUser } from '@/lib/react-query-auth';
+import { useAuth } from '@/stores/auth';
 
 import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 import { ChangeProfilePictureForm } from '../../components/ChangeProfilePictureForm/ChangeProfilePictureForm';
@@ -12,14 +12,13 @@ import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProf
 import * as S from './ProfilePage.styles';
 
 export function ProfilePage() {
-  const { data: user } = useUser();
-  const signOutMutation = useSignOut();
+  const { user, signOut } = useAuth();
 
   const formattedCreatedAt = format(user?.createdAt ? new Date(user.createdAt) : new Date(), "dd/MM/yyyy 'às' HH:mm");
   const formattedUpdatedAt = format(user?.updatedAt ? new Date(user.updatedAt) : new Date(), "dd/MM/yyyy 'às' HH:mm");
 
   const handleSignOut = async () => {
-    await signOutMutation.mutateAsync(null);
+    await signOut();
   };
 
   return (

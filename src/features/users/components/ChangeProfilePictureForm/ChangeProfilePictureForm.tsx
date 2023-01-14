@@ -5,13 +5,13 @@ import { toast } from 'react-toastify';
 import personPlaceholderImg from '@/assets/images/person-placeholder.png';
 import { Button, Tooltip } from '@/components/elements';
 import { useAlertDialog } from '@/hooks';
-import { useUser } from '@/lib/react-query-auth';
+import { useAuth } from '@/stores/auth';
 
 import { useChangeProfilePicture } from '../../api/changePicture';
 import * as S from './ChangeProfilePictureForm.styles';
 
 export function ChangeProfilePictureForm() {
-  const { data: user } = useUser();
+  const { user } = useAuth();
   const alertDialog = useAlertDialog();
   const changeProfilePictureMutation = useChangeProfilePicture();
 

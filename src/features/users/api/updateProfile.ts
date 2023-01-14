@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { AuthUser } from '@/features/auth';
 import { axios } from '@/lib/axios';
 import { MutationConfig } from '@/lib/react-query';
-import { useUser } from '@/lib/react-query-auth';
+import { useAuth } from '@/stores/auth';
 
 export type UpdateProfileDTO = {
   data: {
@@ -22,7 +22,7 @@ type UseUpdateProfileOptions = {
 };
 
 export function useUpdateProfile({ config }: UseUpdateProfileOptions = {}) {
-  const { refetch: refetchUser } = useUser();
+  const { refetchUser } = useAuth();
 
   return useMutation({
     onSuccess: () => {

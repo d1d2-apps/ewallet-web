@@ -5,13 +5,13 @@ import logoImg from '@/assets/images/logo.png';
 import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
 import { useColorModeValue } from '@/hooks';
-import { useUser } from '@/lib/react-query-auth';
+import { useAuth } from '@/stores/auth';
 import { useColorMode } from '@/stores/colorMode';
 
 import * as S from './LandingPage.styles';
 
 export function LandingPage() {
-  const { data: user } = useUser();
+  const { user } = useAuth();
   const { toggleColorMode } = useColorMode();
 
   const colorModeButtonConfig = {

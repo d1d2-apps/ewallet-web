@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import logoImg from '@/assets/images/logo.png';
 import { Avatar, Button, Tooltip } from '@/components/elements';
 import { useColorModeValue } from '@/hooks';
-import { useUser } from '@/lib/react-query-auth';
+import { useAuth } from '@/stores/auth';
 import { useColorMode } from '@/stores/colorMode';
 
 import * as S from './MainLayout.styles';
@@ -48,7 +48,7 @@ interface MainLayoutProps {
 }
 
 export function MainLayout({ children }: MainLayoutProps) {
-  const { data: user } = useUser();
+  const { user } = useAuth();
   const { toggleColorMode } = useColorMode();
 
   const location = useLocation();
