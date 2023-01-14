@@ -1,22 +1,14 @@
-import { createContext, useCallback, useState, useContext, useMemo, useEffect } from 'react';
+import { createContext, useCallback, useState, useContext, useMemo } from 'react';
 
-import {
-  AuthUser,
-  getUser,
-  SignInCredentialsDTO,
-  signInWithEmailAndPassword,
-  SignUpCredentialsDTO,
-  signUpWithEmailAndPassword,
-  UserResponse
-} from '@/features/auth';
-import { storage } from '@/utils/storage';
+import { AuthUser, SignInCredentialsDTO, SignUpCredentialsDTO } from '@/features/auth';
+import { useSignIn, useSignOut, useSignUp, useUser } from '@/lib/react-query-auth';
 
 interface AuthContextData {
   user: AuthUser | null;
   isLoadingUser: boolean;
   signIn(data: SignInCredentialsDTO): Promise<void>;
   signUp(data: SignUpCredentialsDTO): Promise<void>;
-  signOut(): void;
+  signOut(): Promise<void>;
   refetchUser(): Promise<void>;
 }
 
@@ -24,59 +16,57 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-const handleUserResponse = async (data: UserResponse) => {
-  const { token, user } = data;
-  storage.setToken(token);
-  return user;
-};
-
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<AuthUser | null>(null);
-  const [isLoadingUser, setIsLoadingUser] = useState(true);
 
-  const refetchUser = useCallback(async () => {
-    try {
-      const token = storage.getToken();
+  const signInMutation = useSignIn();
+  const signUpMutation = useSignUp();
+  const signOutMutation = useSignOut();
 
-      if (token) {
-        const data = await getUser();
+  const userMutation = useUser({
+    onSuccess: data => {
+      if (data) {
         setUser(data);
       }
-    } catch (err) {
+    },
+    onError: async err => {
       console.log(err);
+      await signOutMutation.mutateAsync({});
+      setUser(null);
     }
-  }, []);
+  });
 
-  const signIn = useCallback(async (data: SignInCredentialsDTO) => {
-    const response = await signInWithEmailAndPassword(data);
-    const authUser = await handleUserResponse(response);
-    setUser(authUser);
-  }, []);
-
-  const signUp = useCallback(async (data: SignUpCredentialsDTO) => {
-    const response = await signUpWithEmailAndPassword(data);
-    const authUser = await handleUserResponse(response);
-    setUser(authUser);
-  }, []);
-
-  const signOut = useCallback(async () => {
-    storage.clearToken();
-    window.location.assign(window.location.origin as unknown as string);
-    setUser(null);
-  }, []);
-
-  const providerValue = useMemo(
-    () => ({ user, isLoadingUser, signIn, signUp, signOut, refetchUser }),
-    [user, isLoadingUser, signIn, signUp, signOut, refetchUser]
+  const signIn = useCallback(
+    async (data: SignInCredentialsDTO) => {
+      const response = await signInMutation.mutateAsync(data);
+      setUser(response);
+    },
+    [signInMutation]
   );
 
-  useEffect(() => {
-    setIsLoadingUser(true);
+  const signUp = useCallback(
+    async (data: SignUpCredentialsDTO) => {
+      const response = await signUpMutation.mutateAsync(data);
+      setUser(response);
+    },
+    [signUpMutation]
+  );
 
-    refetchUser().then(() => setIsLoadingUser(false));
-  }, [refetchUser]);
+  const signOut = useCallback(async () => {
+    await signOutMutation.mutateAsync({});
+    setUser(null);
+  }, [signOutMutation]);
+
+  const refetchUser = useCallback(async () => {
+    await userMutation.refetch();
+  }, [userMutation]);
+
+  const providerValue = useMemo(
+    () => ({ user, isLoadingUser: userMutation.isLoading, signIn, signUp, signOut, refetchUser }),
+    [user, userMutation.isLoading, signIn, signUp, signOut, refetchUser]
+  );
 
   return <AuthContext.Provider value={providerValue}>{children}</AuthContext.Provider>;
 }

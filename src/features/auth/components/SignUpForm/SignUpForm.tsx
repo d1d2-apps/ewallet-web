@@ -36,6 +36,7 @@ const validationSchema = yup
 
 export function SignUpForm({ onSuccess }: SignUpFormProps) {
   const { signUp } = useAuth();
+
   const alertDialog = useAlertDialog();
 
   const {

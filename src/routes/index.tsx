@@ -2,26 +2,27 @@ import { useRoutes } from 'react-router-dom';
 
 import { LoadingFeedback } from '@/components/feedbacks';
 import { LandingPage, NotFoundPage } from '@/features/misc';
-import { useAuth } from '@/stores/auth';
+import { AuthLoader } from '@/lib/react-query-auth';
 
 import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';
 
 export function AppRoutes() {
-  const { user, isLoadingUser } = useAuth();
-
   const commonRoutes = [
     { path: '/', element: <LandingPage /> },
     { path: '*', element: <NotFoundPage /> }
   ];
 
-  const routes = user ? protectedRoutes : publicRoutes;
+  const publicRoutesElement = <>{useRoutes([...publicRoutes, ...commonRoutes])}</>;
 
-  const routesElement = useRoutes([...routes, ...commonRoutes]);
+  const protectedRoutesElement = <>{useRoutes([...protectedRoutes, ...commonRoutes])}</>;
 
-  if (isLoadingUser) {
-    return <LoadingFeedback title="Carregando informações..." />;
-  }
-
-  return routesElement;
+  return (
+    <AuthLoader
+      renderLoading={() => <LoadingFeedback title="Verificando dados da sessão..." />}
+      renderUnauthenticated={() => publicRoutesElement}
+    >
+      {protectedRoutesElement}
+    </AuthLoader>
+  );
 }

@@ -70,11 +70,11 @@ function App({ children }: AppProviderProps) {
           <HelmetProvider>
             <QueryClientProvider client={queryClient}>
               <NiceModal.Provider>
-                <AuthProvider>
-                  <TooltipProvider>
+                <TooltipProvider>
+                  <AuthProvider>
                     <Router>{children}</Router>
-                  </TooltipProvider>
-                </AuthProvider>
+                  </AuthProvider>
+                </TooltipProvider>
 
                 <ToastProvider />
               </NiceModal.Provider>
