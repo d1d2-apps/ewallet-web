@@ -1,26 +1,19 @@
 import { Suspense } from 'react';
 import { Navigate, Outlet, RouteObject } from 'react-router-dom';
 
-import { Spinner } from '@/components/elements';
+import { LoadingFeedback } from '@/components/feedbacks';
 import { MainLayout } from '@/components/layouts';
 import { lazyImport } from '@/utils/lazyImport';
 
 const { ProfilePage } = lazyImport(() => import('@/features/users'), 'ProfilePage');
 const { DebtorsRoutes } = lazyImport(() => import('@/features/debtors'), 'DebtorsRoutes');
 const { CreditCardsRoutes } = lazyImport(() => import('@/features/creditCards'), 'CreditCardsRoutes');
+const { BillsRoutes } = lazyImport(() => import('@/features/bills'), 'BillsRoutes');
 
 function App() {
   return (
     <MainLayout>
-      <Suspense
-        fallback={
-          <div
-            style={{ width: '100vw', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-          >
-            <Spinner size="2xl" />
-          </div>
-        }
-      >
+      <Suspense fallback={<LoadingFeedback title="Carregando recursos..." />}>
         <Outlet />
       </Suspense>
     </MainLayout>
@@ -36,6 +29,7 @@ export const protectedRoutes: RouteObject[] = [
       { path: 'profile', element: <ProfilePage /> },
       { path: 'debtors/*', element: <DebtorsRoutes /> },
       { path: 'cards/*', element: <CreditCardsRoutes /> },
+      { path: 'bills/*', element: <BillsRoutes /> },
       { path: '*', element: <Navigate to="profile" /> }
     ]
   }
