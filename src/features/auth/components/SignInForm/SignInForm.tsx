@@ -9,12 +9,10 @@ import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 import { useAuth } from '@/stores/auth';
 
+import { SignInCredentialsDTO } from '../../api/signin';
 import * as S from './SignInForm.styles';
 
-interface FormData {
-  email: string;
-  password: string;
-}
+type FormData = SignInCredentialsDTO['data'];
 
 interface SignInFormProps {
   onSuccess: () => void;

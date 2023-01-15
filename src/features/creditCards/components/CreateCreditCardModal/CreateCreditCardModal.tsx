@@ -11,14 +11,12 @@ import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
-import { useCreateCreditCard } from '../../api/createCreditCard';
+import { CreateCreditCardDTO, useCreateCreditCard } from '../../api/createCreditCard';
 import { useUpdateCreditCard } from '../../api/updateCreditCard';
 import { CreditCard } from '../../types';
 import * as S from './CreateCreditCardModal.styles';
 
-interface FormData {
-  name: string;
-}
+type FormData = CreateCreditCardDTO['data'];
 
 interface CreateCreditCardModalProps {
   creditCard?: CreditCard;

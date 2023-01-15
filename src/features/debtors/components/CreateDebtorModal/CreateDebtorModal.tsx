@@ -11,15 +11,12 @@ import { Button } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
-import { useCreateDebtor } from '../../api/createDebtor';
+import { CreateDebtorDTO, useCreateDebtor } from '../../api/createDebtor';
 import { useUpdateDebtor } from '../../api/updateDebtor';
 import { Debtor } from '../../types';
 import * as S from './CreateDebtorModal.styles';
 
-interface FormData {
-  name: string;
-  color: string;
-}
+type FormData = CreateDebtorDTO['data'];
 
 interface CreateDebtorModalProps {
   debtor?: Debtor;

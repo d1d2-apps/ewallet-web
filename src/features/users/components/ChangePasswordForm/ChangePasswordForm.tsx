@@ -9,14 +9,10 @@ import { Button, Heading } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
-import { useChangePassword } from '../../api/changePassword';
+import { ChangePasswordDTO, useChangePassword } from '../../api/changePassword';
 import * as S from './ChangePasswordForm.styles';
 
-interface FormData {
-  oldPassword: string;
-  password: string;
-  passwordConfirmation: string;
-}
+type FormData = ChangePasswordDTO['data'];
 
 const validationSchema = yup
   .object({

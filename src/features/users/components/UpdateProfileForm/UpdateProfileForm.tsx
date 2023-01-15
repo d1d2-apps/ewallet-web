@@ -10,13 +10,10 @@ import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 import { useAuth } from '@/stores/auth';
 
-import { useUpdateProfile } from '../../api/updateProfile';
+import { UpdateProfileDTO, useUpdateProfile } from '../../api/updateProfile';
 import * as S from './UpdateProfileForm.styles';
 
-interface FormData {
-  name: string;
-  email: string;
-}
+type FormData = UpdateProfileDTO['data'];
 
 const validationSchema = yup
   .object({
