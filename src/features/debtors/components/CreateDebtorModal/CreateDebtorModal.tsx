@@ -44,14 +44,8 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
       name: debtor?.name || '',
       color: debtor?.color || '#6b7280'
     },
-    shouldUnregister: true,
     resolver: yupResolver(validationSchema)
   });
-
-  const handleCloseModal = async () => {
-    await modal.hide();
-    modal.remove();
-  };
 
   const handleSaveDebtor = async (formData: FormData) => {
     try {
@@ -63,7 +57,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
 
       toast.success('Devedor salvo com sucesso.');
 
-      await handleCloseModal();
+      await modal.hide();
     } catch (err) {
       console.log(err);
 
@@ -77,7 +71,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
   };
 
   return (
-    <Dialog.Root open={modal.visible}>
+    <Dialog.Root open={modal.visible} onOpenChange={open => !open && modal.remove()}>
       <Dialog.Portal>
         <S.Overlay />
 
@@ -86,9 +80,11 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
             <header>
               <S.Title>{debtor?.id ? 'Editar' : 'Cadastrar'} devedor</S.Title>
 
-              <Button size="xs" colorScheme="neutral" isRounded onClick={handleCloseModal}>
-                <FiX />
-              </Button>
+              <Dialog.Close asChild>
+                <Button size="xs" colorScheme="neutral" isRounded>
+                  <FiX />
+                </Button>
+              </Dialog.Close>
             </header>
 
             <main>
@@ -108,7 +104,6 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
                 <Button
                   colorScheme="white"
                   size="sm"
-                  onClick={handleCloseModal}
                   disabled={createDebtorMutation.isLoading || updateDebtorMutation.isLoading}
                 >
                   Fechar

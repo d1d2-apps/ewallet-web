@@ -27,13 +27,8 @@ export const AlertDialog = NiceModal.create<AlertDialogProps>(
   ({ type = 'info', title, description, okButtonLabel = 'Ok' }) => {
     const alert = useModal();
 
-    const handleCloseAlert = async () => {
-      await alert.hide();
-      alert.remove();
-    };
-
     return (
-      <RadixAlertDialog.Root open={alert.visible}>
+      <RadixAlertDialog.Root open={alert.visible} onOpenChange={open => !open && alert.remove()}>
         <RadixAlertDialog.Portal>
           <S.Overlay />
 
@@ -49,7 +44,7 @@ export const AlertDialog = NiceModal.create<AlertDialogProps>(
 
             <footer>
               <RadixAlertDialog.Cancel asChild>
-                <Button colorScheme={type} size="sm" onClick={handleCloseAlert}>
+                <Button colorScheme={type} size="sm">
                   {okButtonLabel}
                 </Button>
               </RadixAlertDialog.Cancel>

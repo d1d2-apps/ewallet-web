@@ -41,14 +41,8 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
     defaultValues: {
       name: creditCard?.name || ''
     },
-    shouldUnregister: true,
     resolver: yupResolver(validationSchema)
   });
-
-  const handleCloseModal = async () => {
-    await modal.hide();
-    modal.remove();
-  };
 
   const handleSaveCreditCard = async (formData: FormData) => {
     try {
@@ -60,7 +54,7 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
 
       toast.success('Cartão de crédito salvo com sucesso.');
 
-      await handleCloseModal();
+      await modal.hide();
     } catch (err) {
       console.log(err);
 
@@ -74,7 +68,7 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
   };
 
   return (
-    <Dialog.Root open={modal.visible}>
+    <Dialog.Root open={modal.visible} onOpenChange={open => !open && modal.remove()}>
       <Dialog.Portal>
         <S.Overlay />
 
@@ -83,9 +77,11 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
             <header>
               <S.Title>{creditCard?.id ? 'Editar' : 'Cadastrar'} cartão de crédito</S.Title>
 
-              <Button size="xs" colorScheme="neutral" isRounded onClick={handleCloseModal}>
-                <FiX />
-              </Button>
+              <Dialog.Close asChild>
+                <Button size="xs" colorScheme="neutral" isRounded>
+                  <FiX />
+                </Button>
+              </Dialog.Close>
             </header>
 
             <main>
@@ -103,7 +99,6 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
                 <Button
                   colorScheme="white"
                   size="sm"
-                  onClick={handleCloseModal}
                   disabled={createCreditCardMutation.isLoading || updateCreditCardMutation.isLoading}
                 >
                   Fechar

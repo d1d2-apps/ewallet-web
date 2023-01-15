@@ -29,21 +29,16 @@ export const ConfirmationDialog = NiceModal.create<ConfirmationDialogProps>(
 
     const [isSubmiting, setIsSubmiting] = useState(false);
 
-    const handleCancelClick = async () => {
-      await alert.hide();
-      alert.remove();
-    };
-
     const handleConfirmClick = async () => {
       setIsSubmiting(true);
       await onConfirm();
       setIsSubmiting(false);
 
-      handleCancelClick();
+      await alert.hide();
     };
 
     return (
-      <AlertDialog.Root open={alert.visible}>
+      <AlertDialog.Root open={alert.visible} onOpenChange={open => !open && alert.remove()}>
         <AlertDialog.Portal>
           <S.Overlay />
 
@@ -55,7 +50,7 @@ export const ConfirmationDialog = NiceModal.create<ConfirmationDialogProps>(
 
             <footer>
               <AlertDialog.Cancel asChild>
-                <Button colorScheme="white" size="sm" onClick={handleCancelClick} disabled={isSubmiting}>
+                <Button colorScheme="white" size="sm" disabled={isSubmiting}>
                   {cancelButtonLabel}
                 </Button>
               </AlertDialog.Cancel>
