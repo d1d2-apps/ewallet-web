@@ -2,6 +2,7 @@ import { FiPlus } from 'react-icons/fi';
 
 import { Button, Heading } from '@/components/elements';
 
+import { BillsList } from '../../components/BillsList/BillsList';
 import * as S from './BillsPage.styles';
 
 export function BillsPage() {
@@ -17,6 +18,8 @@ export function BillsPage() {
 
         <Button leftIcon={FiPlus}>Lançar fatura</Button>
       </header>
+
+      <BillsList />
     </S.Container>
   );
 }
