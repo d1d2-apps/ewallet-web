@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import logoImg from '@/assets/images/logo.png';
 import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
+import { useAuth } from '@/features/auth';
 import { useColorModeValue } from '@/hooks';
-import { useAuth } from '@/stores/auth';
 import { useColorMode } from '@/stores/colorMode';
 
 import * as S from './LandingPage.styles';

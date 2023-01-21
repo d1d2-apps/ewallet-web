@@ -1,9 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { AuthUser } from '@/features/auth';
+import { AuthUser, useAuth } from '@/features/auth';
 import { axios } from '@/lib/axios';
 import { MutationConfig } from '@/lib/react-query';
-import { useAuth } from '@/stores/auth';
 
 export type UpdateProfileDTO = {
   data: {

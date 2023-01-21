@@ -7,8 +7,8 @@ import * as yup from 'yup';
 
 import { Button, Heading } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
+import { useAuth } from '@/features/auth';
 import { useAlertDialog } from '@/hooks';
-import { useAuth } from '@/stores/auth';
 
 import { UpdateProfileDTO, useUpdateProfile } from '../../api/updateProfile';
 import * as S from './UpdateProfileForm.styles';

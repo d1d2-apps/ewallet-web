@@ -6,8 +6,8 @@ import * as yup from 'yup';
 
 import { Button } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
+import { useAuth } from '@/features/auth';
 import { useAlertDialog } from '@/hooks';
-import { useAuth } from '@/stores/auth';
 
 import { SignInCredentialsDTO } from '../../api/signin';
 import * as S from './SignInForm.styles';

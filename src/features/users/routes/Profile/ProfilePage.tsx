@@ -4,7 +4,7 @@ import { format } from 'date-fns';
 
 import { Button, Heading } from '@/components/elements';
 import { Head } from '@/components/head';
-import { useAuth } from '@/stores/auth';
+import { useAuth } from '@/features/auth';
 
 import { ChangePasswordForm } from '../../components/ChangePasswordForm/ChangePasswordForm';
 import { ChangeProfilePictureForm } from '../../components/ChangeProfilePictureForm/ChangeProfilePictureForm';

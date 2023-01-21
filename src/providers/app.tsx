@@ -12,9 +12,9 @@ import { Button } from '@/components/elements';
 import { LoadingFeedback } from '@/components/feedbacks';
 import { GlobalStyle } from '@/config/styles/GlobalStyles';
 import { themes } from '@/config/styles/themes';
+import { AuthProvider } from '@/features/auth';
 import { queryClient } from '@/lib/react-query';
 import { ToastProvider } from '@/lib/react-toastify';
-import { AuthProvider } from '@/stores/auth';
 import { ColorModeProvider, useColorMode } from '@/stores/colorMode';
 
 interface AppProviderProps {
