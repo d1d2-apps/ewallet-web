@@ -20,7 +20,7 @@ const SelectItem = React.forwardRef<any, SelectItemProps>(({ children, ...props 
 });
 
 interface SelectRootProps extends SelectPrimitive.SelectProps {
-  placeholder: string;
+  placeholder?: string;
   hasError?: boolean;
   isDisabled?: boolean;
 }

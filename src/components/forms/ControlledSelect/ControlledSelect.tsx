@@ -7,7 +7,7 @@ import * as S from './ControlledSelect.styles';
 
 interface Props {
   label?: string;
-  placeholder: string;
+  placeholder?: string;
   isDisabled?: boolean;
 }
 
