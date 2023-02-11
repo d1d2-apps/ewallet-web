@@ -1,26 +1,27 @@
 import { useState } from 'react';
 
-import { Select } from '@/components/elements';
 import { EmptyFeedback, LoadingFeedback } from '@/components/feedbacks';
 
-import { useBills } from '../../api/getBills';
+import { GetBillsDTO, useBills } from '../../api/getBills';
 import billsImg from '../../assets/images/bills.png';
-import * as S from './BillsList.styles';
+import { FilterBillsForm } from '../FilterBillsForm/FilterBillsForm';
 
 export function BillsList() {
-  const billsQuery = useBills();
+  const [filterOptions, setFilterOptions] = useState<GetBillsDTO['data']>({
+    creditCard: 'all',
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear()
+  });
 
-  const [selectedCreditCardId, setSelectedCreditCardId] = useState('');
+  const billsQuery = useBills({ params: filterOptions });
+
+  const handleApplyBillsFilter = (filter: GetBillsDTO['data']) => {
+    setFilterOptions(filter);
+  };
 
   return (
-    <S.Container>
-      <Select.Root value={selectedCreditCardId} onValueChange={value => setSelectedCreditCardId(value)}>
-        <Select.Group>
-          <Select.GroupLabel>Cartão de crédito</Select.GroupLabel>
-
-          <Select.Item value="">Todos</Select.Item>
-        </Select.Group>
-      </Select.Root>
+    <>
+      <FilterBillsForm onFilterApply={handleApplyBillsFilter} />
 
       {(() => {
         if (billsQuery.isLoading || billsQuery.isFetching) {
@@ -40,6 +41,6 @@ export function BillsList() {
         // return <BillsTable data={billsQuery.data} />;
         return <h3>BillsTable</h3>;
       })()}
-    </S.Container>
+    </>
   );
 }

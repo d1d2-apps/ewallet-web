@@ -6,21 +6,35 @@ import { QueryConfig } from '@/lib/react-query';
 
 import { Bill } from '../types';
 
-const getBills = async () => {
-  const response = await axios.get<Bill[]>('/bills');
+export interface GetBillsDTO {
+  data: {
+    creditCard?: string | 'all';
+    month: number;
+    year: number;
+  };
+}
+
+const getBills = async ({ data }: GetBillsDTO) => {
+  const response = await axios.get<Bill[]>('/bills', { params: data });
   return response.data;
 };
 
 type QueryFnType = typeof getBills;
 
 type UseBillOptions = {
-  config?: QueryConfig<QueryFnType>;
+  params: GetBillsDTO['data'];
+  options?: QueryConfig<QueryFnType>;
 };
 
-export const useBills = ({ config }: UseBillOptions = {}) => {
+const defaultParams: UseBillOptions['params'] = {
+  month: new Date().getMonth() + 1,
+  year: new Date().getFullYear()
+};
+
+export const useBills = ({ params, options }: UseBillOptions = { params: defaultParams }) => {
   return useQuery<AsyncReturnType<QueryFnType>>({
-    ...config,
-    queryKey: ['bills'],
-    queryFn: getBills
+    ...options,
+    queryKey: ['bills', params.creditCard || 'all', params.year, params.month],
+    queryFn: () => getBills({ data: params })
   });
 };

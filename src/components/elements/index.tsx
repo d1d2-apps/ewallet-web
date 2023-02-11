@@ -1,6 +1,7 @@
 export * from './Avatar/Avatar';
 export * from './Button/Button';
 export * from './Heading/Heading';
+export * from './Popover/Popover';
 export * from './Select/Select';
 export * from './Spinner/Spinner';
 export * from './Table/Table';

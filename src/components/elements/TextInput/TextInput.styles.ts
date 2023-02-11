@@ -57,6 +57,7 @@ export const IconContainer = styled.i`
 
 export const InputContainer = styled.input`
   flex: 1;
+  max-width: 100%;
 
   height: 100%;
   background-color: transparent;
