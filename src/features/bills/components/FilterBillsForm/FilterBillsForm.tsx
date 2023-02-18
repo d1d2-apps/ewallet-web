@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FiFilter } from 'react-icons/fi';
 
@@ -8,7 +8,6 @@ import * as yup from 'yup';
 import { Button, Popover, Select } from '@/components/elements';
 import { ControlledSelect, ControlledTextInput } from '@/components/forms';
 import { useCreditCards } from '@/features/creditCards/api/getCreditCards';
-import { CreditCard } from '@/features/creditCards/types';
 
 import { GetBillsDTO } from '../../api/getBills';
 import * as S from './FilterBillsForm.styles';
@@ -48,28 +47,32 @@ const validationSchema = yup
   })
   .required();
 
+const now = new Date();
+
+const defaultFormValues: FormData = {
+  creditCard: 'all',
+  month: String(now.getMonth() + 1),
+  year: String(now.getFullYear())
+};
+
 export function FilterBillsForm({ onFilterApply }: FilterBillsForm) {
   const filterPopoverRef = useRef<HTMLButtonElement>(null);
 
   const creditCardsQuery = useCreditCards();
 
-  const { control, handleSubmit, watch, setValue } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(validationSchema),
-    defaultValues: {
-      creditCard: 'all',
-      month: String(new Date().getMonth() + 1),
-      year: String(new Date().getFullYear())
-    }
+    defaultValues: defaultFormValues
   });
 
-  const creditCardWathcer = watch('creditCard');
-  const yearWathcer = watch('year');
-  const monthWathcer = watch('month');
+  const [currentFilter, setCurrentFilter] = useState<FormData>(defaultFormValues);
 
-  const [selectedMonth, setSelectedMonth] = useState<typeof MONTHS[0]>();
-  const [selectedCreditCard, setSelectedCreditCard] = useState<CreditCard | null>(null);
+  const selectedCreditCard = creditCardsQuery.data?.find(cc => cc.id === currentFilter.creditCard);
+  const selectedMonth = MONTHS.find(m => m.value === currentFilter.month);
 
   const handleFilterBills = (formData: FormData) => {
+    setCurrentFilter({ ...formData, month: String(formData.month) });
+
     onFilterApply({
       creditCard: formData.creditCard,
       month: Number(formData.month),
@@ -78,30 +81,6 @@ export function FilterBillsForm({ onFilterApply }: FilterBillsForm) {
 
     filterPopoverRef.current?.click();
   };
-
-  useEffect(() => {
-    let yearValue = yearWathcer.replace(/\D/, '');
-
-    if (yearValue.length > 4) {
-      yearValue = yearValue.substring(0, 4);
-    }
-
-    setValue('year', yearValue);
-  }, [setValue, yearWathcer]);
-
-  useEffect(() => {
-    const month = MONTHS.find(m => m.value === monthWathcer);
-    setSelectedMonth(month);
-  }, [monthWathcer]);
-
-  useEffect(() => {
-    if (creditCardWathcer === 'all') {
-      setSelectedCreditCard(null);
-    } else if (creditCardsQuery.data?.length) {
-      const creditCard = creditCardsQuery.data.find(cc => cc.id === creditCardWathcer);
-      setSelectedCreditCard(creditCard || null);
-    }
-  }, [creditCardWathcer, creditCardsQuery.data]);
 
   return (
     <S.Container>
@@ -113,7 +92,7 @@ export function FilterBillsForm({ onFilterApply }: FilterBillsForm) {
 
         <div>
           <small>Ano</small>
-          <strong>{yearWathcer}</strong>
+          <strong>{currentFilter.year}</strong>
         </div>
 
         <div>
