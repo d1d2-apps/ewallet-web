@@ -1,6 +1,6 @@
 import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 
-import { API_URL } from '@/config';
+import { getApiUrl } from '@/config/env';
 import { storage } from '@/utils/storage';
 
 const authRequestInterceptor = (config: AxiosRequestConfig) => {
@@ -27,7 +27,7 @@ const authErrorResponseInterceptor = (error: AxiosError<any, any>) => {
 };
 
 export const axios = Axios.create({
-  baseURL: API_URL
+  baseURL: getApiUrl()
 });
 
 axios.interceptors.request.use(authRequestInterceptor);

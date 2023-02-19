@@ -60,7 +60,7 @@ export function SignInForm({ onSuccess }: SignInFormProps) {
   };
 
   return (
-    <S.Container onSubmit={handleSubmit(handleSignIn)}>
+    <S.Container onSubmit={handleSubmit(handleSignIn)} noValidate>
       <ControlledTextInput
         name="email"
         control={control}
