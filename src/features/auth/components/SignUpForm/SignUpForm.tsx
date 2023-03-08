@@ -66,7 +66,7 @@ export function SignUpForm({ onSuccess }: SignUpFormProps) {
   };
 
   return (
-    <S.Container onSubmit={handleSubmit(handleSignUp)}>
+    <S.Container onSubmit={handleSubmit(handleSignUp)} noValidate>
       <ControlledTextInput
         name="name"
         control={control}
