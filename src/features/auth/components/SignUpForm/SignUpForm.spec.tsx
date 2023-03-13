@@ -1,6 +1,4 @@
-import userEvent from '@testing-library/user-event';
-
-import { render } from '@/test/test-utils';
+import { render, userEvent } from '@/test/test-utils';
 
 import { SignUpForm } from './SignUpForm';
 

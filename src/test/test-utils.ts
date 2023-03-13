@@ -1,6 +1,7 @@
 import { FunctionComponent } from 'react';
 
 import { render as rtlRender, RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { AppProvider } from '@/providers/app';
 
@@ -15,3 +16,5 @@ export const render = async (
 
   return returnValue;
 };
+
+export { rtlRender, userEvent };
