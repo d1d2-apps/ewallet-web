@@ -1,13 +1,12 @@
 import { useState } from 'react';
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import * as AlertDialog from '@radix-ui/react-alert-dialog';
+import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 
 import { Button } from '@/components/elements';
 
 import * as S from './ConfirmationDialog.styles';
 
-export interface ConfirmationDialogProps {
+export interface ConfirmationDialogProps extends AlertDialogPrimitive.AlertDialogProps {
   title: string;
   description: string;
   okButtonLabel?: string;
@@ -16,52 +15,47 @@ export interface ConfirmationDialogProps {
   onConfirm: () => void | Promise<void>;
 }
 
-export const ConfirmationDialog = NiceModal.create<ConfirmationDialogProps>(
-  ({
-    title,
-    description,
-    okButtonLabel = 'Confirmar',
-    okButtonLoadingText = 'Confirmando...',
-    cancelButtonLabel = 'Cancelar',
-    onConfirm
-  }) => {
-    const alert = useModal();
+export function ConfirmationDialog({
+  title,
+  description,
+  okButtonLabel = 'Confirmar',
+  okButtonLoadingText = 'Confirmando...',
+  cancelButtonLabel = 'Cancelar',
+  onConfirm,
+  ...rest
+}: ConfirmationDialogProps) {
+  const [isSubmiting, setIsSubmiting] = useState(false);
 
-    const [isSubmiting, setIsSubmiting] = useState(false);
+  const handleConfirmClick = async () => {
+    setIsSubmiting(true);
+    await onConfirm();
+    setIsSubmiting(false);
+  };
 
-    const handleConfirmClick = async () => {
-      setIsSubmiting(true);
-      await onConfirm();
-      setIsSubmiting(false);
+  return (
+    <AlertDialogPrimitive.Root {...rest}>
+      <AlertDialogPrimitive.Portal>
+        <S.Overlay />
 
-      await alert.hide();
-    };
+        <S.Content>
+          <main>
+            <S.Title>{title}</S.Title>
+            <S.Description>{description}</S.Description>
+          </main>
 
-    return (
-      <AlertDialog.Root open={alert.visible} onOpenChange={open => !open && alert.remove()}>
-        <AlertDialog.Portal>
-          <S.Overlay />
-
-          <S.Content>
-            <main>
-              <S.Title>{title}</S.Title>
-              <S.Description>{description}</S.Description>
-            </main>
-
-            <footer>
-              <AlertDialog.Cancel asChild>
-                <Button colorScheme="white" size="sm" disabled={isSubmiting}>
-                  {cancelButtonLabel}
-                </Button>
-              </AlertDialog.Cancel>
-
-              <Button size="sm" onClick={handleConfirmClick} isLoading={isSubmiting} loadingText={okButtonLoadingText}>
-                {okButtonLabel}
+          <footer>
+            <AlertDialogPrimitive.Cancel asChild>
+              <Button colorScheme="white" size="sm" disabled={isSubmiting}>
+                {cancelButtonLabel}
               </Button>
-            </footer>
-          </S.Content>
-        </AlertDialog.Portal>
-      </AlertDialog.Root>
-    );
-  }
-);
+            </AlertDialogPrimitive.Cancel>
+
+            <Button size="sm" onClick={handleConfirmClick} isLoading={isSubmiting} loadingText={okButtonLoadingText}>
+              {okButtonLabel}
+            </Button>
+          </footer>
+        </S.Content>
+      </AlertDialogPrimitive.Portal>
+    </AlertDialogPrimitive.Root>
+  );
+}
