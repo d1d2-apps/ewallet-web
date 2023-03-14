@@ -17,4 +17,5 @@ export const render = async (
   return returnValue;
 };
 
+export * from '@testing-library/react';
 export { rtlRender, userEvent };

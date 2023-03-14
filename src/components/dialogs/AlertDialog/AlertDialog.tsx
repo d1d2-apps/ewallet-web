@@ -1,7 +1,6 @@
 import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
-import * as RadixAlertDialog from '@radix-ui/react-alert-dialog';
+import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 
 import { Button } from '@/components/elements';
 
@@ -9,7 +8,7 @@ import * as S from './AlertDialog.styles';
 
 export type AlertDialogType = 'info' | 'error' | 'success' | 'warning';
 
-export interface AlertDialogProps {
+export interface AlertDialogProps extends AlertDialogPrimitive.AlertDialogProps {
   type?: AlertDialogType;
   title: string;
   description: string;
@@ -23,35 +22,31 @@ const ALERT_TYPES_ICONS = {
   warning: <FiAlertTriangle />
 };
 
-export const AlertDialog = NiceModal.create<AlertDialogProps>(
-  ({ type = 'info', title, description, okButtonLabel = 'Ok' }) => {
-    const alert = useModal();
+export function AlertDialog({ type = 'info', title, description, okButtonLabel = 'Ok', ...rest }: AlertDialogProps) {
+  return (
+    <AlertDialogPrimitive.Root {...rest}>
+      <AlertDialogPrimitive.Portal>
+        <S.Overlay />
 
-    return (
-      <RadixAlertDialog.Root open={alert.visible} onOpenChange={open => !open && alert.remove()}>
-        <RadixAlertDialog.Portal>
-          <S.Overlay />
+        <S.Content $type={type}>
+          <main>
+            <i>{ALERT_TYPES_ICONS[type]}</i>
 
-          <S.Content $type={type}>
-            <main>
-              <i>{ALERT_TYPES_ICONS[type]}</i>
+            <div>
+              <S.Title>{title}</S.Title>
+              <S.Description>{description}</S.Description>
+            </div>
+          </main>
 
-              <div>
-                <S.Title>{title}</S.Title>
-                <S.Description>{description}</S.Description>
-              </div>
-            </main>
-
-            <footer>
-              <RadixAlertDialog.Cancel asChild>
-                <Button colorScheme={type} size="sm">
-                  {okButtonLabel}
-                </Button>
-              </RadixAlertDialog.Cancel>
-            </footer>
-          </S.Content>
-        </RadixAlertDialog.Portal>
-      </RadixAlertDialog.Root>
-    );
-  }
-);
+          <footer>
+            <AlertDialogPrimitive.Cancel asChild>
+              <Button colorScheme={type} size="sm">
+                {okButtonLabel}
+              </Button>
+            </AlertDialogPrimitive.Cancel>
+          </footer>
+        </S.Content>
+      </AlertDialogPrimitive.Portal>
+    </AlertDialogPrimitive.Root>
+  );
+}
