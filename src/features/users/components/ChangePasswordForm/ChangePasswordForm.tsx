@@ -16,7 +16,7 @@ type FormData = ChangePasswordDTO['data'];
 
 const validationSchema = yup
   .object({
-    oldPassword: yup.string(),
+    oldPassword: yup.string().required('Senha antiga é obrigatória'),
     password: yup.string().when('oldPassword', {
       is: (val: string) => !!val.length,
       then: yup.string().min(6, 'Mínimo de 6 caracteres'),
