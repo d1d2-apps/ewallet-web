@@ -1,4 +1,4 @@
-import { render, userEvent } from '@/test/test-utils';
+import { cleanup, render, userEvent } from '@/test/test-utils';
 
 import { ChangePasswordForm } from './ChangePasswordForm';
 
@@ -12,100 +12,93 @@ jest.mock('../../api/changePassword', () => ({
   })
 }));
 
-describe('ChangePasswordForm Component', () => {
-  it('should render without crashing', async () => {
-    const { getByText, getByLabelText } = await render(<ChangePasswordForm />);
+const setup = async () => {
+  const utils = await render(<ChangePasswordForm />);
 
-    const oldPasswordInput = getByLabelText('Sua senha antiga');
-    const passwordInput = getByLabelText('Sua nova senha');
-    const passwordConfirmationInput = getByLabelText('Confirme sua nova senha');
-    const submitButton = getByText('Alterar');
+  const changeOldPasswordInput = (value: string) => {
+    return userEvent.type(utils.getByLabelText('Sua senha antiga'), value);
+  };
 
-    expect(oldPasswordInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-    expect(passwordConfirmationInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-  });
+  const changePasswordInput = (value: string) => {
+    return userEvent.type(utils.getByLabelText('Sua nova senha'), value);
+  };
 
-  it('should not be able to submit if old password input is empty', async () => {
-    const { getByLabelText, getByText, findByText } = await render(<ChangePasswordForm />);
+  const changePasswordConfirmationInput = (value: string) => {
+    return userEvent.type(utils.getByLabelText('Confirme sua nova senha'), value);
+  };
 
-    const passwordInput = getByLabelText('Sua nova senha');
-    const submitButton = getByText('Alterar');
+  const clickSubmit = () => userEvent.click(utils.getByText('Alterar'));
 
-    await userEvent.type(passwordInput, 'test');
-    await userEvent.click(submitButton);
+  return {
+    ...utils,
+    changeOldPasswordInput,
+    changePasswordInput,
+    changePasswordConfirmationInput,
+    clickSubmit,
+    mockChangePasswordMutation
+  };
+};
 
-    const oldPasswordInputErrorMessage = await findByText('Senha antiga é obrigatória');
-    expect(oldPasswordInputErrorMessage).toBeInTheDocument();
-  });
+afterEach(() => cleanup());
 
-  it('should not be able to submit if new password input has not minimum of characters', async () => {
-    const { getByLabelText, getByText, findByText } = await render(<ChangePasswordForm />);
+test('shows validation error when submit is clicked and old password is not provided', async () => {
+  const { changePasswordInput, clickSubmit, findByText } = await setup();
 
-    const oldPasswordInput = getByLabelText('Sua senha antiga');
-    const passwordInput = getByLabelText('Sua nova senha');
-    const submitButton = getByText('Alterar');
+  await changePasswordInput('new-password');
+  await clickSubmit();
 
-    await userEvent.type(oldPasswordInput, 'old-password');
-    await userEvent.type(passwordInput, 'test');
-    await userEvent.click(submitButton);
+  const validationErrorMessage = await findByText('Senha antiga é obrigatória');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
 
-    const passwordInputErrorMessage = await findByText('Mínimo de 6 caracteres');
-    expect(passwordInputErrorMessage).toBeInTheDocument();
-  });
+test('shows validation error when submit is clicked and new password has not the minimum of characters', async () => {
+  const { changeOldPasswordInput, changePasswordInput, clickSubmit, findByText } = await setup();
 
-  it('should not be able to submit if new password confirmation input is empty', async () => {
-    const { getByLabelText, getByText, findByText } = await render(<ChangePasswordForm />);
+  await changeOldPasswordInput('old-password');
+  await changePasswordInput('12345');
+  await clickSubmit();
 
-    const oldPasswordInput = getByLabelText('Sua senha antiga');
-    const passwordInput = getByLabelText('Sua nova senha');
-    const submitButton = getByText('Alterar');
+  const validationErrorMessage = await findByText('Mínimo de 6 caracteres');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
 
-    await userEvent.type(oldPasswordInput, 'old-password');
-    await userEvent.type(passwordInput, 'new-password');
-    await userEvent.click(submitButton);
+test('shows validation error when submit is clicked and password confirmation is not provided', async () => {
+  const { changeOldPasswordInput, changePasswordInput, clickSubmit, findByText } = await setup();
 
-    const passwordConfirmationInputErrorMessage = await findByText('Confirmação de senha é obrigatória');
-    expect(passwordConfirmationInputErrorMessage).toBeInTheDocument();
-  });
+  await changeOldPasswordInput('old-password');
+  await changePasswordInput('new-password');
+  await clickSubmit();
 
-  it('should not be able to submit if new password confirmation input is different from password input', async () => {
-    const { getByLabelText, getByText, findByText } = await render(<ChangePasswordForm />);
+  const validationErrorMessage = await findByText('Confirmação de senha é obrigatória');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
 
-    const oldPasswordInput = getByLabelText('Sua senha antiga');
-    const passwordInput = getByLabelText('Sua nova senha');
-    const passwordConfirmationInput = getByLabelText('Confirme sua nova senha');
-    const submitButton = getByText('Alterar');
+test('shows validation error when submit is clicked and password confirmation is different from new passowrd', async () => {
+  const { changeOldPasswordInput, changePasswordInput, changePasswordConfirmationInput, clickSubmit, findByText } =
+    await setup();
 
-    await userEvent.type(oldPasswordInput, 'old-password');
-    await userEvent.type(passwordInput, 'new-password');
-    await userEvent.type(passwordConfirmationInput, 'different-password');
-    await userEvent.click(submitButton);
+  await changeOldPasswordInput('old-password');
+  await changePasswordInput('new-password');
+  await changePasswordConfirmationInput('different-password');
+  await clickSubmit();
 
-    const passwordConfirmationInputErrorMessage = await findByText('Confirmação incorreta');
-    expect(passwordConfirmationInputErrorMessage).toBeInTheDocument();
-  });
+  const validationErrorMessage = await findByText('Confirmação incorreta');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
 
-  it('should be able to submit if form values are valid', async () => {
-    const { getByLabelText, getByText } = await render(<ChangePasswordForm />);
+test('calls change password mutation with form values', async () => {
+  const { changeOldPasswordInput, changePasswordInput, changePasswordConfirmationInput, clickSubmit } = await setup();
 
-    const oldPasswordInput = getByLabelText('Sua senha antiga');
-    const passwordInput = getByLabelText('Sua nova senha');
-    const passwordConfirmationInput = getByLabelText('Confirme sua nova senha');
-    const submitButton = getByText('Alterar');
+  await changeOldPasswordInput('old-password');
+  await changePasswordInput('new-password');
+  await changePasswordConfirmationInput('new-password');
+  await clickSubmit();
 
-    await userEvent.type(oldPasswordInput, 'old-password');
-    await userEvent.type(passwordInput, 'new-password');
-    await userEvent.type(passwordConfirmationInput, 'new-password');
-    await userEvent.click(submitButton);
-
-    expect(mockChangePasswordMutation).toHaveBeenCalledWith({
-      data: {
-        oldPassword: 'old-password',
-        password: 'new-password',
-        passwordConfirmation: 'new-password'
-      }
-    });
+  expect(mockChangePasswordMutation).toHaveBeenCalledWith({
+    data: {
+      oldPassword: 'old-password',
+      password: 'new-password',
+      passwordConfirmation: 'new-password'
+    }
   });
 });
