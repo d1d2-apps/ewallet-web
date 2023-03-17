@@ -1,4 +1,4 @@
-import { render, userEvent } from '@/test/test-utils';
+import { cleanup, render, userEvent } from '@/test/test-utils';
 
 import { SignUpForm } from './SignUpForm';
 
@@ -12,113 +12,108 @@ jest.mock('@/features/auth', () => ({
   })
 }));
 
-describe('SignUpForm Component', () => {
-  it('should render without crashing', async () => {
-    const { getByText, getByPlaceholderText, getByLabelText } = await render(<SignUpForm onSuccess={jest.fn()} />);
+const inputsLabels = {
+  name: 'Seu nome completo',
+  email: 'Seu e-mail',
+  password: 'Sua senha',
+  passwordConfirmation: 'Confirme sua senha'
+};
 
-    const nameInput = getByPlaceholderText('Fulano de tal');
-    const emailInput = getByPlaceholderText('fulano@email.com.br');
-    const passwordInput = getByLabelText('Sua senha');
-    const passwordConfirmationInput = getByLabelText('Confirme sua senha');
-    const submitButton = getByText('Cadastrar');
+const setup = async () => {
+  const onSuccess = jest.fn();
 
-    expect(nameInput).toBeInTheDocument();
-    expect(emailInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-    expect(passwordConfirmationInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
+  const utils = await render(<SignUpForm onSuccess={onSuccess} />);
+
+  const changeInput = (inputName: keyof typeof inputsLabels, value: string) => {
+    return userEvent.type(utils.getByLabelText(inputsLabels[inputName]), value);
+  };
+
+  const clickSubmit = () => userEvent.click(utils.getByText('Cadastrar'));
+
+  return {
+    ...utils,
+    onSuccess,
+    changeInput,
+    clickSubmit
+  };
+};
+
+afterEach(() => cleanup());
+
+test('shows validation error when submit is clicked and name is not provided', async () => {
+  const { clickSubmit, findByText } = await setup();
+
+  await clickSubmit();
+
+  const validationErrorMessage = await findByText('Nome é obrigatório');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
+
+test('shows validation error when submit is clicked and email is not provided', async () => {
+  const { clickSubmit, findByText } = await setup();
+
+  await clickSubmit();
+
+  const validationErrorMessage = await findByText('E-mail é obrigatório');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
+
+test('shows validation error when submit is clicked and the email is invalid', async () => {
+  const { clickSubmit, changeInput, findByText } = await setup();
+
+  await changeInput('email', 'invalid-email-format');
+  await clickSubmit();
+
+  const validationErrorMessage = await findByText('Formato de e-mail inválido');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
+
+test('shows validation error when submit is clicked and password length is less then 6', async () => {
+  const { clickSubmit, findByText } = await setup();
+
+  await clickSubmit();
+
+  const validationErrorMessage = await findByText('Mínimo de 6 caracteres');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
+
+test('shows validation error when submit is clicked and password confirmation is not provided', async () => {
+  const { clickSubmit, findByText } = await setup();
+
+  await clickSubmit();
+
+  const validationErrorMessage = await findByText('Confirmação de senha é obrigatória');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
+
+test('shows validation error when submit is clicked and password confirmation is different from the provided password', async () => {
+  const { clickSubmit, changeInput, findByText } = await setup();
+
+  await changeInput('password', 'new-password');
+  await changeInput('passwordConfirmation', 'different-password');
+  await clickSubmit();
+
+  const validationErrorMessage = await findByText('Confirmação incorreta');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
+
+test('calls signUp with the provided form values and calls onSuccess once', async () => {
+  const { clickSubmit, changeInput, onSuccess } = await setup();
+
+  await changeInput('name', 'John Doe');
+  await changeInput('email', 'john.doe@email.com.br');
+  await changeInput('password', 'new-password');
+  await changeInput('passwordConfirmation', 'new-password');
+  await clickSubmit();
+
+  expect(mockSignUp).toHaveBeenCalledWith({
+    data: {
+      name: 'John Doe',
+      email: 'john.doe@email.com.br',
+      password: 'new-password',
+      passwordConfirmation: 'new-password'
+    }
   });
 
-  it('should not be able to submit if name input is empty', async () => {
-    const { getByText, findByText } = await render(<SignUpForm onSuccess={jest.fn()} />);
-
-    const submitButton = getByText('Cadastrar');
-    await userEvent.click(submitButton);
-
-    const nameInputErrorMessage = await findByText('Nome é obrigatório');
-    expect(nameInputErrorMessage).toBeInTheDocument();
-  });
-
-  it('should not be able to submit if email input is empty', async () => {
-    const { getByText, findByText } = await render(<SignUpForm onSuccess={jest.fn()} />);
-
-    const submitButton = getByText('Cadastrar');
-    await userEvent.click(submitButton);
-
-    const emailInputErrorMessage = await findByText('E-mail é obrigatório');
-    expect(emailInputErrorMessage).toBeInTheDocument();
-  });
-
-  it('should not be able to submit if email input is invalid', async () => {
-    const { getByText, getByPlaceholderText, findByText } = await render(<SignUpForm onSuccess={jest.fn()} />);
-
-    const emailInput = getByPlaceholderText('fulano@email.com.br');
-    const submitButton = getByText('Cadastrar');
-
-    await userEvent.type(emailInput, 'invalid-email-format');
-    await userEvent.click(submitButton);
-
-    const emailInputErrorMessage = await findByText('Formato de e-mail inválido');
-    expect(emailInputErrorMessage).toBeInTheDocument();
-  });
-
-  it('should not be able to submit if password length is less then 6', async () => {
-    const { getByText, findByText } = await render(<SignUpForm onSuccess={jest.fn()} />);
-
-    const submitButton = getByText('Cadastrar');
-    await userEvent.click(submitButton);
-
-    const passwordInputErrorMessage = await findByText('Mínimo de 6 caracteres');
-    expect(passwordInputErrorMessage).toBeInTheDocument();
-  });
-
-  it('should not be able to submit if password confirmation input is empty', async () => {
-    const { getByText, findByText } = await render(<SignUpForm onSuccess={jest.fn()} />);
-
-    const submitButton = getByText('Cadastrar');
-    await userEvent.click(submitButton);
-
-    const passwordConfirmationInputErrorMessage = await findByText('Confirmação de senha é obrigatória');
-    expect(passwordConfirmationInputErrorMessage).toBeInTheDocument();
-  });
-
-  it('should not be able to submit if password confirmation is different from password input', async () => {
-    const { getByText, getByLabelText, findByText } = await render(<SignUpForm onSuccess={jest.fn()} />);
-
-    const passwordInput = getByLabelText('Sua senha');
-    const passwordConfirmationInput = getByLabelText('Confirme sua senha');
-    const submitButton = getByText('Cadastrar');
-
-    await userEvent.type(passwordInput, '123456');
-    await userEvent.type(passwordConfirmationInput, '654321');
-    await userEvent.click(submitButton);
-
-    const passwordConfirmationInputErrorMessage = await findByText('Confirmação incorreta');
-    expect(passwordConfirmationInputErrorMessage).toBeInTheDocument();
-  });
-
-  it('should be able to submit if form values are valid', async () => {
-    const { getByText, getByLabelText, getByPlaceholderText } = await render(<SignUpForm onSuccess={jest.fn()} />);
-
-    const nameInput = getByPlaceholderText('Fulano de tal');
-    const emailInput = getByPlaceholderText('fulano@email.com.br');
-    const passwordInput = getByLabelText('Sua senha');
-    const passwordConfirmationInput = getByLabelText('Confirme sua senha');
-    const submitButton = getByText('Cadastrar');
-
-    await userEvent.type(nameInput, 'John Doe');
-    await userEvent.type(emailInput, 'john.doe@email.com.br');
-    await userEvent.type(passwordInput, '123456');
-    await userEvent.type(passwordConfirmationInput, '123456');
-    await userEvent.click(submitButton);
-
-    expect(mockSignUp).toHaveBeenCalledWith({
-      data: {
-        name: 'John Doe',
-        email: 'john.doe@email.com.br',
-        password: '123456',
-        passwordConfirmation: '123456'
-      }
-    });
-  });
+  expect(onSuccess).toHaveBeenCalledTimes(1);
 });
