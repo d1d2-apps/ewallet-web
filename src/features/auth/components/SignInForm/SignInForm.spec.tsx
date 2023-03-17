@@ -1,4 +1,4 @@
-import { render, userEvent } from '@/test/test-utils';
+import { cleanup, render, userEvent } from '@/test/test-utils';
 
 import { SignInForm } from './SignInForm';
 
@@ -12,63 +12,67 @@ jest.mock('@/features/auth', () => ({
   })
 }));
 
-describe('SignInForm Component', () => {
-  it('should render without crashing', async () => {
-    const { getByText, getByPlaceholderText } = await render(<SignInForm onSuccess={jest.fn()} />);
+const setup = async () => {
+  const onSuccess = jest.fn();
 
-    const emailInput = getByPlaceholderText('fulano@email.com.br');
-    const passwordInput = getByPlaceholderText('********');
-    const submitButton = getByText('Entrar');
+  const utils = await render(<SignInForm onSuccess={onSuccess} />);
 
-    expect(emailInput).toBeInTheDocument();
-    expect(passwordInput).toBeInTheDocument();
-    expect(submitButton).toBeInTheDocument();
-  });
+  const changeEmailInput = (value: string) => {
+    return userEvent.type(utils.getByLabelText('Seu e-mail'), value);
+  };
 
-  it('should not be able to submit if email input is empty', async () => {
-    const { getByText, findByText } = await render(<SignInForm onSuccess={jest.fn()} />);
+  const changePasswordInput = (value: string) => {
+    return userEvent.type(utils.getByLabelText('Sua senha'), value);
+  };
 
-    const submitButton = getByText('Entrar');
-    await userEvent.click(submitButton);
+  const clickSubmit = () => userEvent.click(utils.getByText('Entrar'));
 
-    const emailInputErrorMessage = await findByText('E-mail é obrigatório');
-    expect(emailInputErrorMessage).toBeInTheDocument();
-  });
+  return {
+    ...utils,
+    onSuccess,
+    changeEmailInput,
+    changePasswordInput,
+    clickSubmit
+  };
+};
 
-  it('should not be able to submit if email input is invalid', async () => {
-    const { getByText, getByPlaceholderText, findByText } = await render(<SignInForm onSuccess={jest.fn()} />);
+afterEach(() => cleanup());
 
-    const emailInput = getByPlaceholderText('fulano@email.com.br');
-    const submitButton = getByText('Entrar');
+test('shows validation error when submit is clicked and email is not provided', async () => {
+  const { clickSubmit, findByText } = await setup();
 
-    await userEvent.type(emailInput, 'invalid-email-format');
-    await userEvent.click(submitButton);
+  await clickSubmit();
 
-    const emailInputErrorMessage = await findByText('Formato de e-mail inválido');
-    expect(emailInputErrorMessage).toBeInTheDocument();
-  });
+  const validationErrorMessage = await findByText('E-mail é obrigatório');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
 
-  it('should not be able to submit if password input is empty', async () => {
-    const { getByText, findByText } = await render(<SignInForm onSuccess={jest.fn()} />);
+test('shows validation error when submit is clicked and the provided email is invalid', async () => {
+  const { changeEmailInput, clickSubmit, findByText } = await setup();
 
-    const submitButton = getByText('Entrar');
-    await userEvent.click(submitButton);
+  await changeEmailInput('invalid-email-format');
+  await clickSubmit();
 
-    const passwordInputErrorMessage = await findByText('Senha é orbigatória');
-    expect(passwordInputErrorMessage).toBeInTheDocument();
-  });
+  const validationErrorMessage = await findByText('Formato de e-mail inválido');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
 
-  it('should be able to submit if form values are valid', async () => {
-    const { getByText, getByPlaceholderText } = await render(<SignInForm onSuccess={jest.fn()} />);
+test('shows validation error when submit is clicked and password is not provided', async () => {
+  const { clickSubmit, findByText } = await setup();
 
-    const emailInput = getByPlaceholderText('fulano@email.com.br');
-    const passwordInput = getByPlaceholderText('********');
-    const submitButton = getByText('Entrar');
+  await clickSubmit();
 
-    await userEvent.type(emailInput, 'test@email.com');
-    await userEvent.type(passwordInput, '123456');
-    await userEvent.click(submitButton);
+  const validationErrorMessage = await findByText('Senha é orbigatória');
+  expect(validationErrorMessage).toBeInTheDocument();
+});
 
-    expect(mockSignIn).toHaveBeenCalledWith({ data: { email: 'test@email.com', password: '123456' } });
-  });
+test('calls signIn with provided form values and onSuccess once', async () => {
+  const { changeEmailInput, changePasswordInput, clickSubmit, onSuccess } = await setup();
+
+  await changeEmailInput('test@email.com');
+  await changePasswordInput('123456');
+  await clickSubmit();
+
+  expect(mockSignIn).toHaveBeenCalledWith({ data: { email: 'test@email.com', password: '123456' } });
+  expect(onSuccess).toHaveBeenCalledTimes(1);
 });
