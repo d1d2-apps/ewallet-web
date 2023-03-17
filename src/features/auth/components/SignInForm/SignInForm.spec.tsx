@@ -12,17 +12,18 @@ jest.mock('@/features/auth', () => ({
   })
 }));
 
+const inputsLabels = {
+  email: 'Seu e-mail',
+  password: 'Sua senha'
+};
+
 const setup = async () => {
   const onSuccess = jest.fn();
 
   const utils = await render(<SignInForm onSuccess={onSuccess} />);
 
-  const changeEmailInput = (value: string) => {
-    return userEvent.type(utils.getByLabelText('Seu e-mail'), value);
-  };
-
-  const changePasswordInput = (value: string) => {
-    return userEvent.type(utils.getByLabelText('Sua senha'), value);
+  const changeInput = (inputName: keyof typeof inputsLabels, value: string) => {
+    return userEvent.type(utils.getByLabelText(inputsLabels[inputName]), value);
   };
 
   const clickSubmit = () => userEvent.click(utils.getByText('Entrar'));
@@ -30,8 +31,7 @@ const setup = async () => {
   return {
     ...utils,
     onSuccess,
-    changeEmailInput,
-    changePasswordInput,
+    changeInput,
     clickSubmit
   };
 };
@@ -48,9 +48,9 @@ test('shows validation error when submit is clicked and email is not provided', 
 });
 
 test('shows validation error when submit is clicked and the provided email is invalid', async () => {
-  const { changeEmailInput, clickSubmit, findByText } = await setup();
+  const { changeInput, clickSubmit, findByText } = await setup();
 
-  await changeEmailInput('invalid-email-format');
+  await changeInput('email', 'invalid-email-format');
   await clickSubmit();
 
   const validationErrorMessage = await findByText('Formato de e-mail inválido');
@@ -67,10 +67,10 @@ test('shows validation error when submit is clicked and password is not provided
 });
 
 test('calls signIn with provided form values and onSuccess once', async () => {
-  const { changeEmailInput, changePasswordInput, clickSubmit, onSuccess } = await setup();
+  const { changeInput, clickSubmit, onSuccess } = await setup();
 
-  await changeEmailInput('test@email.com');
-  await changePasswordInput('123456');
+  await changeInput('email', 'test@email.com');
+  await changeInput('password', '123456');
   await clickSubmit();
 
   expect(mockSignIn).toHaveBeenCalledWith({ data: { email: 'test@email.com', password: '123456' } });
