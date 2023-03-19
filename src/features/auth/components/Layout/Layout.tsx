@@ -5,7 +5,7 @@ import logoImg from '@/assets/images/logo.png';
 import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
 import { useColorModeValue } from '@/hooks';
-import { useColorMode } from '@/stores/colorMode';
+import { useColorModeStore } from '@/stores/colorMode';
 
 import spreadsheetImg from '../../assets/images/spreadsheet.png';
 import * as S from './Layout.styles';
@@ -21,7 +21,7 @@ export function Layout({ title, children }: LayoutProps) {
   const isInSignInPage = location.pathname === '/auth/sign-in';
   const isInSignUpPage = location.pathname === '/auth/sign-up';
 
-  const { toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorModeStore();
 
   const colorModeButtonConfig = {
     title: useColorModeValue('Habilitar modo escuro', 'Habilitar modo claro'),

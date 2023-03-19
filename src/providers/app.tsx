@@ -15,7 +15,7 @@ import { themes } from '@/config/styles/themes';
 import { AuthProvider } from '@/features/auth';
 import { queryClient } from '@/lib/react-query';
 import { ToastProvider } from '@/lib/react-toastify';
-import { ColorModeProvider, useColorMode } from '@/stores/colorMode';
+import { useColorModeStore } from '@/stores/colorMode';
 
 interface AppProviderProps {
   children: React.ReactNode;
@@ -58,8 +58,8 @@ function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   );
 }
 
-function App({ children }: AppProviderProps) {
-  const { colorMode } = useColorMode();
+export function AppProvider({ children }: AppProviderProps) {
+  const { colorMode } = useColorModeStore();
 
   const currentTheme = themes[colorMode];
 
@@ -85,13 +85,5 @@ function App({ children }: AppProviderProps) {
 
       <GlobalStyle theme={currentTheme} />
     </ThemeProvider>
-  );
-}
-
-export function AppProvider({ children }: AppProviderProps) {
-  return (
-    <ColorModeProvider>
-      <App>{children}</App>
-    </ColorModeProvider>
   );
 }

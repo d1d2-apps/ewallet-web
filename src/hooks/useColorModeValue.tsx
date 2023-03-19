@@ -1,4 +1,4 @@
-import { useColorMode } from '@/stores/colorMode';
+import { useColorModeStore } from '@/stores/colorMode';
 
 /**
  * Change value based on color mode.
@@ -13,6 +13,6 @@ import { useColorMode } from '@/stores/colorMode';
  * ```
  */
 export function useColorModeValue<TLight = unknown, TDark = unknown>(light: TLight, dark: TDark) {
-  const { colorMode } = useColorMode();
+  const { colorMode } = useColorModeStore();
   return colorMode === 'light' ? light : dark;
 }

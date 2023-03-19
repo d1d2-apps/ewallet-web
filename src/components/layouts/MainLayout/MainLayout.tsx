@@ -7,7 +7,7 @@ import logoImg from '@/assets/images/logo.png';
 import { Avatar, Button, Tooltip } from '@/components/elements';
 import { useAuth } from '@/features/auth';
 import { useColorModeValue } from '@/hooks';
-import { useColorMode } from '@/stores/colorMode';
+import { useColorModeStore } from '@/stores/colorMode';
 
 import * as S from './MainLayout.styles';
 
@@ -49,9 +49,10 @@ interface MainLayoutProps {
 
 export function MainLayout({ children }: MainLayoutProps) {
   const { user } = useAuth();
-  const { toggleColorMode } = useColorMode();
 
   const location = useLocation();
+
+  const { toggleColorMode } = useColorModeStore();
 
   const colorModeButtonConfig = {
     title: useColorModeValue('Habilitar modo escuro', 'Habilitar modo claro'),

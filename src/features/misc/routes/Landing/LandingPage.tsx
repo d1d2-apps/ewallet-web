@@ -6,13 +6,14 @@ import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
 import { useAuth } from '@/features/auth';
 import { useColorModeValue } from '@/hooks';
-import { useColorMode } from '@/stores/colorMode';
+import { useColorModeStore } from '@/stores/colorMode';
 
 import * as S from './LandingPage.styles';
 
 export function LandingPage() {
   const { user } = useAuth();
-  const { toggleColorMode } = useColorMode();
+
+  const { toggleColorMode } = useColorModeStore();
 
   const colorModeButtonConfig = {
     title: useColorModeValue('Habilitar modo escuro', 'Habilitar modo claro'),
