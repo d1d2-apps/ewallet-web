@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Dialog from '@radix-ui/react-dialog';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as yup from 'yup';
 
 import { Button } from '@/components/elements';
@@ -18,8 +18,9 @@ import * as S from './CreateCreditCardModal.styles';
 
 type FormData = CreateCreditCardDTO['data'];
 
-interface CreateCreditCardModalProps {
+export interface CreateCreditCardModalProps extends DialogPrimitive.DialogProps {
   creditCard?: CreditCard;
+  onSuccess?: () => void | Promise<void>;
 }
 
 const validationSchema = yup
@@ -28,9 +29,7 @@ const validationSchema = yup
   })
   .required();
 
-export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps>(({ creditCard }) => {
-  const modal = useModal();
-
+export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: CreateCreditCardModalProps) {
   const alertDialog = useAlertDialog();
   const createCreditCardMutation = useCreateCreditCard();
   const updateCreditCardMutation = useUpdateCreditCard();
@@ -52,7 +51,9 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
 
       toast.success('Cartão de crédito salvo com sucesso.');
 
-      await modal.hide();
+      if (onSuccess) {
+        await onSuccess();
+      }
     } catch (err) {
       console.log(err);
 
@@ -66,8 +67,8 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
   };
 
   return (
-    <Dialog.Root open={modal.visible} onOpenChange={open => !open && modal.remove()}>
-      <Dialog.Portal>
+    <DialogPrimitive.Root {...rest}>
+      <DialogPrimitive.Portal>
         <S.Overlay />
 
         <S.Content asChild>
@@ -75,11 +76,11 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
             <header>
               <S.Title>{creditCard?.id ? 'Editar' : 'Cadastrar'} cartão de crédito</S.Title>
 
-              <Dialog.Close asChild>
+              <DialogPrimitive.Close asChild>
                 <Button size="xs" colorScheme="neutral" isRounded>
                   <FiX />
                 </Button>
-              </Dialog.Close>
+              </DialogPrimitive.Close>
             </header>
 
             <main>
@@ -93,7 +94,7 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
             </main>
 
             <footer>
-              <Dialog.Close asChild>
+              <DialogPrimitive.Close asChild>
                 <Button
                   colorScheme="white"
                   size="sm"
@@ -101,7 +102,7 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
                 >
                   Fechar
                 </Button>
-              </Dialog.Close>
+              </DialogPrimitive.Close>
 
               <Button
                 type="submit"
@@ -114,14 +115,35 @@ export const CreateCreditCardModal = NiceModal.create<CreateCreditCardModalProps
             </footer>
           </form>
         </S.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  );
+}
+
+const CreateCreditCardNiceModal = NiceModal.create<CreateCreditCardModalProps>(({ onSuccess, ...rest }) => {
+  const modal = useModal();
+
+  const handleSuccess = async () => {
+    modal.remove();
+
+    if (onSuccess) {
+      await onSuccess();
+    }
+  };
+
+  return (
+    <CreateCreditCardModal
+      {...rest}
+      open={modal.visible}
+      onOpenChange={open => !open && modal.remove()}
+      onSuccess={handleSuccess}
+    />
   );
 });
 
 export function useCreateCreditCardModal() {
   const show = async (props: CreateCreditCardModalProps = {}) => {
-    await NiceModal.show(CreateCreditCardModal, props);
+    await NiceModal.show(CreateCreditCardNiceModal, props);
   };
 
   return { show };
