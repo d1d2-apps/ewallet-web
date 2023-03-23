@@ -8,7 +8,7 @@ import * as S from './AlertDialog.styles';
 
 export type AlertDialogType = 'info' | 'error' | 'success' | 'warning';
 
-export interface AlertDialogProps extends AlertDialogPrimitive.AlertDialogProps {
+export interface AlertDialogProps {
   type?: AlertDialogType;
   title: string;
   description: string;
@@ -22,7 +22,13 @@ const ALERT_TYPES_ICONS = {
   warning: <FiAlertTriangle />
 };
 
-export function AlertDialog({ type = 'info', title, description, okButtonLabel = 'Ok', ...rest }: AlertDialogProps) {
+export function AlertDialog({
+  type = 'info',
+  title,
+  description,
+  okButtonLabel = 'Ok',
+  ...rest
+}: AlertDialogProps & AlertDialogPrimitive.AlertDialogProps) {
   return (
     <AlertDialogPrimitive.Root {...rest}>
       <AlertDialogPrimitive.Portal>
