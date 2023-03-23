@@ -18,7 +18,7 @@ import * as S from './CreateCreditCardModal.styles';
 
 type FormData = CreateCreditCardDTO['data'];
 
-export interface CreateCreditCardModalProps extends DialogPrimitive.DialogProps {
+export interface CreateCreditCardModalProps {
   creditCard?: CreditCard;
   onSuccess?: () => void | Promise<void>;
 }
@@ -29,7 +29,11 @@ const validationSchema = yup
   })
   .required();
 
-export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: CreateCreditCardModalProps) {
+export function CreateCreditCardModal({
+  creditCard,
+  onSuccess,
+  ...rest
+}: CreateCreditCardModalProps & DialogPrimitive.DialogProps) {
   const alertDialog = useAlertDialog();
   const createCreditCardMutation = useCreateCreditCard();
   const updateCreditCardMutation = useUpdateCreditCard();
