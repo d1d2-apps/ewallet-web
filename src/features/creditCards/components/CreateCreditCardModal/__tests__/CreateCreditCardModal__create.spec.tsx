@@ -1,7 +1,6 @@
-import { AppProvider } from '@/providers/app';
-import { cleanup, rtlRender, userEvent } from '@/test/test-utils';
+import { cleanup } from '@/test/test-utils';
 
-import { CreateCreditCardModal, CreateCreditCardModalProps } from '../CreateCreditCardModal';
+import { setupCreateCardModalTestUtils } from './helpers/setup';
 
 const mockCreateCreditCardMutation = jest.fn();
 
@@ -11,34 +10,12 @@ jest.mock('../../../api/createCreditCard', () => ({
   })
 }));
 
-const inputsLabels = {
-  name: 'Nome'
-};
-
-const setup = (modifiers?: CreateCreditCardModalProps) => {
-  const utils = rtlRender(<CreateCreditCardModal open {...modifiers} />, {
-    wrapper: AppProvider
-  });
-
-  const changeInput = (inputName: keyof typeof inputsLabels, value: string) => {
-    return userEvent.type(utils.getByLabelText(inputsLabels[inputName]), value);
-  };
-
-  const clickSubmit = () => userEvent.click(utils.getByText('Salvar'));
-
-  return {
-    ...utils,
-    changeInput,
-    clickSubmit
-  };
-};
-
 afterEach(() => cleanup());
 
 afterAll(() => jest.clearAllMocks());
 
 test('should not be able to submit if name is not provided', async () => {
-  const { clickSubmit, findByText } = setup();
+  const { clickSubmit, findByText } = setupCreateCardModalTestUtils();
 
   await clickSubmit();
 
@@ -47,7 +24,7 @@ test('should not be able to submit if name is not provided', async () => {
 });
 
 test('should not be able to submit if provided name has not the minimun length', async () => {
-  const { clickSubmit, changeInput, findByText } = setup();
+  const { clickSubmit, changeInput, findByText } = setupCreateCardModalTestUtils();
 
   await changeInput('name', 'Te');
   await clickSubmit();
@@ -59,7 +36,7 @@ test('should not be able to submit if provided name has not the minimun length',
 test('should be able to submit if form values are valid', async () => {
   const onSuccess = jest.fn();
 
-  const { clickSubmit, changeInput } = setup({ onSuccess });
+  const { clickSubmit, changeInput } = setupCreateCardModalTestUtils({ onSuccess });
 
   await changeInput('name', 'Credit Card');
   await clickSubmit();
