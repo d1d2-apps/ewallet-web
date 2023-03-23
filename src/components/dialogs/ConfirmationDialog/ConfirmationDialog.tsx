@@ -6,7 +6,7 @@ import { Button } from '@/components/elements';
 
 import * as S from './ConfirmationDialog.styles';
 
-export interface ConfirmationDialogProps extends AlertDialogPrimitive.AlertDialogProps {
+export interface ConfirmationDialogProps {
   title: string;
   description: string;
   okButtonLabel?: string;
@@ -23,7 +23,7 @@ export function ConfirmationDialog({
   cancelButtonLabel = 'Cancelar',
   onConfirm,
   ...rest
-}: ConfirmationDialogProps) {
+}: ConfirmationDialogProps & AlertDialogPrimitive.AlertDialogProps) {
   const [isSubmiting, setIsSubmiting] = useState(false);
 
   const handleConfirmClick = async () => {
