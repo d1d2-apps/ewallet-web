@@ -27,8 +27,6 @@ export function CreditCardsTable({ data }: CreditCardsTableProps) {
 
       toast.success('Cartão de crédito excluído com sucesso.');
     } catch (err) {
-      console.log(err);
-
       alertDialog.show({
         type: 'error',
         title: 'Não foi possível excluir o cartão de crédito',
@@ -80,6 +78,7 @@ export function CreditCardsTable({ data }: CreditCardsTableProps) {
                     colorScheme="neutral"
                     isRounded
                     onClick={() => handleEditCreditCardClick(creditCard)}
+                    title={`Editar cartão ${creditCard.name}`}
                   >
                     <FiEdit2 />
                   </Button>
@@ -91,6 +90,7 @@ export function CreditCardsTable({ data }: CreditCardsTableProps) {
                     colorScheme="neutral"
                     isRounded
                     onClick={() => handleDeleteCreditCardClick(creditCard)}
+                    title={`Excluir cartão ${creditCard.name}`}
                   >
                     <FiTrash2 />
                   </Button>

@@ -38,6 +38,8 @@ const setup = async () => {
 
 afterEach(() => cleanup());
 
+afterAll(() => jest.clearAllMocks());
+
 test('shows validation error when submit is clicked and email is not provided', async () => {
   const { clickSubmit, findByText } = await setup();
 

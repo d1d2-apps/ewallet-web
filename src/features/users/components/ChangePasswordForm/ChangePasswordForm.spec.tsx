@@ -37,6 +37,8 @@ const setup = async () => {
 
 afterEach(() => cleanup());
 
+afterAll(() => jest.clearAllMocks());
+
 test('shows validation error when submit is clicked and old password is not provided', async () => {
   const { changeInput, clickSubmit, findByText } = await setup();
 

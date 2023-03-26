@@ -40,6 +40,8 @@ const setup = async () => {
 
 afterEach(() => cleanup());
 
+afterAll(() => jest.clearAllMocks());
+
 test('shows validation error when submit is clicked and name is not provided', async () => {
   const { clickSubmit, findByText } = await setup();
 
