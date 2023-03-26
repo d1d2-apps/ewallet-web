@@ -1,25 +1,20 @@
 import { formatISO } from 'date-fns';
-// import nock from 'nock';
 
-// import { getApiUrl } from '@/config/env';
-import { cleanup, render, userEvent } from '@/test/test-utils';
+import { cleanup, render, userEvent, waitFor } from '@/test/test-utils';
 
-import * as deleteCreditCardApi from '../../api/deleteCreditCard';
 import { CreditCard } from '../../types';
 import { CreditCardsTable } from './CreditCardsTable';
 
-const mockDeleteCreditCardMutation = jest.fn();
+let mockDeleteCreditCardMutation = jest.fn();
 
-// jest.mock('../../api/deleteCreditCard', () => ({
-//   useDeleteCreditCard: () => ({
-//     mutateAsync: mockDeleteCreditCardMutation
-//   })
-// }));
-
-// jest.spyOn(deleteCreditCardMutation, 'useDeleteCreditCard').mockReturnValue({
-//   ...jest.requireActual('../../api/deleteCreditCard'),
-//   mutateAsync: mockDeleteCreditCardMutation
-// });
+jest.mock('../../api/deleteCreditCard', () => {
+  return {
+    __esModule: true,
+    useDeleteCreditCard: () => ({
+      mutateAsync: mockDeleteCreditCardMutation
+    })
+  };
+});
 
 const creditCards: CreditCard[] = [
   {
@@ -41,6 +36,8 @@ const creditCards: CreditCard[] = [
     updatedAt: formatISO(new Date())
   }
 ];
+
+beforeEach(() => jest.resetModules());
 
 afterEach(() => cleanup());
 
@@ -64,17 +61,25 @@ test('should be able to open CreateCreditCardModal when edit button is clicked',
 });
 
 test('should call the delete credit card mutation when delete button is clicked', async () => {
-  // const scope = nock(getApiUrl()).delete(`/users/credit-cards/${creditCards[0].id}`).reply(200);
+  const { getByText, getByTitle, getByRole } = await render(<CreditCardsTable data={[creditCards[0]]} />);
 
-  // jest.mock('../../api/deleteCreditCard', () => ({
-  //   useDeleteCreditCard: () => ({
-  //     mutateAsync: mockDeleteCreditCardMutation
-  //   })
-  // }));
+  const deleteButton = getByTitle(`Excluir cartão ${creditCards[0].name}`);
+  await userEvent.click(deleteButton);
 
-  jest.spyOn(deleteCreditCardApi, 'useDeleteCreditCard').mockImplementation(() => ({
-    ...jest.requireActual('../../api/deleteCreditCard'),
-    mutateAsync: mockDeleteCreditCardMutation
+  expect(getByRole('alertdialog')).toBeInTheDocument();
+
+  await userEvent.click(getByText('Excluir'));
+
+  expect(mockDeleteCreditCardMutation).toHaveBeenCalledWith({ creditCardId: creditCards[0].id });
+});
+
+test('should show error alert dialog when delete credit card mutation fails', async () => {
+  mockDeleteCreditCardMutation = jest.fn().mockRejectedValue(new Error('test'));
+
+  jest.doMock('../../api/deleteCreditCard', () => ({
+    useDeleteCreditCard: () => ({
+      mutateAsync: mockDeleteCreditCardMutation
+    })
   }));
 
   const { getByText, getByTitle, getByRole } = await render(<CreditCardsTable data={[creditCards[0]]} />);
@@ -88,36 +93,7 @@ test('should call the delete credit card mutation when delete button is clicked'
 
   expect(mockDeleteCreditCardMutation).toHaveBeenCalledWith({ creditCardId: creditCards[0].id });
 
-  // scope.done();
+  waitFor(() => {
+    expect(getByText('Não foi possível excluir o cartão de crédito')).toBeInTheDocument();
+  });
 });
-
-// jest.clearAllMocks();
-
-// jest.mock('../../api/deleteCreditCard', () => ({
-//   useDeleteCreditCard: () => ({
-//     mutateAsync: () => Promise.reject()
-//   })
-// }));
-
-// test('should show error alert dialog when delete credit card mutation fails', async () => {
-//   // jest.spyOn(deleteCreditCardMutation, 'useDeleteCreditCard').mockReturnValue({
-//   //   ...jest.requireActual('../../api/deleteCreditCard'),
-//   //   mutateAsync: jest.fn(() => Promise.reject())
-//   // });
-//   // const scope = nock(getApiUrl()).delete(`/users/credit-cards/${creditCards[0].id}`).reply(400);
-
-//   const { getByText, getByTitle, getByRole } = await render(<CreditCardsTable data={[creditCards[0]]} />);
-
-//   const deleteButton = getByTitle(`Excluir cartão ${creditCards[0].name}`);
-//   await userEvent.click(deleteButton);
-
-//   expect(getByRole('alertdialog')).toBeInTheDocument();
-
-//   await userEvent.click(getByText('Excluir'));
-
-//   // expect(mockDeleteCreditCardMutation).toHaveBeenCalledWith({ creditCardId: creditCards[0].id });
-
-//   expect(getByText('Não foi possível excluir o cartão de crédito')).toBeInTheDocument();
-
-//   // scope.done();
-// });
