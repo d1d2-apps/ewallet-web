@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Dialog from '@radix-ui/react-dialog';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as yup from 'yup';
 
 import { Button } from '@/components/elements';
@@ -18,8 +18,9 @@ import * as S from './CreateDebtorModal.styles';
 
 type FormData = CreateDebtorDTO['data'];
 
-interface CreateDebtorModalProps {
+export interface CreateDebtorModalProps {
   debtor?: Debtor;
+  onSuccess?: () => void | Promise<void>;
 }
 
 const validationSchema = yup
@@ -29,9 +30,11 @@ const validationSchema = yup
   })
   .required();
 
-export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ debtor }) => {
-  const modal = useModal();
-
+export function CreateDebtorModal({
+  debtor,
+  onSuccess,
+  ...rest
+}: CreateDebtorModalProps & DialogPrimitive.DialogProps) {
   const alertDialog = useAlertDialog();
   const createDebtorMutation = useCreateDebtor();
   const updateDebtorMutation = useUpdateDebtor();
@@ -54,7 +57,9 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
 
       toast.success('Devedor salvo com sucesso.');
 
-      await modal.hide();
+      if (onSuccess) {
+        await onSuccess();
+      }
     } catch (err) {
       console.log(err);
 
@@ -68,8 +73,8 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
   };
 
   return (
-    <Dialog.Root open={modal.visible} onOpenChange={open => !open && modal.remove()}>
-      <Dialog.Portal>
+    <DialogPrimitive.Root {...rest}>
+      <DialogPrimitive.Portal>
         <S.Overlay />
 
         <S.Content asChild>
@@ -77,11 +82,11 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
             <header>
               <S.Title>{debtor?.id ? 'Editar' : 'Cadastrar'} devedor</S.Title>
 
-              <Dialog.Close asChild>
+              <DialogPrimitive.Close asChild>
                 <Button size="xs" colorScheme="neutral" isRounded>
                   <FiX />
                 </Button>
-              </Dialog.Close>
+              </DialogPrimitive.Close>
             </header>
 
             <main>
@@ -97,7 +102,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
             </main>
 
             <footer>
-              <Dialog.Close asChild>
+              <DialogPrimitive.Close asChild>
                 <Button
                   colorScheme="white"
                   size="sm"
@@ -105,7 +110,7 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
                 >
                   Fechar
                 </Button>
-              </Dialog.Close>
+              </DialogPrimitive.Close>
 
               <Button
                 type="submit"
@@ -118,14 +123,35 @@ export const CreateDebtorModal = NiceModal.create<CreateDebtorModalProps>(({ deb
             </footer>
           </form>
         </S.Content>
-      </Dialog.Portal>
-    </Dialog.Root>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
+  );
+}
+
+const CreateDebtorNiceModal = NiceModal.create<CreateDebtorModalProps>(({ onSuccess, ...rest }) => {
+  const modal = useModal();
+
+  const handleSuccess = async () => {
+    modal.remove();
+
+    if (onSuccess) {
+      await onSuccess();
+    }
+  };
+
+  return (
+    <CreateDebtorModal
+      {...rest}
+      open={modal.visible}
+      onOpenChange={open => !open && modal.remove()}
+      onSuccess={handleSuccess}
+    />
   );
 });
 
 export function useCreateDebtorModal() {
   const show = async (props: CreateDebtorModalProps = {}) => {
-    await NiceModal.show(CreateDebtorModal, props);
+    await NiceModal.show(CreateDebtorNiceModal, props);
   };
 
   return { show };
