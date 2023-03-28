@@ -29,19 +29,23 @@ export function ControlledColorInput<T extends FieldValues>({
       <S.SelectedColor $color={inputProps.value}>
         <figure />
 
-        <div>
+        <S.ColorButtonsWrapper>
           {COLORS.map(color => {
             return (
-              <S.ColorButton
-                key={color}
-                disabled={color === inputProps.value || isSubmitting || isDisabled}
-                $color={color}
-                $isSelected={color === inputProps.value}
-                onClick={() => inputProps.onChange(color)}
-              />
+              // eslint-disable-next-line jsx-a11y/label-has-associated-control
+              <label key={color}>
+                <span hidden>{color}</span>
+                <input type="radio" hidden {...inputProps} checked={inputProps.value === color} />
+                <S.ColorButton
+                  disabled={color === inputProps.value || isSubmitting || isDisabled}
+                  $color={color}
+                  $isSelected={color === inputProps.value}
+                  onClick={() => inputProps.onChange(color)}
+                />
+              </label>
             );
           })}
-        </div>
+        </S.ColorButtonsWrapper>
       </S.SelectedColor>
 
       {!!error?.message && <S.ErrorMessage>{error.message}</S.ErrorMessage>}

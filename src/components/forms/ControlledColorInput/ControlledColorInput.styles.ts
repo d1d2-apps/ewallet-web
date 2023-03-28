@@ -9,7 +9,7 @@ interface ColorButtonProps {
   $isSelected: boolean;
 }
 
-export const Container = styled.label`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -34,6 +34,12 @@ export const SelectedColor = styled.div<SelectedColorProps>`
   }
 `;
 
+export const ColorButtonsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+`;
+
 export const ColorButton = styled.button.attrs({
   type: 'button'
 })<ColorButtonProps>`
@@ -44,10 +50,6 @@ export const ColorButton = styled.button.attrs({
   border-radius: ${({ theme }) => theme.rounded.full};
   box-shadow: ${({ theme }) => theme.shadow.sm};
   transition: all 0.2s;
-
-  & + button {
-    margin-left: 0.75rem;
-  }
 
   &:hover {
     box-shadow: ${({ theme }) => theme.shadow.md};
