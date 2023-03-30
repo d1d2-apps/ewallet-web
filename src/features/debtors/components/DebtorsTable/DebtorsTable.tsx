@@ -27,8 +27,6 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
 
       toast.success('Devedor excluído com sucesso.');
     } catch (err) {
-      console.log(err);
-
       alertDialog.show({
         type: 'error',
         title: 'Não foi possível excluir o devedor',
@@ -80,13 +78,25 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
             <S.ActionsTableCell>
               <div>
                 <Tooltip content="Editar devedor">
-                  <Button size="xs" colorScheme="neutral" isRounded onClick={() => handleEditDebtorClick(debtor)}>
+                  <Button
+                    size="xs"
+                    colorScheme="neutral"
+                    isRounded
+                    onClick={() => handleEditDebtorClick(debtor)}
+                    title={`Editar devedor ${debtor.name}`}
+                  >
                     <FiEdit2 />
                   </Button>
                 </Tooltip>
 
                 <Tooltip content="Excluir devedor">
-                  <Button size="xs" colorScheme="neutral" isRounded onClick={() => handleDeleteDebtorClick(debtor)}>
+                  <Button
+                    size="xs"
+                    colorScheme="neutral"
+                    isRounded
+                    onClick={() => handleDeleteDebtorClick(debtor)}
+                    title={`Excluir devedor ${debtor.name}`}
+                  >
                     <FiTrash2 />
                   </Button>
                 </Tooltip>
