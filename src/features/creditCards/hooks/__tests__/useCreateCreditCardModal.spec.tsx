@@ -1,7 +1,7 @@
 import { AppProvider } from '@/providers/app';
 import { act, cleanup, renderHook, screen, userEvent } from '@/test/test-utils';
 
-import { useCreateCreditCardModal } from '../CreateCreditCardModal';
+import { useCreateCreditCardModal } from '../useCreateCreditCardModal';
 
 afterEach(() => cleanup());
 

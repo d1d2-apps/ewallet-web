@@ -7,8 +7,8 @@ import { Button, Table, Tooltip } from '@/components/elements';
 import { useAlertDialog, useConfirmationDialog } from '@/hooks';
 
 import { useDeleteCreditCard } from '../../api/deleteCreditCard';
+import { useCreateCreditCardModal } from '../../hooks/useCreateCreditCardModal';
 import { CreditCard } from '../../types';
-import { useCreateCreditCardModal } from '../CreateCreditCardModal/CreateCreditCardModal';
 import * as S from './CreditCardsTable.styles';
 
 interface CreditCardsTableProps {

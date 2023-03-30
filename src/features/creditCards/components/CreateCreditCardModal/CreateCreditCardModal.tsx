@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { FiUser, FiX } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as yup from 'yup';
@@ -122,33 +121,4 @@ export function CreateCreditCardModal({
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
-}
-
-const CreateCreditCardNiceModal = NiceModal.create<CreateCreditCardModalProps>(({ onSuccess, ...rest }) => {
-  const modal = useModal();
-
-  const handleSuccess = async () => {
-    modal.remove();
-
-    if (onSuccess) {
-      await onSuccess();
-    }
-  };
-
-  return (
-    <CreateCreditCardModal
-      {...rest}
-      open={modal.visible}
-      onOpenChange={open => !open && modal.remove()}
-      onSuccess={handleSuccess}
-    />
-  );
-});
-
-export function useCreateCreditCardModal() {
-  const show = async (props: CreateCreditCardModalProps = {}) => {
-    await NiceModal.show(CreateCreditCardNiceModal, props);
-  };
-
-  return { show };
 }
