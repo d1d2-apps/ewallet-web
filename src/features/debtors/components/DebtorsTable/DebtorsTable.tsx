@@ -7,8 +7,8 @@ import { Button, Table, Tooltip } from '@/components/elements';
 import { useAlertDialog, useConfirmationDialog } from '@/hooks';
 
 import { useDeleteDebtor } from '../../api/deleteDebtor';
+import { useCreateDebtorModal } from '../../hooks/useCreateDebtorModal';
 import { Debtor } from '../../types';
-import { useCreateDebtorModal } from '../CreateDebtorModal/CreateDebtorModal';
 import * as S from './DebtorsTable.styles';
 
 interface DebtorsTableProps {

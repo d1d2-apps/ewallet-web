@@ -2,7 +2,6 @@ import { useForm } from 'react-hook-form';
 import { FiUser, FiX } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-import NiceModal, { useModal } from '@ebay/nice-modal-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as yup from 'yup';
@@ -126,33 +125,4 @@ export function CreateDebtorModal({
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
-}
-
-const CreateDebtorNiceModal = NiceModal.create<CreateDebtorModalProps>(({ onSuccess, ...rest }) => {
-  const modal = useModal();
-
-  const handleSuccess = async () => {
-    modal.remove();
-
-    if (onSuccess) {
-      await onSuccess();
-    }
-  };
-
-  return (
-    <CreateDebtorModal
-      {...rest}
-      open={modal.visible}
-      onOpenChange={open => !open && modal.remove()}
-      onSuccess={handleSuccess}
-    />
-  );
-});
-
-export function useCreateDebtorModal() {
-  const show = async (props: CreateDebtorModalProps = {}) => {
-    await NiceModal.show(CreateDebtorNiceModal, props);
-  };
-
-  return { show };
 }
