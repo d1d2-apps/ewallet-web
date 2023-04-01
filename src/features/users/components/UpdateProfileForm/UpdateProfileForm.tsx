@@ -60,7 +60,7 @@ export function UpdateProfileForm() {
   };
 
   return (
-    <S.Container onSubmit={handleSubmit(handleSaveProfile)}>
+    <S.Container onSubmit={handleSubmit(handleSaveProfile)} noValidate>
       <Heading variant="h3" asChild>
         <h3>Suas informações</h3>
       </Heading>
