@@ -28,23 +28,25 @@ export function ProfilePage() {
       <S.Container>
         <main>
           <S.ProfilePictureSection>
-            <ChangeProfilePictureForm />
+            <div>
+              <ChangeProfilePictureForm />
 
-            <Button leftIcon={FiLogOut} colorScheme="white" onClick={handleSignOut}>
-              Sair
-            </Button>
+              <Button leftIcon={FiLogOut} colorScheme="white" onClick={handleSignOut}>
+                Sair
+              </Button>
 
-            <section>
-              <div>
-                <span>Data de criação</span>
-                <strong>{formattedCreatedAt}</strong>
-              </div>
+              <section>
+                <div>
+                  <span>Data de criação</span>
+                  <strong>{formattedCreatedAt}</strong>
+                </div>
 
-              <div>
-                <span>Última atualização</span>
-                <strong>{formattedUpdatedAt}</strong>
-              </div>
-            </section>
+                <div>
+                  <span>Última atualização</span>
+                  <strong>{formattedUpdatedAt}</strong>
+                </div>
+              </section>
+            </div>
           </S.ProfilePictureSection>
 
           <S.ProfileDataSection>

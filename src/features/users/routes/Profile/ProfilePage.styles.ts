@@ -28,39 +28,51 @@ export const ProfilePictureSection = styled.section`
   width: 100%;
 
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+
+  position: relative;
 
   ${({ theme }) =>
     theme.mixins.screen.md(css`
       max-width: 15rem;
     `)}
 
-  section {
-    width: 100%;
-    margin-top: 2rem;
-
+  & > div {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    align-items: center;
+    gap: 1.5rem;
 
-    & > div {
-      flex: 1;
-      text-align: center;
+    ${({ theme }) =>
+      theme.mixins.screen.md(css`
+        position: fixed;
+      `)}
+
+    section {
+      width: 100%;
+      margin-top: 2rem;
 
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 2rem;
 
-      span {
-        text-transform: uppercase;
-        font-size: ${({ theme }) => theme.fontSize.xs};
-        color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
-      }
+      & > div {
+        flex: 1;
+        text-align: center;
 
-      strong {
-        font-size: ${({ theme }) => theme.fontSize.md};
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        span {
+          text-transform: uppercase;
+          font-size: ${({ theme }) => theme.fontSize.xs};
+          color: ${({ theme }) => opacify(-0.5, theme.colors.neutral)};
+        }
+
+        strong {
+          font-size: ${({ theme }) => theme.fontSize.md};
+        }
       }
     }
   }
