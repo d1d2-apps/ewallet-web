@@ -2,8 +2,8 @@ import { FiPlus } from 'react-icons/fi';
 
 import { Button, Heading } from '@/components/elements';
 
-import { useCreateDebtorModal } from '../../components/CreateDebtorModal/CreateDebtorModal';
 import { DebtorsList } from '../../components/DebtorsList/DebtorsList';
+import { useCreateDebtorModal } from '../../hooks/useCreateDebtorModal';
 import * as S from './DebtorsPage.styles';
 
 export function DebtorsPage() {
