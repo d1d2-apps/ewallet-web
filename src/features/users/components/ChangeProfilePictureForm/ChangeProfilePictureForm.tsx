@@ -47,7 +47,13 @@ export function ChangeProfilePictureForm() {
     <S.Container>
       <img src={user?.picture || personPlaceholderImg} alt={`${user?.name || 'User'}'s profile`} />
 
-      <input ref={inputRef} type="file" id="avatar" onChange={handlePictureChange} />
+      <input
+        ref={inputRef}
+        type="file"
+        id="avatar"
+        onChange={handlePictureChange}
+        data-testid="profile-picture-input"
+      />
 
       <Tooltip content="Alterar foto de perfil" side="bottom">
         <Button
