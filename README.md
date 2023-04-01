@@ -18,12 +18,12 @@ O primeiro passo é estar com o backend da aplicação em execução. Para isso,
 ### Passo 2 - Clonar esse repositório e instalar as dependências
 O próximo passo é clonar esse repositório, caso ainda não o tenha feito. Após fazer isso, acesse o diretório raiz do projeto e execute o comando `npm install` ou `yarn` para instalar as dependências.
 
-### Passo 3 - Configurar o arquivo .env do projeto
-Na pasta raiz do projeto, crie o arquivo `.env` para que a aplicação tenha acesso às variáveis de ambiente necessárias.
+### Passo 3 - Configurar o arquivo .env.local do projeto
+Na pasta raiz do projeto, crie o arquivo `.env.local` para que a aplicação tenha acesso às variáveis de ambiente necessárias.
 
 A estrutura desse arquivo deve seguir a mesma encontrada no arquivo `.env.example` localizado também na pasta raiz do projeto.
 
-No seu arquivo `.env`, você deve preencher todas as variáveis necessárias para que a aplicação funcione corretamente. Segue abaixo uma tabela com a explicação de cada variável.
+No seu arquivo `.env.local`, você deve preencher todas as variáveis necessárias para que a aplicação funcione corretamente. Segue abaixo uma tabela com a explicação de cada variável.
 
 | Variável | Descrição |
 | :- | :- |
