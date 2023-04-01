@@ -2,8 +2,8 @@ import { FiPlus } from 'react-icons/fi';
 
 import { Button, Heading } from '@/components/elements';
 
-import { useCreateCreditCardModal } from '../../components/CreateCreditCardModal/CreateCreditCardModal';
 import { CreditCardsList } from '../../components/CreditCardsList/CreditCardsList';
+import { useCreateCreditCardModal } from '../../hooks/useCreateCreditCardModal';
 import * as S from './CreditCardsPage.styles';
 
 export function CreditCardsPage() {
