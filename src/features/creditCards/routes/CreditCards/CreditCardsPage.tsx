@@ -1,6 +1,7 @@
 import { FiPlus } from 'react-icons/fi';
 
 import { Button, Heading } from '@/components/elements';
+import { Head } from '@/components/head';
 
 import { CreditCardsList } from '../../components/CreditCardsList/CreditCardsList';
 import { useCreateCreditCardModal } from '../../hooks/useCreateCreditCardModal';
@@ -14,21 +15,25 @@ export function CreditCardsPage() {
   };
 
   return (
-    <S.Container>
-      <header>
-        <div>
-          <Heading>Cartões de crédito</Heading>
-          <Heading variant="h4" asChild>
-            <h4>Gerencie todos os seus cartões de crédito ou cadastre um novo.</h4>
-          </Heading>
-        </div>
+    <>
+      <Head title="Cartões de crédito" />
 
-        <Button leftIcon={FiPlus} onClick={handleShowCreateCreditCardsModal}>
-          Cadastrar cartão
-        </Button>
-      </header>
+      <S.Container>
+        <header>
+          <div>
+            <Heading>Cartões de crédito</Heading>
+            <Heading variant="h4" asChild>
+              <h4>Gerencie todos os seus cartões de crédito ou cadastre um novo.</h4>
+            </Heading>
+          </div>
 
-      <CreditCardsList />
-    </S.Container>
+          <Button leftIcon={FiPlus} onClick={handleShowCreateCreditCardsModal}>
+            Cadastrar cartão
+          </Button>
+        </header>
+
+        <CreditCardsList />
+      </S.Container>
+    </>
   );
 }
