@@ -1,3 +1,4 @@
+import { opacify } from 'polished';
 import { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
@@ -45,5 +46,25 @@ export const GlobalStyle = createGlobalStyle`
   a {
     color: inherit;
     text-decoration: none;
+  }
+
+  ::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: ${({ theme }) => opacify(-0.95, theme.colors.neutral)};
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
+    border-radius: ${({ theme }) => theme.rounded.full};
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: ${({ theme }) => opacify(-0.8, theme.colors.neutral)};
   }
 `;
