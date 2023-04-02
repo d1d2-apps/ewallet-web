@@ -170,6 +170,7 @@ export const NavItem = styled.li<NavItemProps>`
 
     font-size: ${({ theme }) => theme.fontSize.xl};
     color: ${({ theme }) => opacify(-0.6, theme.colors.neutral)};
+    line-height: 1;
 
     display: flex;
     align-items: center;
