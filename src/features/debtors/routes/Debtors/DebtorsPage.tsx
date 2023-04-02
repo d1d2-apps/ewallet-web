@@ -1,6 +1,7 @@
 import { FiPlus } from 'react-icons/fi';
 
 import { Button, Heading } from '@/components/elements';
+import { Head } from '@/components/head';
 
 import { DebtorsList } from '../../components/DebtorsList/DebtorsList';
 import { useCreateDebtorModal } from '../../hooks/useCreateDebtorModal';
@@ -14,21 +15,25 @@ export function DebtorsPage() {
   };
 
   return (
-    <S.Container>
-      <header>
-        <div>
-          <Heading>Devedores</Heading>
-          <Heading variant="h4" asChild>
-            <h4>Gerencie todos os seus devedores ou cadastre um novo.</h4>
-          </Heading>
-        </div>
+    <>
+      <Head title="Devedores" />
 
-        <Button leftIcon={FiPlus} onClick={handleShowCreateDebtorsModal}>
-          Cadastrar devedor
-        </Button>
-      </header>
+      <S.Container>
+        <header>
+          <div>
+            <Heading>Devedores</Heading>
+            <Heading variant="h4" asChild>
+              <h4>Gerencie todos os seus devedores ou cadastre um novo.</h4>
+            </Heading>
+          </div>
 
-      <DebtorsList />
-    </S.Container>
+          <Button leftIcon={FiPlus} onClick={handleShowCreateDebtorsModal}>
+            Cadastrar devedor
+          </Button>
+        </header>
+
+        <DebtorsList />
+      </S.Container>
+    </>
   );
 }
