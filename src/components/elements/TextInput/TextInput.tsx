@@ -31,7 +31,7 @@ TextInputIcon.displayName = 'TextInput.Icon';
 export type TextInputInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 function TextInputInput(props: TextInputInputProps) {
-  return <S.InputContainer {...props} />;
+  return <input {...props} />;
 }
 
 TextInputInput.displayName = 'TextInput.Input';

@@ -18,6 +18,8 @@ export const BaseContainer = styled.div<BaseContainerProps>`
   align-items: center;
   gap: 0.75rem;
 
+  position: relative;
+
   --icon-color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
 
   &:hover {
@@ -44,6 +46,21 @@ export const BaseContainer = styled.div<BaseContainerProps>`
       background-color: ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
       pointer-events: none;
     `}
+
+  & > input {
+    flex: 1;
+    max-width: 100%;
+
+    height: 100%;
+    background-color: transparent;
+    padding-right: 1rem;
+    border: none;
+    color: ${({ theme }) => theme.colors.secondary};
+
+    &::placeholder {
+      color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
+    }
+  }
 `;
 
 export const IconContainer = styled.i`
@@ -53,19 +70,4 @@ export const IconContainer = styled.i`
 
   display: flex;
   align-items: center;
-`;
-
-export const InputContainer = styled.input`
-  flex: 1;
-  max-width: 100%;
-
-  height: 100%;
-  background-color: transparent;
-  padding-right: 1rem;
-  border: none;
-  color: ${({ theme }) => theme.colors.secondary};
-
-  &::placeholder {
-    color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
-  }
 `;

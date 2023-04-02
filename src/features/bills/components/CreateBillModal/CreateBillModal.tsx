@@ -3,6 +3,7 @@ import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 import { Button } from '@/components/elements';
+import { CreditCardsAutocomplete } from '@/features/creditCards';
 
 import * as S from './CreateBillModal.styles';
 
@@ -29,6 +30,8 @@ export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & D
 
           <main>
             <h1>Lançamento de fatura</h1>
+
+            <CreditCardsAutocomplete onChange={() => {}} />
           </main>
 
           <footer>
