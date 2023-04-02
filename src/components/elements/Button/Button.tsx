@@ -13,6 +13,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   colorScheme?: ButtonColorScheme;
   size?: ButtonSize;
   leftIcon?: React.ComponentType<IconBaseProps>;
+  rightIcon?: React.ComponentType<IconBaseProps>;
   isRounded?: boolean;
   isLoading?: boolean;
   loadingText?: string;
@@ -26,6 +27,7 @@ export const Button = React.forwardRef<any, ButtonProps>(
       colorScheme = 'primary',
       size = 'md',
       leftIcon: LeftIcon,
+      rightIcon: RightIcon,
       isRounded = false,
       isLoading = false,
       loadingText = '',
@@ -56,6 +58,8 @@ export const Button = React.forwardRef<any, ButtonProps>(
         {!isLoading && !isRounded && LeftIcon && <LeftIcon />}
 
         {isLoading ? loadingText : children}
+
+        {!isLoading && !isRounded && RightIcon && <RightIcon />}
       </S.Container>
     );
   }

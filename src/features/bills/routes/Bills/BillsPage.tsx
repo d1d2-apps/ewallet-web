@@ -4,9 +4,16 @@ import { Button, Heading } from '@/components/elements';
 import { Head } from '@/components/head';
 
 import { BillsList } from '../../components/BillsList/BillsList';
+import { useCreateBillModal } from '../../hooks/useCreateBillForm';
 import * as S from './BillsPage.styles';
 
 export function BillsPage() {
+  const createBillModal = useCreateBillModal();
+
+  const handleShowCreateBillModal = async () => {
+    await createBillModal.show();
+  };
+
   return (
     <>
       <Head title="Faturas" />
@@ -20,7 +27,9 @@ export function BillsPage() {
             </Heading>
           </div>
 
-          <Button leftIcon={FiPlus}>Lançar fatura</Button>
+          <Button leftIcon={FiPlus} onClick={handleShowCreateBillModal}>
+            Lançar fatura
+          </Button>
         </header>
 
         <BillsList />
