@@ -32,6 +32,7 @@ export const Button = React.forwardRef<any, ButtonProps>(
       isLoading = false,
       loadingText = '',
       disabled,
+      type = 'button',
       ...rest
     },
     ref
@@ -47,6 +48,7 @@ export const Button = React.forwardRef<any, ButtonProps>(
     return (
       <S.Container
         {...rest}
+        type={type}
         ref={ref}
         disabled={disabled || isLoading}
         $isRounded={isRounded}
