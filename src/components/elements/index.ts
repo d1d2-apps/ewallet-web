@@ -6,5 +6,6 @@ export * from './Popover/Popover';
 export * from './Select/Select';
 export * from './Spinner/Spinner';
 export * from './Table/Table';
+export * from './TextArea/TextArea';
 export * from './TextInput/TextInput';
 export * from './Tooltip/Tooltip';
