@@ -29,6 +29,15 @@ export const Content = styled(Dialog.Content)`
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    .row {
+      display: flex;
+      gap: 1rem;
+
+      label {
+        flex: 1;
+      }
+    }
   }
 
   footer {
@@ -49,4 +58,15 @@ export const Title = styled(Dialog.Title)`
   font-weight: bold;
   text-align: center;
   color: ${({ theme }) => theme.colors.secondary};
+`;
+
+export const CreditCardField = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  span {
+    font-size: ${({ theme }) => theme.fontSize.sm};
+    font-weight: 500;
+  }
 `;
