@@ -35,7 +35,7 @@ export function ControlledTextInput<T extends FieldValues>({
     <S.Container>
       {!!label && <span>{label}</span>}
 
-      <TextInput.Base hasError={!!error?.message} isDisabled={isDisabled || isSubmitting}>
+      <TextInput.Root hasError={!!error?.message} isDisabled={isDisabled || isSubmitting}>
         {!!Icon && (
           <TextInput.Icon>
             <Icon />
@@ -43,7 +43,7 @@ export function ControlledTextInput<T extends FieldValues>({
         )}
 
         <TextInput.Input disabled={isDisabled || isSubmitting} {...rest} {...inputProps} />
-      </TextInput.Base>
+      </TextInput.Root>
 
       {!!error?.message && <S.ErrorMessage>{error.message}</S.ErrorMessage>}
     </S.Container>

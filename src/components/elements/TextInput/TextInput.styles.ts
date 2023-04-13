@@ -1,12 +1,12 @@
 import { opacify } from 'polished';
 import styled, { css } from 'styled-components';
 
-interface BaseContainerProps {
+interface RootContainerProps {
   $hasError?: boolean;
   $isDisabled?: boolean;
 }
 
-export const BaseContainer = styled.div<BaseContainerProps>`
+export const RootContainer = styled.div<RootContainerProps>`
   width: 100%;
   height: 3rem;
   padding-left: 1rem;

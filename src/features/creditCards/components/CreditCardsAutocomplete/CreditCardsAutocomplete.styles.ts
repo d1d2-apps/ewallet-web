@@ -28,6 +28,7 @@ export const ComboboxOptions = styled(Combobox.Options)`
   border-radius: ${({ theme }) => theme.rounded.md};
   box-shadow: ${({ theme }) => theme.shadow.lg};
   overflow: auto;
+  z-index: 1;
 
   position: absolute;
 

@@ -1,22 +1,21 @@
-import { InputHTMLAttributes, ReactNode } from 'react';
+import { InputHTMLAttributes, PropsWithChildren, ReactNode } from 'react';
 
 import * as S from './TextInput.styles';
 
-export interface TextInputBaseProps {
-  children: ReactNode;
+export interface TextInputRootProps {
   hasError?: boolean;
   isDisabled?: boolean;
 }
 
-function TextInputBase({ children, hasError = false, isDisabled = false }: TextInputBaseProps) {
+function TextInputRoot({ children, hasError = false, isDisabled = false }: PropsWithChildren<TextInputRootProps>) {
   return (
-    <S.BaseContainer $hasError={hasError} $isDisabled={isDisabled}>
+    <S.RootContainer $hasError={hasError} $isDisabled={isDisabled}>
       {children}
-    </S.BaseContainer>
+    </S.RootContainer>
   );
 }
 
-TextInputBase.displayName = 'TextInput.Base';
+TextInputRoot.displayName = 'TextInput.Root';
 
 export interface TextInputIconProps {
   children: ReactNode;
@@ -37,7 +36,7 @@ function TextInputInput(props: TextInputInputProps) {
 TextInputInput.displayName = 'TextInput.Input';
 
 export const TextInput = {
-  Base: TextInputBase,
+  Root: TextInputRoot,
   Input: TextInputInput,
   Icon: TextInputIcon
 };

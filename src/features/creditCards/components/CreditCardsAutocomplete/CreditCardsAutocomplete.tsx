@@ -16,7 +16,7 @@ interface CreditCardsAutocompleteProps {
 
 export function CreditCardsAutocomplete({
   onChange,
-  placeholder = 'Selecione um cartão'
+  placeholder = 'Selecione um cartão de crédito'
 }: CreditCardsAutocompleteProps) {
   const creditCardsQuery = useCreditCards();
 
@@ -37,32 +37,32 @@ export function CreditCardsAutocomplete({
 
   if (creditCardsQuery.isLoading || creditCardsQuery.isFetching) {
     return (
-      <TextInput.Base>
+      <TextInput.Root>
         <TextInput.Icon>
           <Spinner />
         </TextInput.Icon>
 
         <TextInput.Input placeholder="Carregando cartões de crédito..." disabled />
-      </TextInput.Base>
+      </TextInput.Root>
     );
   }
 
   if (creditCardsQuery.isError) {
     return (
-      <TextInput.Base>
+      <TextInput.Root>
         <TextInput.Icon>
           <FiAlertTriangle />
         </TextInput.Icon>
 
         <TextInput.Input placeholder="Erro ao carregar cartões de crédito" disabled />
-      </TextInput.Base>
+      </TextInput.Root>
     );
   }
 
   return (
     <Combobox value={selectedCreditCard} onChange={handleOnChange}>
       <S.AutocompleteWrapper>
-        <TextInput.Base>
+        <TextInput.Root>
           <TextInput.Icon>
             <FiCreditCard />
           </TextInput.Icon>
@@ -76,7 +76,7 @@ export function CreditCardsAutocomplete({
           <S.ComboboxButton>
             <FiChevronDown />
           </S.ComboboxButton>
-        </TextInput.Base>
+        </TextInput.Root>
 
         <Transition as={Fragment} afterLeave={() => setQuery('')}>
           <S.ComboboxOptions>
