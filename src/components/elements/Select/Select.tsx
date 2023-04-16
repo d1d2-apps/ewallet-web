@@ -1,4 +1,5 @@
-import React, { PropsWithChildren } from 'react';
+import React, { ComponentType, PropsWithChildren } from 'react';
+import { IconBaseProps } from 'react-icons';
 import { FiCheck, FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 import * as SelectPrimitive from '@radix-ui/react-select';
@@ -21,15 +22,30 @@ const SelectItem = React.forwardRef<any, SelectItemProps>(({ children, ...props 
 
 interface SelectRootProps extends SelectPrimitive.SelectProps {
   placeholder?: string;
+  icon?: ComponentType<IconBaseProps>;
   hasError?: boolean;
   isDisabled?: boolean;
 }
 
-function SelectRoot({ placeholder, hasError = false, isDisabled = false, children, ...rest }: SelectRootProps) {
+function SelectRoot({
+  placeholder,
+  icon: Icon,
+  hasError = false,
+  isDisabled = false,
+  children,
+  ...rest
+}: SelectRootProps) {
   return (
     <SelectPrimitive.Root disabled={isDisabled} {...rest}>
       <S.SelectTrigger $hasError={hasError} $isDisabled={isDisabled}>
-        <SelectPrimitive.Value placeholder={placeholder || 'Selecione...'} />
+        <div>
+          {!!Icon && (
+            <i>
+              <Icon />
+            </i>
+          )}
+          <SelectPrimitive.Value placeholder={placeholder || 'Selecione...'} />
+        </div>
 
         <S.SelectIcon>
           <FiChevronDown />

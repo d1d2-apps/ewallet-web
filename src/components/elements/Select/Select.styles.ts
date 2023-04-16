@@ -23,6 +23,21 @@ export const SelectTrigger = styled(SelectPrimitive.SelectTrigger)<SelectTrigger
   justify-content: space-between;
   gap: 1rem;
 
+  --icon-color: ${({ theme }) => opacify(-0.75, theme.colors.neutral)};
+
+  & > div {
+    line-height: 1;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    i {
+      font-size: 1rem;
+      color: var(--icon-color);
+    }
+  }
+
   &:hover {
     background-color: ${({ theme }) => opacify(-0.95, theme.colors.neutral)};
   }
@@ -31,6 +46,8 @@ export const SelectTrigger = styled(SelectPrimitive.SelectTrigger)<SelectTrigger
     background-color: ${({ theme }) => theme.colors.backgroundOffset};
     border-color: ${({ theme }) => theme.colors.primary};
     box-shadow: ${({ theme }) => theme.mixins.ring.xs(theme.colors.primary)};
+
+    --icon-color: ${({ theme }) => theme.colors.primary};
   }
 
   &[data-placeholder] {
@@ -118,7 +135,7 @@ export const SelectItemIndicator = styled(SelectPrimitive.ItemIndicator)`
 
 const selectScrollButtonStyles = css`
   height: 1.5rem;
-  background-color: white;
+  background-color: ${({ theme }) => opacify(-0.975, theme.colors.neutral)};
   color: ${({ theme }) => theme.colors.secondary};
   cursor: default;
 

@@ -8,6 +8,9 @@ import { Button, Select } from '@/components/elements';
 import { ControlledCurrencyInput, ControlledSelect, ControlledTextArea, ControlledTextInput } from '@/components/forms';
 import { CreditCardsAutocomplete } from '@/features/creditCards';
 
+import { BillCategory } from '../../types';
+import { billCategoryIcon } from '../../utils/billCategoryIcon';
+import { billCategoryLabel } from '../../utils/billCategoryLabel';
 import * as S from './CreateBillModal.styles';
 
 export interface CreateBillModalProps {
@@ -21,6 +24,7 @@ interface FormData {
   totalAmount: string;
   totalOfInstallments: string;
   description: string;
+  category: BillCategory;
 }
 
 const MONTHS = [
@@ -41,16 +45,19 @@ const MONTHS = [
 const now = new Date();
 
 export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & DialogPrimitive.DialogProps) {
-  const { control, handleSubmit } = useForm<FormData>({
+  const { control, handleSubmit, watch } = useForm<FormData>({
     defaultValues: {
       creditCard: '',
       month: String(now.getMonth() + 1),
       year: String(now.getFullYear()),
       totalAmount: '',
       totalOfInstallments: '1',
-      description: ''
+      description: '',
+      category: 'HOUSE'
     }
   });
+
+  const categoryWatcher = watch('category');
 
   const handleNextStepClick = (data: FormData) => {
     console.log(data);
@@ -114,15 +121,34 @@ export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & D
                 placeholder="Ex.: R$ 100,00"
               />
 
-              <ControlledTextInput
-                name="totalOfInstallments"
-                control={control}
-                type="number"
-                label="Quantidade de parcelas"
-                placeholder="Ex.: 10"
-                icon={FiFile}
-                onKeyDown={handleTotalOfInstallmentsInputKeyDown}
-              />
+              <div className="row">
+                <ControlledTextInput
+                  name="totalOfInstallments"
+                  control={control}
+                  type="number"
+                  label="Quantidade de parcelas"
+                  placeholder="Ex.: 10"
+                  icon={FiFile}
+                  onKeyDown={handleTotalOfInstallmentsInputKeyDown}
+                />
+
+                <ControlledSelect
+                  name="category"
+                  control={control}
+                  label="Categoria"
+                  icon={billCategoryIcon[categoryWatcher]}
+                >
+                  <Select.Group>
+                    <Select.GroupLabel>Categoria</Select.GroupLabel>
+
+                    {Object.entries(billCategoryLabel).map(([category, label]) => (
+                      <Select.Item key={category} value={category}>
+                        {label}
+                      </Select.Item>
+                    ))}
+                  </Select.Group>
+                </ControlledSelect>
+              </div>
 
               <ControlledTextArea
                 name="description"
