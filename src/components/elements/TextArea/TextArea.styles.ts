@@ -12,6 +12,7 @@ export const Container = styled.textarea<ContainerProps>`
   height: 4rem;
   max-height: 6rem;
   padding: 1rem;
+  background-color: transparent;
   border: 1px solid ${({ theme }) => opacify(-0.9, theme.colors.neutral)};
   border-radius: ${({ theme }) => theme.rounded.sm};
   transition: all 0.2s;
