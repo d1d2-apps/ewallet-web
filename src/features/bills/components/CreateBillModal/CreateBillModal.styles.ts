@@ -1,6 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { opacify } from 'polished';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Overlay = styled(Dialog.Overlay)`
   ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}
@@ -25,6 +25,7 @@ export const Content = styled(Dialog.Content)`
 
   main {
     padding: 1.5rem;
+    overflow-y: auto;
 
     display: flex;
     flex-direction: column;
@@ -32,7 +33,13 @@ export const Content = styled(Dialog.Content)`
 
     .row {
       display: flex;
+      flex-direction: column;
       gap: 1rem;
+
+      ${({ theme }) =>
+        theme.mixins.screen.md(css`
+          flex-direction: row;
+        `)}
 
       label {
         flex: 1;
