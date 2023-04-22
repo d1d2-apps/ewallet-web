@@ -10,6 +10,8 @@ export const Container = styled.div`
     max-width: 20rem;
     max-height: 20rem;
     object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.5;
   }
 
   h2 {
