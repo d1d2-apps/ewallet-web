@@ -1,12 +1,12 @@
-import * as Dialog from '@radix-ui/react-dialog';
+import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { opacify } from 'polished';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-export const Overlay = styled(Dialog.Overlay)`
+export const Overlay = styled(DialogPrimitive.Overlay)`
   ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}
 `;
 
-export const Content = styled(Dialog.Content)`
+export const Content = styled(DialogPrimitive.Content)`
   ${({ theme }) => theme.mixins.dialogs.getContentBaseStyles()}
 
   max-width: 40rem;
@@ -23,30 +23,6 @@ export const Content = styled(Dialog.Content)`
     }
   }
 
-  main {
-    padding: 1.5rem;
-    overflow-y: auto;
-
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    .row {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-
-      ${({ theme }) =>
-        theme.mixins.screen.md(css`
-          flex-direction: row;
-        `)}
-
-      label {
-        flex: 1;
-      }
-    }
-  }
-
   footer {
     justify-content: space-between;
 
@@ -57,7 +33,7 @@ export const Content = styled(Dialog.Content)`
   }
 `;
 
-export const Title = styled(Dialog.Title)`
+export const Title = styled(DialogPrimitive.Title)`
   max-width: calc(100% - 2rem);
   margin: 0 auto;
   font-family: ${({ theme }) => theme.fontFamily.montserrat};
@@ -65,20 +41,4 @@ export const Title = styled(Dialog.Title)`
   font-weight: bold;
   text-align: center;
   color: ${({ theme }) => theme.colors.secondary};
-`;
-
-export const CreditCardField = styled.label`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  span {
-    font-size: ${({ theme }) => theme.fontSize.sm};
-    font-weight: 500;
-  }
-`;
-
-export const ErrorMessage = styled.small`
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  color: ${({ theme }) => theme.colors.error};
 `;
