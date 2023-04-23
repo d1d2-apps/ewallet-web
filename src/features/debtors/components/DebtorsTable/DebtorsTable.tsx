@@ -71,9 +71,9 @@ export function DebtorsTable({ data }: DebtorsTableProps) {
               </div>
             </S.NameTableCell>
 
-            <td align="center">{format(new Date(debtor.createdAt), "dd/MM/yyy 'às' HH:mm")}</td>
+            <S.NeutralTableCell>{format(new Date(debtor.createdAt), "dd/MM/yyy 'às' HH:mm")}</S.NeutralTableCell>
 
-            <td align="center">{format(new Date(debtor.updatedAt), "dd/MM/yyy 'às' HH:mm")}</td>
+            <S.NeutralTableCell>{format(new Date(debtor.updatedAt), "dd/MM/yyy 'às' HH:mm")}</S.NeutralTableCell>
 
             <S.ActionsTableCell>
               <div>

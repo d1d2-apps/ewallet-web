@@ -66,9 +66,9 @@ export function CreditCardsTable({ data }: CreditCardsTableProps) {
           <tr key={creditCard.id}>
             <td>{creditCard.name}</td>
 
-            <td align="center">{format(new Date(creditCard.createdAt), "dd/MM/yyy 'às' HH:mm")}</td>
+            <S.NeutralTableCell>{format(new Date(creditCard.createdAt), "dd/MM/yyy 'às' HH:mm")}</S.NeutralTableCell>
 
-            <td align="center">{format(new Date(creditCard.updatedAt), "dd/MM/yyy 'às' HH:mm")}</td>
+            <S.NeutralTableCell>{format(new Date(creditCard.updatedAt), "dd/MM/yyy 'às' HH:mm")}</S.NeutralTableCell>
 
             <S.ActionsTableCell>
               <div>
