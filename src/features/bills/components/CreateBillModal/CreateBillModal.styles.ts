@@ -77,3 +77,8 @@ export const CreditCardField = styled.label`
     font-weight: 500;
   }
 `;
+
+export const ErrorMessage = styled.small`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: ${({ theme }) => theme.colors.error};
+`;

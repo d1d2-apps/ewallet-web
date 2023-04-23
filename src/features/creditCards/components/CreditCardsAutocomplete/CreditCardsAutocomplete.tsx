@@ -12,11 +12,13 @@ import * as S from './CreditCardsAutocomplete.styles';
 interface CreditCardsAutocompleteProps {
   onChange: (creditCard: CreditCard) => void;
   placeholder?: string;
+  hasError?: boolean;
 }
 
 export function CreditCardsAutocomplete({
   onChange,
-  placeholder = 'Selecione um cartão de crédito'
+  placeholder = 'Selecione um cartão de crédito',
+  hasError = false
 }: CreditCardsAutocompleteProps) {
   const creditCardsQuery = useCreditCards();
 
@@ -62,7 +64,7 @@ export function CreditCardsAutocomplete({
   return (
     <Combobox value={selectedCreditCard} onChange={handleOnChange}>
       <S.AutocompleteWrapper>
-        <TextInput.Root>
+        <TextInput.Root hasError={hasError}>
           <TextInput.Icon>
             <FiCreditCard />
           </TextInput.Icon>

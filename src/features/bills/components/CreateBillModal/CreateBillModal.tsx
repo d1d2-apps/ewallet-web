@@ -2,7 +2,9 @@ import { KeyboardEvent, useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FiArrowLeft, FiArrowRight, FiFile, FiX } from 'react-icons/fi';
 
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
+import * as yup from 'yup';
 
 import { Button, Select } from '@/components/elements';
 import { ControlledCurrencyInput, ControlledSelect, ControlledTextArea, ControlledTextInput } from '@/components/forms';
@@ -44,8 +46,38 @@ const MONTHS = [
 
 const now = new Date();
 
+const validationSchema = yup
+  .object({
+    creditCard: yup.string().required('Cartão de crédito é obrigatório'),
+    month: yup.number().required('Mês é obrigatório'),
+    year: yup.number().required('Ano é obrigatório'),
+    totalAmount: yup.string().test(`min-value`, function (value) {
+      const { path, createError } = this;
+      const parsedValue = Number((value || '').replace(',', '.'));
+
+      if (parsedValue > 0) {
+        return true;
+      }
+
+      return createError({
+        path,
+        message: 'Valor precisa ser maior que R$ 0,00'
+      });
+    }),
+    totalOfInstallments: yup.number().required('Quantidade de parcelas é obrigatório'),
+    description: yup.string().required('Descrição é obrigatória'),
+    category: yup.string().required('Categoria é obrigatória')
+  })
+  .required();
+
 export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & DialogPrimitive.DialogProps) {
-  const { control, handleSubmit, watch } = useForm<FormData>({
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm<FormData>({
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       creditCard: '',
       month: String(now.getMonth() + 1),
@@ -93,7 +125,11 @@ export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & D
                 render={({ field: { onChange } }) => (
                   <S.CreditCardField>
                     <span>Cartão de crédito</span>
-                    <CreditCardsAutocomplete onChange={creditCard => onChange(creditCard.id)} />
+                    <CreditCardsAutocomplete
+                      hasError={!!errors.creditCard?.message}
+                      onChange={creditCard => onChange(creditCard.id)}
+                    />
+                    {!!errors.creditCard?.message && <S.ErrorMessage>{errors.creditCard.message}</S.ErrorMessage>}
                   </S.CreditCardField>
                 )}
               />
