@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { FiX } from 'react-icons/fi';
 
+import { X } from '@phosphor-icons/react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 import { Button } from '@/components/elements';
@@ -29,7 +29,7 @@ export function SelectBillCategoryModal({
 
             <DialogPrimitive.Close asChild>
               <Button size="xs" colorScheme="neutral" isRounded>
-                <FiX />
+                <X size="1rem" />
               </Button>
             </DialogPrimitive.Close>
           </header>
@@ -44,7 +44,7 @@ export function SelectBillCategoryModal({
                   $selected={categoryKey === selectedCategory}
                   onClick={() => setSelectedCategory(categoryKey as BillCategory)}
                 >
-                  <CategoryIcon size={24} weight={categoryKey === selectedCategory ? 'duotone' : 'regular'} />
+                  <CategoryIcon size="1.5rem" weight={categoryKey === selectedCategory ? 'duotone' : 'regular'} />
                   {BillCategoryLabel[categoryKey as BillCategory]}
                 </S.CategoryCard>
               );
