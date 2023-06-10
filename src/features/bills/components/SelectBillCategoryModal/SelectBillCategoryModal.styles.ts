@@ -29,10 +29,16 @@ export const Content = styled(DialogPrimitive.Content)`
 
   main {
     padding: 1.5rem;
+    overflow-y: auto;
 
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     gap: 0.75rem;
+
+    ${({ theme }) =>
+      theme.mixins.screen.md(css`
+        grid-template-columns: repeat(2, 1fr);
+      `)}
   }
 
   footer {
