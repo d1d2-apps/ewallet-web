@@ -13,8 +13,12 @@ export function BillsPage() {
   const selectBillCategoryModal = useSelectBillCategoryModal();
 
   const handleShowCreateBillModal = async () => {
-    const onSelect = () => console.log('onSelect');
-    await selectBillCategoryModal.show({ onSelect });
+    await selectBillCategoryModal.show({
+      onSelect: async category => {
+        console.log(category);
+        await createBillModal.show();
+      }
+    });
   };
 
   return (

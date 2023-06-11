@@ -1,15 +1,14 @@
 import { useState } from 'react';
 
-import { X } from '@phosphor-icons/react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-import { Button } from '@/components/elements';
+import { Dialog } from '@/components/elements';
 
 import { BillCategory, BillCategoryIcon, BillCategoryLabel } from '../../types';
 import * as S from './SelectBillCategoryModal.styles';
 
 export interface SelectBillCategoryModalProps {
-  onSelect: () => void;
+  onSelect: (category: BillCategory) => Promise<void>;
 }
 
 export function SelectBillCategoryModal({
@@ -18,52 +17,42 @@ export function SelectBillCategoryModal({
 }: SelectBillCategoryModalProps & DialogPrimitive.DialogProps) {
   const [selectedCategory, setSelectedCategory] = useState<BillCategory | null>(null);
 
+  const handleSubmitSelectedCategory = () => {
+    if (selectedCategory) {
+      onSelect(selectedCategory);
+    }
+  };
+
   return (
-    <DialogPrimitive.Root {...rest}>
-      <DialogPrimitive.Portal>
-        <S.Overlay />
+    <Dialog.Root {...rest}>
+      <Dialog.Header title="Selecione a categoria da fatura" />
 
-        <S.Content>
-          <header>
-            <S.Title>Selecione a categoria da fatura</S.Title>
+      <Dialog.Body asChild>
+        <S.CategoryCardsWrapper>
+          {Object.keys(BillCategoryLabel).map(categoryKey => {
+            const CategoryIcon = BillCategoryIcon[categoryKey as BillCategory];
 
-            <DialogPrimitive.Close asChild>
-              <Button size="xs" colorScheme="neutral" isRounded>
-                <X size="1rem" />
-              </Button>
-            </DialogPrimitive.Close>
-          </header>
+            return (
+              <S.CategoryCard
+                key={categoryKey}
+                $selected={categoryKey === selectedCategory}
+                onClick={() => setSelectedCategory(categoryKey as BillCategory)}
+              >
+                <CategoryIcon size="1.5rem" weight={categoryKey === selectedCategory ? 'duotone' : 'regular'} />
+                {BillCategoryLabel[categoryKey as BillCategory]}
+              </S.CategoryCard>
+            );
+          })}
+        </S.CategoryCardsWrapper>
+      </Dialog.Body>
 
-          <main>
-            {Object.keys(BillCategoryLabel).map(categoryKey => {
-              const CategoryIcon = BillCategoryIcon[categoryKey as BillCategory];
-
-              return (
-                <S.CategoryCard
-                  key={categoryKey}
-                  $selected={categoryKey === selectedCategory}
-                  onClick={() => setSelectedCategory(categoryKey as BillCategory)}
-                >
-                  <CategoryIcon size="1.5rem" weight={categoryKey === selectedCategory ? 'duotone' : 'regular'} />
-                  {BillCategoryLabel[categoryKey as BillCategory]}
-                </S.CategoryCard>
-              );
-            })}
-          </main>
-
-          <footer>
-            <DialogPrimitive.Close asChild>
-              <Button colorScheme="white" size="sm">
-                Fechar
-              </Button>
-            </DialogPrimitive.Close>
-
-            <Button type="submit" size="sm" disabled={!selectedCategory} onClick={onSelect}>
-              Selecionar
-            </Button>
-          </footer>
-        </S.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+      <Dialog.Footer
+        primaryButtonOptions={{
+          title: 'Selecionar',
+          onClick: handleSubmitSelectedCategory,
+          disabled: !selectedCategory
+        }}
+      />
+    </Dialog.Root>
   );
 }
