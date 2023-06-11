@@ -24,7 +24,7 @@ export interface CreateDebtorModalProps {
 
 const validationSchema = yup
   .object({
-    name: yup.string().required('Nome é obrigatório').min(5, 'Mínimo de 5 caracteres'),
+    name: yup.string().required('Nome é obrigatório').min(3, 'Mínimo de 3 caracteres'),
     color: yup.string().required('Cor é orbigatória')
   })
   .required();
