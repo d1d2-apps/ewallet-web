@@ -7,15 +7,17 @@ import { Slot } from '@radix-ui/react-slot';
 import { Button, ButtonProps } from '../Button/Button';
 import * as S from './Dialog.styles';
 
-type DialogRootProps = DialogPrimitive.DialogProps;
+interface DialogRootProps extends DialogPrimitive.DialogProps {
+  asChild?: boolean;
+}
 
-function DialogRoot({ children, ...rest }: DialogRootProps) {
+function DialogRoot({ asChild, children, ...rest }: DialogRootProps) {
   return (
     <DialogPrimitive.Root {...rest}>
       <DialogPrimitive.Portal>
         <S.Overlay />
 
-        <S.Content>{children}</S.Content>
+        <S.Content>{asChild ? <Slot>{children}</Slot> : children}</S.Content>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   );
@@ -67,14 +69,14 @@ function DialogBody({ asChild, children }: PropsWithChildren<DialogBodyProps>) {
 
 DialogBody.displayName = 'Dialog.Body';
 
-interface DialogFooterCloseButtonProps {
+interface DialogFooterCloseButtonProps extends Omit<ButtonProps, 'children'> {
   title?: string;
 }
 
-function DialogFooterCloseButton({ title = 'Fechar' }: DialogFooterCloseButtonProps) {
+function DialogFooterCloseButton({ title = 'Fechar', ...rest }: DialogFooterCloseButtonProps) {
   return (
     <DialogPrimitive.Close asChild>
-      <Button colorScheme="white" size="sm">
+      <Button colorScheme="white" size="sm" {...rest}>
         {title}
       </Button>
     </DialogPrimitive.Close>
@@ -85,11 +87,13 @@ DialogFooterCloseButton.displayName = 'Dialog.FooterCloseButton';
 
 interface DialogFooterProps {
   asChild?: boolean;
-  primaryButtonOptions: Omit<ButtonProps, 'children'> & { title: string };
+  closeButtonOptions?: DialogFooterCloseButtonProps;
+  primaryButtonOptions: Omit<ButtonProps, 'children'> & { title?: string };
 }
 
 function DialogFooter({
   asChild,
+  closeButtonOptions: { title: closeButtonTitle = 'Fechar', ...closeButtonProps } = {},
   primaryButtonOptions: { title: primaryButtonTitle = 'Salvar', ...primaryButtonProps }
 }: DialogFooterProps) {
   if (asChild) {
@@ -98,7 +102,7 @@ function DialogFooter({
 
   return (
     <S.Footer>
-      <DialogFooterCloseButton />
+      <DialogFooterCloseButton title={closeButtonTitle} {...closeButtonProps} />
 
       <Button type="submit" size="sm" {...primaryButtonProps}>
         {primaryButtonTitle}
