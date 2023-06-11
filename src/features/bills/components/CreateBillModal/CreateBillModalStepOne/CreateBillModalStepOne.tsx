@@ -1,4 +1,4 @@
-import { KeyboardEvent, useCallback } from 'react';
+import React, { KeyboardEvent, useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { FiFile } from 'react-icons/fi';
 
@@ -63,7 +63,7 @@ const validationSchema = yup
   })
   .required();
 
-export function CreateBillModalStepOne() {
+export const CreateBillModalStepOne = React.forwardRef(() => {
   const {
     control,
     handleSubmit,
@@ -156,4 +156,4 @@ export function CreateBillModalStepOne() {
       <ControlledTextArea name="description" control={control} label="Descrição" placeholder="Ex.: Notebook Samsung" />
     </S.Container>
   );
-}
+});
