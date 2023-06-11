@@ -1,8 +1,8 @@
-import { FiArrowLeft, FiArrowRight, FiX } from 'react-icons/fi';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 
-import { Button } from '@/components/elements';
+import { Button, Dialog } from '@/components/elements';
 
 import * as S from './CreateBillModal.styles';
 import { CreateBillModalStepOne } from './CreateBillModalStepOne/CreateBillModalStepOne';
@@ -13,44 +13,26 @@ export interface CreateBillModalProps {
 
 export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & DialogPrimitive.DialogProps) {
   return (
-    <DialogPrimitive.Root {...rest}>
-      <DialogPrimitive.Portal>
-        <S.Overlay />
+    <Dialog.Root {...rest}>
+      <Dialog.Header title="Lançamento de fatura" />
 
-        <S.Content>
-          <header>
-            <S.Title>Lançamento de fatura</S.Title>
+      <Dialog.Body asChild>
+        <CreateBillModalStepOne />
+      </Dialog.Body>
 
-            <DialogPrimitive.Close asChild>
-              <Button size="xs" colorScheme="neutral" isRounded>
-                <FiX />
-              </Button>
-            </DialogPrimitive.Close>
-          </header>
+      <S.Footer>
+        <Dialog.FooterCloseButton />
 
-          <main>
-            <CreateBillModalStepOne />
-          </main>
+        <div>
+          <Button size="sm" leftIcon={FiArrowLeft} colorScheme="white">
+            Voltar
+          </Button>
 
-          <footer>
-            <DialogPrimitive.Close asChild>
-              <Button colorScheme="white" size="sm">
-                Fechar
-              </Button>
-            </DialogPrimitive.Close>
-
-            <div>
-              <Button size="sm" leftIcon={FiArrowLeft} colorScheme="white">
-                Voltar
-              </Button>
-
-              <Button type="submit" size="sm" rightIcon={FiArrowRight}>
-                Avançar
-              </Button>
-            </div>
-          </footer>
-        </S.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+          <Button type="submit" size="sm" rightIcon={FiArrowRight}>
+            Avançar
+          </Button>
+        </div>
+      </S.Footer>
+    </Dialog.Root>
   );
 }

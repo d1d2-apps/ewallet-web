@@ -1,44 +1,10 @@
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { opacify } from 'polished';
 import styled from 'styled-components';
 
-export const Overlay = styled(DialogPrimitive.Overlay)`
-  ${({ theme }) => theme.mixins.dialogs.getOverlayStyles()}
-`;
+export const Footer = styled.footer`
+  justify-content: space-between;
 
-export const Content = styled(DialogPrimitive.Content)`
-  ${({ theme }) => theme.mixins.dialogs.getContentBaseStyles()}
-
-  max-width: 40rem;
-
-  header {
-    padding: 1rem 1.5rem;
-    position: relative;
-    border-bottom: 1px solid ${({ theme }) => opacify(-0.95, theme.colors.neutral)};
-
-    & > button {
-      position: absolute;
-      top: 0.75rem;
-      right: 0.75rem;
-    }
+  & > div {
+    display: flex;
+    gap: 0.75rem;
   }
-
-  footer {
-    justify-content: space-between;
-
-    & > div {
-      display: flex;
-      gap: 0.75rem;
-    }
-  }
-`;
-
-export const Title = styled(DialogPrimitive.Title)`
-  max-width: calc(100% - 2rem);
-  margin: 0 auto;
-  font-family: ${({ theme }) => theme.fontFamily.montserrat};
-  font-size: ${({ theme }) => theme.fontSize.lg};
-  font-weight: bold;
-  text-align: center;
-  color: ${({ theme }) => theme.colors.secondary};
 `;
