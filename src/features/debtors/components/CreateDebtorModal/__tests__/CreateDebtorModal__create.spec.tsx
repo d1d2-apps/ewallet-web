@@ -30,7 +30,7 @@ test('should not be able to submit if provided name has not the minimun length',
   await changeInput('name', 'Te');
   await clickSubmit();
 
-  const validationErrorMessage = await findByText('Mínimo de 5 caracteres');
+  const validationErrorMessage = await findByText('Mínimo de 3 caracteres');
   expect(validationErrorMessage).toBeInTheDocument();
 });
 
