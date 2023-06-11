@@ -33,7 +33,6 @@ const contentShow = keyframes`
 `;
 
 export const Content = styled(DialogPrimitive.Content)`
-  /* ${({ theme }) => theme.mixins.dialogs.getContentBaseStyles()} */
   width: 90vw;
   max-width: 40rem;
   max-height: 85vh;
@@ -49,6 +48,19 @@ export const Content = styled(DialogPrimitive.Content)`
 
   display: flex;
   flex-direction: column;
+
+  footer {
+    background-color: ${({ theme }) => opacify(-0.975, theme.colors.neutral)};
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 ${({ theme }) => theme.rounded.lg} ${({ theme }) => theme.rounded.lg};
+
+    display: flex;
+    gap: 0.75rem;
+
+    button {
+      width: fit-content;
+    }
+  }
 `;
 
 export const Header = styled.header`
@@ -73,17 +85,7 @@ export const Body = styled.main`
 `;
 
 export const Footer = styled.footer`
-  background-color: ${({ theme }) => opacify(-0.975, theme.colors.neutral)};
-  padding: 0.75rem 1.5rem;
-  border-radius: 0 0 ${({ theme }) => theme.rounded.lg} ${({ theme }) => theme.rounded.lg};
-
-  display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
-
-  button {
-    width: fit-content;
-  }
 `;
 
 export const Title = styled(DialogPrimitive.Title)`

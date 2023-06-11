@@ -92,14 +92,9 @@ interface DialogFooterProps {
 }
 
 function DialogFooter({
-  asChild,
   closeButtonOptions: { title: closeButtonTitle = 'Fechar', ...closeButtonProps } = {},
   primaryButtonOptions: { title: primaryButtonTitle, ...primaryButtonProps }
 }: DialogFooterProps) {
-  if (asChild) {
-    return <Slot />;
-  }
-
   return (
     <S.Footer>
       <DialogFooterCloseButton title={closeButtonTitle} {...closeButtonProps} />
