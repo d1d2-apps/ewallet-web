@@ -1,8 +1,6 @@
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-
-import { Button, Dialog } from '@/components/elements';
+import { Button, Dialog, DialogProps } from '@/components/elements';
 
 import * as S from './CreateBillModal.styles';
 import { CreateBillModalStepOne } from './CreateBillModalStepOne/CreateBillModalStepOne';
@@ -11,7 +9,7 @@ export interface CreateBillModalProps {
   onSuccess?: () => void | Promise<void>;
 }
 
-export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & DialogPrimitive.DialogProps) {
+export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & DialogProps) {
   return (
     <Dialog.Root {...rest}>
       <Dialog.Header title="Lançamento de fatura" />

@@ -3,10 +3,9 @@ import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CreditCard as CreditCardIcon } from '@phosphor-icons/react';
-import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as yup from 'yup';
 
-import { Dialog } from '@/components/elements';
+import { Dialog, DialogProps } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
@@ -27,11 +26,7 @@ const validationSchema = yup
   })
   .required();
 
-export function CreateCreditCardModal({
-  creditCard,
-  onSuccess,
-  ...rest
-}: CreateCreditCardModalProps & DialogPrimitive.DialogProps) {
+export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: CreateCreditCardModalProps & DialogProps) {
   const alertDialog = useAlertDialog();
   const createCreditCardMutation = useCreateCreditCard();
   const updateCreditCardMutation = useUpdateCreditCard();

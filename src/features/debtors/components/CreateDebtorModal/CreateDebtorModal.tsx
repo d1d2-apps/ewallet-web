@@ -3,10 +3,9 @@ import { FiUser } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as yup from 'yup';
 
-import { Dialog } from '@/components/elements';
+import { Dialog, DialogProps } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
@@ -28,11 +27,7 @@ const validationSchema = yup
   })
   .required();
 
-export function CreateDebtorModal({
-  debtor,
-  onSuccess,
-  ...rest
-}: CreateDebtorModalProps & DialogPrimitive.DialogProps) {
+export function CreateDebtorModal({ debtor, onSuccess, ...rest }: CreateDebtorModalProps & DialogProps) {
   const alertDialog = useAlertDialog();
   const createDebtorMutation = useCreateDebtor();
   const updateDebtorMutation = useUpdateDebtor();

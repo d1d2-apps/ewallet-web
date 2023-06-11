@@ -1,8 +1,6 @@
 import { useState } from 'react';
 
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-
-import { Dialog } from '@/components/elements';
+import { Dialog, DialogProps } from '@/components/elements';
 
 import { BillCategory, BillCategoryIcon, BillCategoryLabel } from '../../types';
 import * as S from './SelectBillCategoryModal.styles';
@@ -11,10 +9,7 @@ export interface SelectBillCategoryModalProps {
   onSelect: (category: BillCategory) => Promise<void>;
 }
 
-export function SelectBillCategoryModal({
-  onSelect,
-  ...rest
-}: SelectBillCategoryModalProps & DialogPrimitive.DialogProps) {
+export function SelectBillCategoryModal({ onSelect, ...rest }: SelectBillCategoryModalProps & DialogProps) {
   const [selectedCategory, setSelectedCategory] = useState<BillCategory | null>(null);
 
   const handleSubmitSelectedCategory = () => {

@@ -7,7 +7,9 @@ import { Slot } from '@radix-ui/react-slot';
 import { Button, ButtonProps } from '../Button/Button';
 import * as S from './Dialog.styles';
 
-interface DialogRootProps extends DialogPrimitive.DialogProps {
+export type DialogProps = DialogPrimitive.DialogProps;
+
+interface DialogRootProps extends DialogProps {
   asChild?: boolean;
 }
 
