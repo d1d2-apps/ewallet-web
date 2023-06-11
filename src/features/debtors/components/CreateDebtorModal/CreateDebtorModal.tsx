@@ -1,19 +1,18 @@
 import { useForm } from 'react-hook-form';
-import { FiUser, FiX } from 'react-icons/fi';
+import { FiUser } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import * as yup from 'yup';
 
-import { Button } from '@/components/elements';
+import { Dialog } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
 import { CreateDebtorDTO, useCreateDebtor } from '../../api/createDebtor';
 import { useUpdateDebtor } from '../../api/updateDebtor';
 import { Debtor } from '../../types';
-import * as S from './CreateDebtorModal.styles';
 
 type FormData = CreateDebtorDTO['data'];
 
@@ -72,57 +71,26 @@ export function CreateDebtorModal({
   };
 
   return (
-    <DialogPrimitive.Root {...rest}>
-      <DialogPrimitive.Portal>
-        <S.Overlay />
+    <Dialog.Root {...rest} asChild>
+      <form onSubmit={handleSubmit(handleSaveDebtor)}>
+        <Dialog.Header title={`${debtor?.id ? 'Editar' : 'Cadastrar'} devedor`} />
 
-        <S.Content asChild>
-          <form onSubmit={handleSubmit(handleSaveDebtor)}>
-            <header>
-              <S.Title>{debtor?.id ? 'Editar' : 'Cadastrar'} devedor</S.Title>
+        <Dialog.Body>
+          <ControlledTextInput name="name" control={control} label="Nome" icon={FiUser} placeholder="Fulano de Tal" />
 
-              <DialogPrimitive.Close asChild>
-                <Button size="xs" colorScheme="neutral" isRounded>
-                  <FiX />
-                </Button>
-              </DialogPrimitive.Close>
-            </header>
+          <ControlledColorInput name="color" control={control} label="Cor" />
+        </Dialog.Body>
 
-            <main>
-              <ControlledTextInput
-                name="name"
-                control={control}
-                label="Nome"
-                icon={FiUser}
-                placeholder="Fulano de Tal"
-              />
-
-              <ControlledColorInput name="color" control={control} label="Cor" />
-            </main>
-
-            <footer>
-              <DialogPrimitive.Close asChild>
-                <Button
-                  colorScheme="white"
-                  size="sm"
-                  disabled={createDebtorMutation.isLoading || updateDebtorMutation.isLoading}
-                >
-                  Fechar
-                </Button>
-              </DialogPrimitive.Close>
-
-              <Button
-                type="submit"
-                size="sm"
-                isLoading={createDebtorMutation.isLoading || updateDebtorMutation.isLoading}
-                loadingText="Salvando..."
-              >
-                Salvar
-              </Button>
-            </footer>
-          </form>
-        </S.Content>
-      </DialogPrimitive.Portal>
-    </DialogPrimitive.Root>
+        <Dialog.Footer
+          closeButtonOptions={{
+            disabled: createDebtorMutation.isLoading || updateDebtorMutation.isLoading
+          }}
+          primaryButtonOptions={{
+            isLoading: createDebtorMutation.isLoading || updateDebtorMutation.isLoading,
+            loadingText: 'Salvando...'
+          }}
+        />
+      </form>
+    </Dialog.Root>
   );
 }
