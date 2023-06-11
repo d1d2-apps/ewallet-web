@@ -86,6 +86,8 @@ export function CreateDebtorModal({
             disabled: createDebtorMutation.isLoading || updateDebtorMutation.isLoading
           }}
           primaryButtonOptions={{
+            type: 'submit',
+            title: 'Salvar',
             isLoading: createDebtorMutation.isLoading || updateDebtorMutation.isLoading,
             loadingText: 'Salvando...'
           }}

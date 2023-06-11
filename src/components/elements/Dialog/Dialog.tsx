@@ -88,13 +88,13 @@ DialogFooterCloseButton.displayName = 'Dialog.FooterCloseButton';
 interface DialogFooterProps {
   asChild?: boolean;
   closeButtonOptions?: DialogFooterCloseButtonProps;
-  primaryButtonOptions: Omit<ButtonProps, 'children'> & { title?: string };
+  primaryButtonOptions: Omit<ButtonProps, 'children'> & { title: string };
 }
 
 function DialogFooter({
   asChild,
   closeButtonOptions: { title: closeButtonTitle = 'Fechar', ...closeButtonProps } = {},
-  primaryButtonOptions: { title: primaryButtonTitle = 'Salvar', ...primaryButtonProps }
+  primaryButtonOptions: { title: primaryButtonTitle, ...primaryButtonProps }
 }: DialogFooterProps) {
   if (asChild) {
     return <Slot />;
@@ -104,7 +104,7 @@ function DialogFooter({
     <S.Footer>
       <DialogFooterCloseButton title={closeButtonTitle} {...closeButtonProps} />
 
-      <Button type="submit" size="sm" {...primaryButtonProps}>
+      <Button size="sm" {...primaryButtonProps}>
         {primaryButtonTitle}
       </Button>
     </S.Footer>

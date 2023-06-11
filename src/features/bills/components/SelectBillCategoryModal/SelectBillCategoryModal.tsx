@@ -48,6 +48,7 @@ export function SelectBillCategoryModal({
 
       <Dialog.Footer
         primaryButtonOptions={{
+          type: 'submit',
           title: 'Selecionar',
           onClick: handleSubmitSelectedCategory,
           disabled: !selectedCategory

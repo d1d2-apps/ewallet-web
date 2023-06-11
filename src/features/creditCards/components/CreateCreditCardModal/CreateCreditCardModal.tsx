@@ -88,6 +88,8 @@ export function CreateCreditCardModal({
             disabled: createCreditCardMutation.isLoading || updateCreditCardMutation.isLoading
           }}
           primaryButtonOptions={{
+            type: 'submit',
+            title: 'Salvar',
             isLoading: createCreditCardMutation.isLoading || updateCreditCardMutation.isLoading,
             loadingText: 'Salvando...'
           }}
