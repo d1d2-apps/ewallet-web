@@ -2,6 +2,7 @@ export * from './Avatar/Avatar';
 export * from './Button/Button';
 export * from './CurrencyInput/CurrencyInput';
 export * from './Heading/Heading';
+export * from './Modal/Modal';
 export * from './Popover/Popover';
 export * from './Select/Select';
 export * from './Spinner/Spinner';

@@ -5,13 +5,22 @@ import { Head } from '@/components/head';
 
 import { BillsList } from '../../components/BillsList/BillsList';
 import { useCreateBillModal } from '../../hooks/useCreateBillForm';
+import { useSelectBillCategoryModal } from '../../hooks/useSelectBillCategoryModal';
 import * as S from './BillsPage.styles';
 
 export function BillsPage() {
   const createBillModal = useCreateBillModal();
+  const selectBillCategoryModal = useSelectBillCategoryModal();
 
   const handleShowCreateBillModal = async () => {
     await createBillModal.show();
+
+    // await selectBillCategoryModal.show({
+    //   onSelect: async category => {
+    //     console.log(category);
+    //     await createBillModal.show();
+    //   }
+    // });
   };
 
   return (

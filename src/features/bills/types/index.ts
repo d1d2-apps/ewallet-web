@@ -1,3 +1,18 @@
+import {
+  Airplane,
+  Book,
+  Car,
+  ForkKnife,
+  Headphones,
+  Heart,
+  House,
+  Shapes,
+  ShoppingCart,
+  Television,
+  TShirt,
+  Wrench
+} from '@phosphor-icons/react';
+
 import { CreditCard } from '@/features/creditCards/types';
 import { Debtor } from '@/features/debtors';
 import { BaseEntity } from '@/types';
@@ -15,6 +30,37 @@ export type BillCategory =
   | 'TRANSPORT'
   | 'CLOTHING'
   | 'TRAVEL';
+
+// eslint-disable-next-line no-shadow
+export const BillCategoryLabel: Record<BillCategory, string> = {
+  HOUSE: 'Casa & Eletro',
+  EDUCATION: 'Educação',
+  ELECTRONICS: 'Eletrônicos',
+  LEISURE: 'Lazer',
+  RESTAURANT: 'Alimentos e bebidas',
+  HEALTH: 'Beleza e Saúde',
+  SERVICES: 'Serviços',
+  SUPERMARKET: 'Mercado',
+  TRANSPORT: 'Transporte',
+  CLOTHING: 'Moda e acessórios',
+  TRAVEL: 'Viagens',
+  OTHERS: 'Outros'
+};
+
+export const BillCategoryIcon = {
+  HOUSE: House,
+  EDUCATION: Book,
+  ELECTRONICS: Television,
+  LEISURE: Headphones,
+  RESTAURANT: ForkKnife,
+  HEALTH: Heart,
+  SERVICES: Wrench,
+  SUPERMARKET: ShoppingCart,
+  TRANSPORT: Car,
+  CLOTHING: TShirt,
+  TRAVEL: Airplane,
+  OTHERS: Shapes
+};
 
 export type Bill = {
   creditCardId: string;
