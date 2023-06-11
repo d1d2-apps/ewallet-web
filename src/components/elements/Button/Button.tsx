@@ -7,7 +7,7 @@ import * as S from './Button.styles';
 export type ButtonColorScheme = 'primary' | 'neutral' | 'white' | 'info' | 'error' | 'success' | 'warning';
 export type ButtonSize = 'xs' | 'sm' | 'md';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
   children: React.ReactNode;
   colorScheme?: ButtonColorScheme;
