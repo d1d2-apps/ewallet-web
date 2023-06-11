@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { CreditCard as CreditCardIcon } from '@phosphor-icons/react';
 import * as yup from 'yup';
 
-import { Dialog, DialogProps } from '@/components/elements';
+import { Modal, ModalProps } from '@/components/elements';
 import { ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
@@ -26,7 +26,7 @@ const validationSchema = yup
   })
   .required();
 
-export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: CreateCreditCardModalProps & DialogProps) {
+export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: CreateCreditCardModalProps & ModalProps) {
   const alertDialog = useAlertDialog();
   const createCreditCardMutation = useCreateCreditCard();
   const updateCreditCardMutation = useUpdateCreditCard();
@@ -64,11 +64,11 @@ export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: Create
   };
 
   return (
-    <Dialog.Root {...rest} asChild>
+    <Modal.Root {...rest} asChild>
       <form onSubmit={handleSubmit(handleSaveCreditCard)}>
-        <Dialog.Header title={`${creditCard?.id ? 'Editar' : 'Cadastrar'} cartão de crédito`} />
+        <Modal.Header title={`${creditCard?.id ? 'Editar' : 'Cadastrar'} cartão de crédito`} />
 
-        <Dialog.Body>
+        <Modal.Body>
           <ControlledTextInput
             name="name"
             control={control}
@@ -76,9 +76,9 @@ export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: Create
             icon={CreditCardIcon}
             placeholder="Ex.: Nubank, Inter, Itaú..."
           />
-        </Dialog.Body>
+        </Modal.Body>
 
-        <Dialog.Footer
+        <Modal.Footer
           closeButtonOptions={{
             disabled: createCreditCardMutation.isLoading || updateCreditCardMutation.isLoading
           }}
@@ -90,6 +90,6 @@ export function CreateCreditCardModal({ creditCard, onSuccess, ...rest }: Create
           }}
         />
       </form>
-    </Dialog.Root>
+    </Modal.Root>
   );
 }

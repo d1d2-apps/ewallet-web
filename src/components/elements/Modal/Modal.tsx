@@ -5,15 +5,15 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { Slot } from '@radix-ui/react-slot';
 
 import { Button, ButtonProps } from '../Button/Button';
-import * as S from './Dialog.styles';
+import * as S from './Modal.styles';
 
-export type DialogProps = DialogPrimitive.DialogProps;
+export type ModalProps = DialogPrimitive.DialogProps;
 
-interface DialogRootProps extends DialogProps {
+interface ModalRootProps extends ModalProps {
   asChild?: boolean;
 }
 
-function DialogRoot({ asChild, children, ...rest }: DialogRootProps) {
+function ModalRoot({ asChild, children, ...rest }: ModalRootProps) {
   return (
     <DialogPrimitive.Root {...rest}>
       <DialogPrimitive.Portal>
@@ -25,15 +25,15 @@ function DialogRoot({ asChild, children, ...rest }: DialogRootProps) {
   );
 }
 
-DialogRoot.displayName = 'Dialog.Root';
+ModalRoot.displayName = 'Modal.Root';
 
-function DialogTitle({ children }: PropsWithChildren) {
+function ModalTitle({ children }: PropsWithChildren) {
   return <S.Title>{children}</S.Title>;
 }
 
-DialogTitle.displayName = 'Dialog.Title';
+ModalTitle.displayName = 'Modal.Title';
 
-function DialogHeaderCloseButton() {
+function ModalHeaderCloseButton() {
   return (
     <DialogPrimitive.Close asChild>
       <Button size="xs" colorScheme="neutral" isRounded>
@@ -43,39 +43,39 @@ function DialogHeaderCloseButton() {
   );
 }
 
-DialogHeaderCloseButton.displayName = 'Dialog.HeaderCloseButton';
+ModalHeaderCloseButton.displayName = 'Modal.HeaderCloseButton';
 
-interface DialogHeaderProps {
+interface ModalHeaderProps {
   title: string;
 }
 
-function DialogHeader({ title }: DialogHeaderProps) {
+function ModalHeader({ title }: ModalHeaderProps) {
   return (
     <S.Header>
-      <DialogTitle>{title}</DialogTitle>
-      <DialogHeaderCloseButton />
+      <ModalTitle>{title}</ModalTitle>
+      <ModalHeaderCloseButton />
     </S.Header>
   );
 }
 
-DialogHeader.displayName = 'Dialog.Header';
+ModalHeader.displayName = 'Modal.Header';
 
-interface DialogBodyProps {
+interface ModalBodyProps {
   asChild?: boolean;
 }
 
-function DialogBody({ asChild, children }: PropsWithChildren<DialogBodyProps>) {
+function ModalBody({ asChild, children }: PropsWithChildren<ModalBodyProps>) {
   const Component = asChild ? Slot : S.Body;
   return <Component>{children}</Component>;
 }
 
-DialogBody.displayName = 'Dialog.Body';
+ModalBody.displayName = 'Modal.Body';
 
-interface DialogFooterCloseButtonProps extends Omit<ButtonProps, 'children'> {
+interface ModalFooterCloseButtonProps extends Omit<ButtonProps, 'children'> {
   title?: string;
 }
 
-function DialogFooterCloseButton({ title = 'Fechar', ...rest }: DialogFooterCloseButtonProps) {
+function ModalFooterCloseButton({ title = 'Fechar', ...rest }: ModalFooterCloseButtonProps) {
   return (
     <DialogPrimitive.Close asChild>
       <Button colorScheme="white" size="sm" {...rest}>
@@ -85,21 +85,21 @@ function DialogFooterCloseButton({ title = 'Fechar', ...rest }: DialogFooterClos
   );
 }
 
-DialogFooterCloseButton.displayName = 'Dialog.FooterCloseButton';
+ModalFooterCloseButton.displayName = 'Modal.FooterCloseButton';
 
-interface DialogFooterProps {
+interface ModalFooterProps {
   asChild?: boolean;
-  closeButtonOptions?: DialogFooterCloseButtonProps;
+  closeButtonOptions?: ModalFooterCloseButtonProps;
   primaryButtonOptions: Omit<ButtonProps, 'children'> & { title: string };
 }
 
-function DialogFooter({
+function ModalFooter({
   closeButtonOptions: { title: closeButtonTitle = 'Fechar', ...closeButtonProps } = {},
   primaryButtonOptions: { title: primaryButtonTitle, ...primaryButtonProps }
-}: DialogFooterProps) {
+}: ModalFooterProps) {
   return (
     <S.Footer>
-      <DialogFooterCloseButton title={closeButtonTitle} {...closeButtonProps} />
+      <ModalFooterCloseButton title={closeButtonTitle} {...closeButtonProps} />
 
       <Button size="sm" {...primaryButtonProps}>
         {primaryButtonTitle}
@@ -108,14 +108,14 @@ function DialogFooter({
   );
 }
 
-DialogFooter.displayName = 'Dialog.Footer';
+ModalFooter.displayName = 'Modal.Footer';
 
-export const Dialog = {
-  Root: DialogRoot,
-  Header: DialogHeader,
-  HeaderCloseButton: DialogHeaderCloseButton,
-  Title: DialogTitle,
-  Body: DialogBody,
-  Footer: DialogFooter,
-  FooterCloseButton: DialogFooterCloseButton
+export const Modal = {
+  Root: ModalRoot,
+  Header: ModalHeader,
+  HeaderCloseButton: ModalHeaderCloseButton,
+  Title: ModalTitle,
+  Body: ModalBody,
+  Footer: ModalFooter,
+  FooterCloseButton: ModalFooterCloseButton
 };

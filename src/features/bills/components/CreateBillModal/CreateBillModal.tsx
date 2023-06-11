@@ -1,6 +1,6 @@
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 
-import { Button, Dialog, DialogProps } from '@/components/elements';
+import { Button, Modal, ModalProps } from '@/components/elements';
 
 import * as S from './CreateBillModal.styles';
 import { CreateBillModalStepOne } from './CreateBillModalStepOne/CreateBillModalStepOne';
@@ -9,17 +9,17 @@ export interface CreateBillModalProps {
   onSuccess?: () => void | Promise<void>;
 }
 
-export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & DialogProps) {
+export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & ModalProps) {
   return (
-    <Dialog.Root {...rest}>
-      <Dialog.Header title="Lançamento de fatura" />
+    <Modal.Root {...rest}>
+      <Modal.Header title="Lançamento de fatura" />
 
-      <Dialog.Body asChild>
+      <Modal.Body asChild>
         <CreateBillModalStepOne />
-      </Dialog.Body>
+      </Modal.Body>
 
       <S.Footer>
-        <Dialog.FooterCloseButton />
+        <Modal.FooterCloseButton />
 
         <div>
           <Button size="sm" leftIcon={FiArrowLeft} colorScheme="white">
@@ -31,6 +31,6 @@ export function CreateBillModal({ onSuccess, ...rest }: CreateBillModalProps & D
           </Button>
         </div>
       </S.Footer>
-    </Dialog.Root>
+    </Modal.Root>
   );
 }

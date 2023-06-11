@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Dialog, DialogProps } from '@/components/elements';
+import { Modal, ModalProps } from '@/components/elements';
 
 import { BillCategory, BillCategoryIcon, BillCategoryLabel } from '../../types';
 import * as S from './SelectBillCategoryModal.styles';
@@ -9,7 +9,7 @@ export interface SelectBillCategoryModalProps {
   onSelect: (category: BillCategory) => Promise<void>;
 }
 
-export function SelectBillCategoryModal({ onSelect, ...rest }: SelectBillCategoryModalProps & DialogProps) {
+export function SelectBillCategoryModal({ onSelect, ...rest }: SelectBillCategoryModalProps & ModalProps) {
   const [selectedCategory, setSelectedCategory] = useState<BillCategory | null>(null);
 
   const handleSubmitSelectedCategory = () => {
@@ -19,10 +19,10 @@ export function SelectBillCategoryModal({ onSelect, ...rest }: SelectBillCategor
   };
 
   return (
-    <Dialog.Root {...rest}>
-      <Dialog.Header title="Selecione a categoria da fatura" />
+    <Modal.Root {...rest}>
+      <Modal.Header title="Selecione a categoria da fatura" />
 
-      <Dialog.Body asChild>
+      <Modal.Body asChild>
         <S.CategoryCardsWrapper>
           {Object.keys(BillCategoryLabel).map(categoryKey => {
             const CategoryIcon = BillCategoryIcon[categoryKey as BillCategory];
@@ -39,9 +39,9 @@ export function SelectBillCategoryModal({ onSelect, ...rest }: SelectBillCategor
             );
           })}
         </S.CategoryCardsWrapper>
-      </Dialog.Body>
+      </Modal.Body>
 
-      <Dialog.Footer
+      <Modal.Footer
         primaryButtonOptions={{
           type: 'submit',
           title: 'Selecionar',
@@ -49,6 +49,6 @@ export function SelectBillCategoryModal({ onSelect, ...rest }: SelectBillCategor
           disabled: !selectedCategory
         }}
       />
-    </Dialog.Root>
+    </Modal.Root>
   );
 }

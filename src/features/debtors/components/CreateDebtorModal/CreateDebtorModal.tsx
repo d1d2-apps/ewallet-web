@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { Dialog, DialogProps } from '@/components/elements';
+import { Modal, ModalProps } from '@/components/elements';
 import { ControlledColorInput, ControlledTextInput } from '@/components/forms';
 import { useAlertDialog } from '@/hooks';
 
@@ -27,7 +27,7 @@ const validationSchema = yup
   })
   .required();
 
-export function CreateDebtorModal({ debtor, onSuccess, ...rest }: CreateDebtorModalProps & DialogProps) {
+export function CreateDebtorModal({ debtor, onSuccess, ...rest }: CreateDebtorModalProps & ModalProps) {
   const alertDialog = useAlertDialog();
   const createDebtorMutation = useCreateDebtor();
   const updateDebtorMutation = useUpdateDebtor();
@@ -66,17 +66,17 @@ export function CreateDebtorModal({ debtor, onSuccess, ...rest }: CreateDebtorMo
   };
 
   return (
-    <Dialog.Root {...rest} asChild>
+    <Modal.Root {...rest} asChild>
       <form onSubmit={handleSubmit(handleSaveDebtor)}>
-        <Dialog.Header title={`${debtor?.id ? 'Editar' : 'Cadastrar'} devedor`} />
+        <Modal.Header title={`${debtor?.id ? 'Editar' : 'Cadastrar'} devedor`} />
 
-        <Dialog.Body>
+        <Modal.Body>
           <ControlledTextInput name="name" control={control} label="Nome" icon={FiUser} placeholder="Fulano de Tal" />
 
           <ControlledColorInput name="color" control={control} label="Cor" />
-        </Dialog.Body>
+        </Modal.Body>
 
-        <Dialog.Footer
+        <Modal.Footer
           closeButtonOptions={{
             disabled: createDebtorMutation.isLoading || updateDebtorMutation.isLoading
           }}
@@ -88,6 +88,6 @@ export function CreateDebtorModal({ debtor, onSuccess, ...rest }: CreateDebtorMo
           }}
         />
       </form>
-    </Dialog.Root>
+    </Modal.Root>
   );
 }
