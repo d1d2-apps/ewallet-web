@@ -1,10 +1,6 @@
 import { useState } from 'react';
 
-import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
-
-import { Button } from '@/components/elements';
-
-import * as S from './ConfirmationDialog.styles';
+import { Button, Dialog, DialogProps } from '@/components/elements';
 
 export interface ConfirmationDialogProps {
   title: string;
@@ -23,7 +19,7 @@ export function ConfirmationDialog({
   cancelButtonLabel = 'Cancelar',
   onConfirm,
   ...rest
-}: ConfirmationDialogProps & AlertDialogPrimitive.AlertDialogProps) {
+}: ConfirmationDialogProps & DialogProps) {
   const [isSubmiting, setIsSubmiting] = useState(false);
 
   const handleConfirmClick = async () => {
@@ -33,29 +29,19 @@ export function ConfirmationDialog({
   };
 
   return (
-    <AlertDialogPrimitive.Root {...rest}>
-      <AlertDialogPrimitive.Portal>
-        <S.Overlay />
+    <Dialog.Root {...rest}>
+      <Dialog.Body>
+        <Dialog.Title>{title}</Dialog.Title>
+        <Dialog.Description>{description}</Dialog.Description>
+      </Dialog.Body>
 
-        <S.Content>
-          <main>
-            <S.Title>{title}</S.Title>
-            <S.Description>{description}</S.Description>
-          </main>
+      <Dialog.Footer>
+        <Dialog.CancelButton title={cancelButtonLabel} disabled={isSubmiting} />
 
-          <footer>
-            <AlertDialogPrimitive.Cancel asChild>
-              <Button colorScheme="white" size="sm" disabled={isSubmiting}>
-                {cancelButtonLabel}
-              </Button>
-            </AlertDialogPrimitive.Cancel>
-
-            <Button size="sm" onClick={handleConfirmClick} isLoading={isSubmiting} loadingText={okButtonLoadingText}>
-              {okButtonLabel}
-            </Button>
-          </footer>
-        </S.Content>
-      </AlertDialogPrimitive.Portal>
-    </AlertDialogPrimitive.Root>
+        <Button size="sm" onClick={handleConfirmClick} isLoading={isSubmiting} loadingText={okButtonLoadingText}>
+          {okButtonLabel}
+        </Button>
+      </Dialog.Footer>
+    </Dialog.Root>
   );
 }
