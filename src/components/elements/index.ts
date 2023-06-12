@@ -1,6 +1,7 @@
 export * from './Avatar/Avatar';
 export * from './Button/Button';
 export * from './CurrencyInput/CurrencyInput';
+export * from './Dialog/Dialog';
 export * from './Heading/Heading';
 export * from './Modal/Modal';
 export * from './Popover/Popover';
