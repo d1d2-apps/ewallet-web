@@ -1,8 +1,6 @@
 import { FiAlertCircle, FiAlertTriangle, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 
-import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
-
-import { Button } from '@/components/elements';
+import { Dialog, DialogProps } from '@/components/elements';
 
 import * as S from './AlertDialog.styles';
 
@@ -28,31 +26,23 @@ export function AlertDialog({
   description,
   okButtonLabel = 'Ok',
   ...rest
-}: AlertDialogProps & AlertDialogPrimitive.AlertDialogProps) {
+}: AlertDialogProps & DialogProps) {
   return (
-    <AlertDialogPrimitive.Root {...rest}>
-      <AlertDialogPrimitive.Portal>
-        <S.Overlay />
+    <Dialog.Root {...rest}>
+      <Dialog.Body>
+        <S.Container $type={type}>
+          <i>{ALERT_TYPES_ICONS[type]}</i>
 
-        <S.Content $type={type}>
-          <main>
-            <i>{ALERT_TYPES_ICONS[type]}</i>
+          <div>
+            <Dialog.Title>{title}</Dialog.Title>
+            <Dialog.Description>{description}</Dialog.Description>
+          </div>
+        </S.Container>
+      </Dialog.Body>
 
-            <div>
-              <S.Title>{title}</S.Title>
-              <S.Description>{description}</S.Description>
-            </div>
-          </main>
-
-          <footer>
-            <AlertDialogPrimitive.Cancel asChild>
-              <Button colorScheme={type} size="sm">
-                {okButtonLabel}
-              </Button>
-            </AlertDialogPrimitive.Cancel>
-          </footer>
-        </S.Content>
-      </AlertDialogPrimitive.Portal>
-    </AlertDialogPrimitive.Root>
+      <Dialog.Footer>
+        <Dialog.CancelButton title={okButtonLabel} colorScheme={type} />
+      </Dialog.Footer>
+    </Dialog.Root>
   );
 }
