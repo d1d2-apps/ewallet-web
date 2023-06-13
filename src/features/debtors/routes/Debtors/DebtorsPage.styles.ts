@@ -8,16 +8,4 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
-
-  & > header {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-
-    & > div {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-  }
 `;

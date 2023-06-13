@@ -1,7 +1,8 @@
-import { FiPlus } from 'react-icons/fi';
+import { Plus } from '@phosphor-icons/react';
 
-import { Button, Heading } from '@/components/elements';
+import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
+import { PageTitle } from '@/components/page-elements';
 
 import { DebtorsList } from '../../components/DebtorsList/DebtorsList';
 import { useCreateDebtorModal } from '../../hooks/useCreateDebtorModal';
@@ -19,18 +20,11 @@ export function DebtorsPage() {
       <Head title="Devedores" />
 
       <S.Container>
-        <header>
-          <div>
-            <Heading>Devedores</Heading>
-            <Heading variant="h4" asChild>
-              <h4>Gerencie todos os seus devedores ou cadastre um novo.</h4>
-            </Heading>
-          </div>
-
-          <Button leftIcon={FiPlus} onClick={handleShowCreateDebtorsModal}>
+        <PageTitle title="Devedores" subtitle="Gerencie todos os seus devedores ou cadastre um novo.">
+          <Button leftIcon={Plus} onClick={handleShowCreateDebtorsModal}>
             Cadastrar devedor
           </Button>
-        </header>
+        </PageTitle>
 
         <DebtorsList />
       </S.Container>
