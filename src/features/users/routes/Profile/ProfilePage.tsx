@@ -2,8 +2,9 @@ import { FiLogOut } from 'react-icons/fi';
 
 import { format } from 'date-fns';
 
-import { Button, Heading } from '@/components/elements';
+import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
+import { PageTitle } from '@/components/page-elements';
 import { useAuth } from '@/features/auth';
 import { useConfirmationDialog } from '@/hooks';
 
@@ -60,9 +61,7 @@ export function ProfilePage() {
           </S.ProfilePictureSection>
 
           <S.ProfileDataSection>
-            <header>
-              <Heading>Meu perfil</Heading>
-            </header>
+            <PageTitle title="Meu perfil" />
 
             <S.ProfileInfoWrapper>
               <section>
