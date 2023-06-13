@@ -1,7 +1,8 @@
-import { FiPlus } from 'react-icons/fi';
+import { Plus } from '@phosphor-icons/react';
 
-import { Button, Heading } from '@/components/elements';
+import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
+import { PageTitle } from '@/components/page-elements';
 
 import { CreditCardsList } from '../../components/CreditCardsList/CreditCardsList';
 import { useCreateCreditCardModal } from '../../hooks/useCreateCreditCardModal';
@@ -19,18 +20,11 @@ export function CreditCardsPage() {
       <Head title="Cartões de crédito" />
 
       <S.Container>
-        <header>
-          <div>
-            <Heading>Cartões de crédito</Heading>
-            <Heading variant="h4" asChild>
-              <h4>Gerencie todos os seus cartões de crédito ou cadastre um novo.</h4>
-            </Heading>
-          </div>
-
-          <Button leftIcon={FiPlus} onClick={handleShowCreateCreditCardsModal}>
+        <PageTitle title="Cartões de crédito" subtitle="Gerencie todos os seus cartões de crédito ou cadastre um novo.">
+          <Button leftIcon={Plus} onClick={handleShowCreateCreditCardsModal}>
             Cadastrar cartão
           </Button>
-        </header>
+        </PageTitle>
 
         <CreditCardsList />
       </S.Container>
