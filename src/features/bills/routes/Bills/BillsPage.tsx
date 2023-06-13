@@ -1,7 +1,8 @@
-import { FiPlus } from 'react-icons/fi';
+import { Plus } from '@phosphor-icons/react';
 
-import { Button, Heading } from '@/components/elements';
+import { Button } from '@/components/elements';
 import { Head } from '@/components/head';
+import { PageTitle } from '@/components/page-elements';
 
 import { BillsList } from '../../components/BillsList/BillsList';
 import { useCreateBillModal } from '../../hooks/useCreateBillForm';
@@ -14,13 +15,6 @@ export function BillsPage() {
 
   const handleShowCreateBillModal = async () => {
     await createBillModal.show();
-
-    // await selectBillCategoryModal.show({
-    //   onSelect: async category => {
-    //     console.log(category);
-    //     await createBillModal.show();
-    //   }
-    // });
   };
 
   return (
@@ -28,18 +22,11 @@ export function BillsPage() {
       <Head title="Faturas" />
 
       <S.Container>
-        <header>
-          <div>
-            <Heading>Faturas</Heading>
-            <Heading variant="h4" asChild>
-              <h4>Gerencie todos as suas faturas ou faça novos lançamentos.</h4>
-            </Heading>
-          </div>
-
-          <Button leftIcon={FiPlus} onClick={handleShowCreateBillModal}>
+        <PageTitle title="Faturas" subtitle="Gerencie todos as suas faturas ou faça novos lançamentos.">
+          <Button leftIcon={Plus} onClick={handleShowCreateBillModal}>
             Lançar fatura
           </Button>
-        </header>
+        </PageTitle>
 
         <BillsList />
       </S.Container>
