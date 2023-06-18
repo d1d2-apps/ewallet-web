@@ -15,11 +15,11 @@ export const Container = styled.div`
   gap: 3rem;
 `;
 
-export const StepperWrapper = styled.main`
+export const StepperWrapper = styled.aside`
   flex: 1;
 
   display: flex;
-  gap: 1.5rem;
+  gap: 5rem;
 `;
 
 export const Stepper = styled.aside`
@@ -75,5 +75,32 @@ export const Step = styled.article<StepProps>`
 
   & > button {
     z-index: 1;
+  }
+`;
+
+export const StepContentWrapper = styled.main`
+  flex: 1;
+
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.backgroundOffset};
+  border-radius: 1rem;
+  box-shadow: ${({ theme }) => theme.shadow.md};
+
+  display: flex;
+  flex-direction: column;
+
+  & > main {
+    flex: 1;
+    padding: 1.5rem;
+  }
+
+  & > footer {
+    border-top: 1px solid ${({ theme }) => opacify(-0.925, theme.colors.neutral)};
+    padding: 0.75rem 1.5rem;
+    border-radius: 0 0 ${({ theme }) => theme.rounded.lg} ${({ theme }) => theme.rounded.lg};
+
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
   }
 `;

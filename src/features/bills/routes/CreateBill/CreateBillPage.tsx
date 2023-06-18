@@ -44,6 +44,20 @@ export function CreateBillPage() {
             </S.Step>
           ))}
         </S.Stepper>
+
+        <S.StepContentWrapper>
+          <main>hahahha</main>
+
+          <footer>
+            <Button size="xs" colorScheme="neutral">
+              Voltar
+            </Button>
+
+            <Button size="xs" colorScheme="neutral">
+              Próximo
+            </Button>
+          </footer>
+        </S.StepContentWrapper>
       </S.StepperWrapper>
     </S.Container>
   );
