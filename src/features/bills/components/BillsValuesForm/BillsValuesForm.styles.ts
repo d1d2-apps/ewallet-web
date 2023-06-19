@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.form`
+  height: 100%;
   padding: 1.5rem;
   overflow-y: auto;
 

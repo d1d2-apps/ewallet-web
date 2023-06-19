@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Button } from '@/components/elements';
 import { PageTitle } from '@/components/page-elements';
 
+import { BillsValuesForm, BillsValuesFormRef } from '../../components/BillsValuesForm/BillsValuesForm';
 import * as S from './CreateBillPage.styles';
 
 const steps = [
@@ -13,6 +14,8 @@ const steps = [
 ];
 
 export function CreateBillPage() {
+  const billValuesFormRef = useRef<BillsValuesFormRef>(null);
+
   const [currentStep, setCurrentStep] = useState(0);
 
   return (
@@ -46,15 +49,17 @@ export function CreateBillPage() {
         </S.Stepper>
 
         <S.StepContentWrapper>
-          <main>hahahha</main>
+          <main>
+            <BillsValuesForm ref={billValuesFormRef} />
+          </main>
 
           <footer>
             <Button size="xs" colorScheme="neutral">
               Voltar
             </Button>
 
-            <Button size="xs" colorScheme="neutral">
-              Próximo
+            <Button size="xs" colorScheme="neutral" onClick={() => billValuesFormRef.current?.submit()}>
+              Avançar
             </Button>
           </footer>
         </S.StepContentWrapper>

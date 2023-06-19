@@ -5,7 +5,7 @@ interface StepProps {
   $isCurrentStep?: boolean;
 }
 
-export const Container = styled.div`
+export const Container = styled.div.attrs({ className: 'teste' })`
   height: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -17,6 +17,9 @@ export const Container = styled.div`
 
 export const StepperWrapper = styled.aside`
   flex: 1;
+  overflow: hidden;
+  margin: -2rem;
+  padding: 2rem;
 
   display: flex;
   gap: 5rem;
@@ -91,7 +94,7 @@ export const StepContentWrapper = styled.main`
 
   & > main {
     flex: 1;
-    padding: 1.5rem;
+    overflow-y: auto;
   }
 
   & > footer {
