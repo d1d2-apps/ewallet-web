@@ -3,20 +3,54 @@ import { useRef, useState } from 'react';
 import { Button } from '@/components/elements';
 import { PageTitle } from '@/components/page-elements';
 
-import { BillsValuesForm, BillsValuesFormRef } from '../../components/BillsValuesForm/BillsValuesForm';
+import {
+  BillCategoryForm,
+  BillCategoryFormData,
+  BillCategoryFormRef
+} from '../../components/BillCategoryForm/BillCategoryForm';
+import {
+  BillsValuesForm,
+  BillValuesFormData,
+  BillValuesFormRef
+} from '../../components/BillsValuesForm/BillsValuesForm';
 import * as S from './CreateBillPage.styles';
 
 const steps = [
   { title: 'Valores', description: 'Informe os valores' },
+  { title: 'Categoria', description: 'Selecione uma categoria' },
   { title: 'Parcelas', description: 'Defina o parcelamento' },
   { title: 'Devedores', description: 'Defina os devedores' },
   { title: 'Resumo', description: 'Revise e confirme' }
 ];
 
 export function CreateBillPage() {
-  const billValuesFormRef = useRef<BillsValuesFormRef>(null);
+  const billValuesFormRef = useRef<BillValuesFormRef>(null);
+  const billCategoryFormRef = useRef<BillCategoryFormRef>(null);
 
   const [currentStep, setCurrentStep] = useState(0);
+
+  const onBillValuesStepSubmitSuccess = (formData: BillValuesFormData) => {
+    console.log(formData);
+  };
+
+  const onBillCategoryStepSubmitSuccess = ({ category }: BillCategoryFormData) => {
+    console.log({ category });
+  };
+
+  const handleGoToNextStep = () => {
+    switch (currentStep) {
+      case 0:
+        billValuesFormRef.current?.submit(onBillValuesStepSubmitSuccess);
+        break;
+
+      case 1:
+        billCategoryFormRef.current?.submit(onBillCategoryStepSubmitSuccess);
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
     <S.Container>
@@ -50,7 +84,8 @@ export function CreateBillPage() {
 
         <S.StepContentWrapper>
           <main>
-            <BillsValuesForm ref={billValuesFormRef} />
+            {currentStep === 0 && <BillsValuesForm ref={billValuesFormRef} />}
+            {currentStep === 1 && <BillCategoryForm ref={billCategoryFormRef} />}
           </main>
 
           <footer>
@@ -58,7 +93,7 @@ export function CreateBillPage() {
               Voltar
             </Button>
 
-            <Button size="xs" colorScheme="neutral" onClick={() => billValuesFormRef.current?.submit()}>
+            <Button size="xs" colorScheme="neutral" onClick={handleGoToNextStep}>
               Avançar
             </Button>
           </footer>

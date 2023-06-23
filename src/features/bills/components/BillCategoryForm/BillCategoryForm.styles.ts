@@ -5,18 +5,26 @@ interface CategoryCardProps {
   $selected: boolean;
 }
 
-export const CategoryCardsWrapper = styled.main`
+export const Container = styled.div`
   padding: 1.5rem;
   overflow-y: auto;
 
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 
-  ${({ theme }) =>
-    theme.mixins.screen.md(css`
-      grid-template-columns: repeat(2, 1fr);
-    `)}
+  & > main {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0.75rem;
+
+    ${({ theme }) =>
+      theme.mixins.screen.lg(css`
+        grid-template-columns: repeat(2, 1fr);
+      `)}
+  }
 `;
 
 export const CategoryCard = styled.article<CategoryCardProps>`
@@ -44,4 +52,9 @@ export const CategoryCard = styled.article<CategoryCardProps>`
       box-shadow: ${theme.mixins.ring.xs(theme.colors.primary)};
       pointer-events: none;
     `}
+`;
+
+export const ErrorMessage = styled.small`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  color: ${({ theme }) => theme.colors.error};
 `;

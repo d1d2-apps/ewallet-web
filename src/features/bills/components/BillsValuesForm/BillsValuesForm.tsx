@@ -10,7 +10,7 @@ import { CreditCardsAutocomplete } from '@/features/creditCards';
 
 import * as S from './BillsValuesForm.styles';
 
-interface FormData {
+export interface BillValuesFormData {
   creditCard: string;
   totalAmount: string;
   month: string;
@@ -18,8 +18,8 @@ interface FormData {
   description: string;
 }
 
-export interface BillsValuesFormRef {
-  submit: () => Promise<void>;
+export interface BillValuesFormRef {
+  submit: (onSuccess: (formData: BillValuesFormData) => void) => Promise<void>;
 }
 
 const MONTHS = [
@@ -61,12 +61,12 @@ const validationSchema = yup
   })
   .required();
 
-export const BillsValuesForm = React.forwardRef<BillsValuesFormRef>((_, ref) => {
+export const BillsValuesForm = React.forwardRef<BillValuesFormRef>((_, ref) => {
   const {
     control,
     handleSubmit,
     formState: { errors }
-  } = useForm<FormData>({
+  } = useForm<BillValuesFormData>({
     resolver: yupResolver(validationSchema),
     defaultValues: {
       creditCard: '',
@@ -77,12 +77,8 @@ export const BillsValuesForm = React.forwardRef<BillsValuesFormRef>((_, ref) => 
     }
   });
 
-  const handleNextStepClick = (data: FormData) => {
-    console.log(data);
-  };
-
   useImperativeHandle(ref, () => ({
-    submit: () => handleSubmit(handleNextStepClick)()
+    submit: onSuccess => handleSubmit(formData => onSuccess(formData))()
   }));
 
   return (
@@ -104,19 +100,21 @@ export const BillsValuesForm = React.forwardRef<BillsValuesFormRef>((_, ref) => 
 
       <ControlledCurrencyInput name="totalAmount" control={control} label="Valor (R$)" placeholder="Ex.: R$ 100,00" />
 
-      <ControlledTextInput name="year" control={control} type="number" label="Ano" placeholder="Ano..." />
+      <div className="row">
+        <ControlledTextInput name="year" control={control} type="number" label="Ano" placeholder="Ano..." />
 
-      <ControlledSelect name="month" control={control} label="Mês">
-        <Select.Group>
-          <Select.GroupLabel>Mês</Select.GroupLabel>
+        <ControlledSelect name="month" control={control} label="Mês">
+          <Select.Group>
+            <Select.GroupLabel>Mês</Select.GroupLabel>
 
-          {MONTHS.map(month => (
-            <Select.Item key={month.value} value={month.value}>
-              {month.name}
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </ControlledSelect>
+            {MONTHS.map(month => (
+              <Select.Item key={month.value} value={month.value}>
+                {month.name}
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </ControlledSelect>
+      </div>
 
       <ControlledTextArea
         name="description"
