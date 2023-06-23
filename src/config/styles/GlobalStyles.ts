@@ -7,6 +7,7 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+    accent-color: ${({ theme }) => theme.colors.primary};
   }
 
   ${({ theme }) =>
